@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('kader/dashboard','KaderController@index');
+Route::get('superadmin/dashboard','SuperadminController@index');
