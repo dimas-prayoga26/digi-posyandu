@@ -16,5 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('kader/dashboard','KaderController@index');
-Route::get('superadmin/dashboard','SuperadminController@index');
+
+Route::get('dashboard','PageController@dashboard');
+Route::get('admin','PageController@admin');
+Route::get('profil','PageController@profil');
+Route::get('kader','PageController@kader');
+Route::get('loginadmin','LoginController@loginadmin');
+
+
+Route::get('loginbidan','LoginController@loginbidan');
