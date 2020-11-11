@@ -18,3 +18,7 @@ Route::get('/', function () {
 });
 Route::get('kader/dashboard','KaderController@index');
 Route::get('superadmin/dashboard','SuperadminController@index');
+Route::get('loginsuperadmin','LoginController@loginsuperadmin');
+Route::get('loginadminpuskesmas','LoginController@loginadminpuskesmas');
+Route::get('loginkader','LoginController@loginkader');
+Route::get('loginbidan','LoginController@loginbidan');

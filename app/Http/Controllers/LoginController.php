@@ -4,17 +4,37 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class KaderController extends Controller
+class LoginController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function loginsuperadmin()
+    {
+         return view('loginsuperadmin');    
+    }
+
+    public function loginadminpuskesmas()
+    {
+         return view('loginadminpuskesmas');    
+    }
+
+    public function loginkader()
+    {
+         return view('loginkader');    
+    }
+
+    public function loginbidan()
+    {
+         return view('loginbidan');    
+    }
     public function index()
     {
-         return view('kader/dashboard');    
+        //
     }
+
     /**
      * Show the form for creating a new resource.
      *
