@@ -1,6 +1,6 @@
 @extends('admin.templateadmin')
 
-@section('title', 'Dashboard | Admin')
+@section('title', 'Dashboard')
     
 @section('content')
 
@@ -28,7 +28,7 @@
                       </div>
                     </div>
                     <div class="col-auto">
-                      <i class="fa fa-building fa-2x" aria-hidden="true"></i>
+                      <i class="far fa-hospital"></i>
                     </div>
                   </div>
                 </div>
@@ -48,7 +48,7 @@
                       </div>
                     </div>
                     <div class="col-auto">
-                      <i class="fa fa-building fa-2x" aria-hidden="true"></i>
+                      <i class="fas fa-clinic-medical"></i>
                     </div>
                   </div>
                 </div>
@@ -60,7 +60,7 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-uppercase mb-1">Pasien</div>
+                      <div class="text-xs font-weight-bold text-uppercase mb-1">Anak</div>
                       <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">366</div>
                       <div class="mt-2 mb-0 text-muted text-xs">
                         <!--<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 20.4%</span>
@@ -114,5 +114,6 @@
                 </div>
               </div>
             </div>
+</div>
 
             @endsection

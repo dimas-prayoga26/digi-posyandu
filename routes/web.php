@@ -17,7 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('admin/dashboard','AdminController@index');
+Route::get('dashboard','PageController@dashboard');
+Route::get('admin','PageController@admin');
+Route::get('profil','PageController@profil');
+Route::get('kader','PageController@kader');
 Route::get('loginadmin','LoginController@loginadmin');
 
 
