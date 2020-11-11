@@ -20,6 +20,9 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Data Bidan Desa</h6>
                 </div>
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <a href="{{url ('#')}}" class="btn btn-success" >Tambah data</a>
+                </div>
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush" id="dataTable">
                     <thead class="thead-light">
@@ -30,6 +33,7 @@
                         <th>Age</th>
                         <th>Start date</th>
                         <th>Salary</th>
+                        <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -40,6 +44,11 @@
                         <td>61</td>
                         <td>2011/04/25</td>
                         <td>$320,800</td>
+                        <td>
+                        <a href="ubah_data">Edit</a>
+                        |
+                        <a href="hapus">Hapus</a>
+                      </td>
                       </tr>
                       <tr>
                         <td>Garrett Winters</td>
@@ -48,6 +57,11 @@
                         <td>63</td>
                         <td>2011/07/25</td>
                         <td>$170,750</td>
+                        <td>
+                        <a href="ubah_data">Edit</a>
+                        |
+                        <a href="hapus">Hapus</a>
+                      </td>
                       </tr>
                     </tbody>
                   </table>

@@ -1,15 +1,15 @@
 @extends('admin.templateadmin')
 
-@section('title', 'Kader Penanggung Jawab')
+@section('title', 'Vaksinasi')
     
 @section('content')
 
         <div class="container-fluid" id="container-wrapper">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Kader Penanggung Jawab</h1>
+            <h1 class="h3 mb-0 text-gray-800">Vaksinasi</h1>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="./">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Kader Penanggung Jawab</li>
+              <li class="breadcrumb-item active" aria-current="page">Vaksinasi</li>
             </ol>
           </div>
 
@@ -18,10 +18,10 @@
             <div class="col-lg-12">
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Data Kader Penanggung Jawab</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Data Vaksinasi</h6>
                 </div>
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <a href="{{url ('#')}}" class="btn btn-success">Tambah data</a>
+                <a href="{{url ('#')}}" class="btn btn-success" >Tambah data</a>
                 </div>
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush" id="dataTable">
@@ -63,7 +63,6 @@
                         <a href="hapus">Hapus</a>
                       </td>
                       </tr>
-                      
                     </tbody>
                   </table>
                 </div>
