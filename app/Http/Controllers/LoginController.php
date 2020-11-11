@@ -11,19 +11,9 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function loginsuperadmin()
+    public function loginadmin()
     {
-         return view('loginsuperadmin');    
-    }
-
-    public function loginadminpuskesmas()
-    {
-         return view('loginadminpuskesmas');    
-    }
-
-    public function loginkader()
-    {
-         return view('loginkader');    
+         return view('loginadmin');    
     }
 
     public function loginbidan()

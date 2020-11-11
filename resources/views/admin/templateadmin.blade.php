@@ -23,7 +23,7 @@
         <!--<img src="img/logo/logo2.png">-->
         <i class="fa fa-id-card fa-3x" aria-hidden="true"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">Dashboard Super Admin</div>
+        <div class="sidebar-brand-text mx-3">Dashboard Admin</div>
       </a>
       <hr class="sidebar-divider my-0">
       <li class="nav-item active">

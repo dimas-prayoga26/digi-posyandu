@@ -5,7 +5,7 @@ use App\Superadmin;
 use DB;
 use Illuminate\Http\Request;
 
-class SuperAdminController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class SuperAdminController extends Controller
      */
     public function index()
     {
-        return view('superadmin/dashboard');
+        return view('admin/dashboard');
     }
 
     /**

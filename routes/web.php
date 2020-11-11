@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('kader/dashboard','KaderController@index');
-Route::get('superadmin/dashboard','SuperadminController@index');
-Route::get('loginsuperadmin','LoginController@loginsuperadmin');
-Route::get('loginadminpuskesmas','LoginController@loginadminpuskesmas');
-Route::get('loginkader','LoginController@loginkader');
+
+Route::get('admin/dashboard','AdminController@index');
+Route::get('loginadmin','LoginController@loginadmin');
+
+
 Route::get('loginbidan','LoginController@loginbidan');

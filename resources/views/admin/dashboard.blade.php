@@ -1,6 +1,6 @@
-@extends('superadmin.templatesuperadmin')
+@extends('admin.templateadmin')
 
-@section('title', 'Dashboard | Super Admin')
+@section('title', 'Dashboard | Admin')
     
 @section('content')
 
