@@ -25,10 +25,7 @@ class UserController extends Controller
    {
        return view('admin.bidan.bidan');
    }
-     public function index()
-    {
-         return view('kader/dashboard');    
-    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -36,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin/tambah_data/TambahKader');
+        
     }
 
     /**

@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Puskesmas;
+use App\Vaksinasi;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class PuskesmasApiController extends Controller
+class VaksinasiApiController extends Controller
 {
     public function getAll(){
-        $datas = Puskesmas::all();
+        $datas = Vaksinasi::all();
         return response()->json($datas);
     }
 
     public function create(Request $request){
-        $data = $request->only('nama_puskesmas', 'alamat');
-        $create = Puskesmas::create($data);
+        $data   = $request->only('nama_vaksinasi');
+        $create = Vaksinasi::create($data);
 
         if($create){
             return response()->json([
@@ -28,8 +28,8 @@ class PuskesmasApiController extends Controller
     }
 
     public function update(Request $request, $id){
-        $data   = $request->only('nama_puskesmas', 'alamat');
-        $update = Puskesmas::where('id_puskesmas', $id)->update($data);
+        $data   = $request->only('nama_vaksinasi');
+        $update = Vaksinasi::where('id_Vaksinasi', $id)->update($data);
         
         if($update){
             return response()->json([
@@ -40,7 +40,7 @@ class PuskesmasApiController extends Controller
     }
 
     public function delete($id){
-        $data = Puskesmas::findOrFail($id);
+        $data = Vaksinasi::findOrFail($id);
         try {
             $data->delete();
             return response()->json([

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Superadmin;
+use App\Admin;
 use DB;
 use Illuminate\Http\Request;
 
@@ -14,7 +14,7 @@ class AdminController extends Controller
      */
     public function adminpuskesmas()
    {
-       return view('admin.admin_puskesmas.admin_puskesmas');
+       return view('admin/admin_puskemas/admin_puskesmas');
    }
     public function index()
     {

@@ -20,7 +20,7 @@
   <div id="wrapper">
     <!-- Sidebar -->
     <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('admin/dashboard')}}">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('dashboard')}}">
         <div class="sidebar-brand-icon">
         <!--<img src="img/logo/logo2.png">-->
         <i class="fa fa-id-card fa-3x" aria-hidden="true"></i>
@@ -29,7 +29,7 @@
       </a>
       <hr class="sidebar-divider my-0">
       <li class="nav-item active">
-        <a class="nav-link" href="{{url('admin/dashboard')}}">
+        <a class="nav-link" href="{{url('dashboard')}}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -46,9 +46,9 @@
         <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Akun</h6>
-            <a class="collapse-item" href="{{url('admin/kader/kader')}}">Kader Penanggung Jawab</a>
-            <a class="collapse-item" href="{{url('admin/bidan/bidan')}}">Bidan Desa</a>
-            <a class="collapse-item" href="{{url('admin/admin_puskesmas/admin_puskesmas')}}">Admin Puskesmas</a>
+            <a class="collapse-item" href="{{url('kader')}}">Kader Penanggung Jawab</a>
+            <a class="collapse-item" href="{{url('bidan')}}">Bidan Desa</a>
+            <a class="collapse-item" href="{{url('admin_puskesmas')}}">Admin Puskesmas</a>
           </div>
         </div>
       </li>
@@ -61,13 +61,13 @@
         <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!--<h6 class="collapse-header">Imunisasi</h6>-->
-            <a class="collapse-item" href="{{url('admin/vaksinasi/vaksinasi')}}">Vaksinasi</a>
-            <a class="collapse-item" href="{{url('admin/imunisasi/imunisasi')}}">Imunisasi</a>
+            <a class="collapse-item" href="{{url('vaksinasi')}}">Vaksinasi</a>
+            <a class="collapse-item" href="{{url('imunisasi')}}">Imunisasi</a>
           </div>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{url('admin/gizi/gizi')}}">
+        <a class="nav-link" href="{{url('gizi')}}">
           <i class="fas fa-weight"></i>
           <span>Gizi</span>
         </a>
@@ -78,20 +78,13 @@
       </div>
     
       <li class="nav-item">
-        <a class="nav-link" href="{{url('admin/puskesmas/puskesmas')}}">
-          <i class="far fa-calendar-alt"></i>
-          <span>Jadwal Posyandu</span>
-        </a>
-      </li>
-      <hr class="sidebar-divider">
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('admin/puskesmas/puskesmas')}}">
+        <a class="nav-link" href="{{url('puskesmas')}}">
           <i class="far fa-hospital"></i>
           <span>Puskesmas</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{url('admin/posyandu/posyandu')}}">
+        <a class="nav-link" href="{{url('posyandu')}}">
           <i class="fas fa-clinic-medical"></i>
           <span>Posyandu</span>
         </a>
@@ -134,7 +127,7 @@
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <img class="img-profile rounded-circle" src="{{url('img/boy.png')}}" style="max-width: 60px">
-                <span class="ml-2 d-none d-lg-inline text-white small">Super Admin</span>
+                <span class="ml-2 d-none d-lg-inline text-white small"> Admin</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="{{url('profil')}}">

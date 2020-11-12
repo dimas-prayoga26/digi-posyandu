@@ -38,4 +38,20 @@ class PosyanduApiController extends Controller
             ]);
         }
     }
+
+    public function delete($id){
+        $data = Posyandu::findOrFail($id);
+        try {
+            $data->delete();
+            return response()->json([
+                'error'     => 0,
+                'message'   => 'Data berhasil dihapus'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error'     => 1,
+                'message'   => 'Data gagal dihapus'
+            ]); 
+        }
+    }
 }
