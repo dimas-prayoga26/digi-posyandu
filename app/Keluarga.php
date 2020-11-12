@@ -19,7 +19,8 @@ class Keluarga extends Model
 		'alamat',
 		'id_desa'
 
-		];
+	];
+	
 	public function desa(){
         return $this->belongsTo('App\Desa', 'id_desa');
     }

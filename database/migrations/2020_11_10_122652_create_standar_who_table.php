@@ -17,7 +17,7 @@ class CreateStandarWhoTable extends Migration
             $table->increments('id_standar_who');
             $table->float('parameter');
             $table->enum('jk', ['laki-laki', 'perempuan']);
-            $table->enum('kategori', ['bb_u', 'pb_tb_u', 'bb_pb_tb']);
+            $table->string('kategori');
             $table->float('sd_min_tiga');
             $table->float('sd_min_dua');
             $table->float('sd_min_satu');

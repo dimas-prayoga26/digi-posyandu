@@ -20,74 +20,87 @@ class LoginController extends Controller
     {
          return view('loginbidan');    
     }
-    public function index()
-    {
-        //
+    public function loginAdminPost(Request $request){
+        $auth = auth()->guard('admin');
+
+        $credentials = $request->only('username', 'password');
+
+        $validator = Validator::make($request->all(),
+            [
+                'username'  => 'required|string|exists:admin',
+                'password'  => 'required|string',
+            ], 
+            [
+                'username.exists'    => 'Akun tidak terdaftar',   
+                'username.required'  => 'Username tidak boleh kosong',
+                'password.required'  => 'Password tidak boleh kosong'
+            ],
+        );
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }else{
+            if($auth->attempt($credentials)){
+                $admin = Admin::where('username', $request->username)->first();
+                session()->put('admin', $admin->username);
+                session()->put('nama_admin', $admin->nama);
+                alert()->success('Login success','Anda berhasil login');
+                return redirect('/admin/DashboardAdmin');
+            }else{
+                return redirect()
+                    ->back()
+                    ->withErrors(
+                        ['password' => 'password anda salah']
+                    );
+            }
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function loginBidanPost(Request $request){
+        $auth = auth()->guard('admin');
+
+        $credentials = $request->only('username', 'password');
+
+        $validator = Validator::make($request->all(),
+            [
+                'username'  => 'required|string|exists:admin',
+                'password'  => 'required|string',
+            ], 
+            [
+                'username.exists'    => 'Akun tidak terdaftar',   
+                'username.required'  => 'Username tidak boleh kosong',
+                'password.required'  => 'Password tidak boleh kosong'
+            ],
+        );
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }else{
+            if($auth->attempt($credentials)){
+                $admin = Admin::where('username', $request->username)->first();
+                session()->put('admin', $admin->username);
+                session()->put('nama_admin', $admin->nama);
+                alert()->success('Login success','Anda berhasil login');
+                return redirect('/admin/DashboardAdmin');
+            }else{
+                return redirect()
+                    ->back()
+                    ->withErrors(
+                        ['password' => 'password anda salah']
+                    );
+            }
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function logoutAdmin(){
+        session()->forget('admin');
+        alert()->info('Anda Sudah Logout', 'Logout');
+        return redirect('/admin/loginAdmin');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+   
+    public function logoutBidan(){
+        session()->forget('admin');
+        alert()->info('Anda Sudah Logout', 'Logout');
+        return redirect('/admin/loginAdmin');
     }
 }
