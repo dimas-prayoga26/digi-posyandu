@@ -24,4 +24,5 @@ Route::get('kader','PageController@kader');
 Route::get('loginadmin','LoginController@loginadmin');
 
 
+
 Route::get('loginbidan','LoginController@loginbidan');

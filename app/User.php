@@ -10,16 +10,22 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'id_user', 'name', 'username', 'password', 'jk', 'alamat', 'level', 'id_posyandu'
+        'id_user', 
+        'name',
+        'username', 
+        'password',
+        'jk',
+        'alamat',
+        'level',
+        'id_posyandu'
+    ];
+
+    protected $hidden = [
+        'password'
     ];
 
     public function posyandu(){
         return $this->belongsTo('App\Posyandu', 'id_posyandu');
-    }
+    }   
 }

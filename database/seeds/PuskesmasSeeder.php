@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class PuseksmasSeeder extends Seeder
+class PuskesmasSeeder extends Seeder
 {
     /**
      * Run the database seeds.
