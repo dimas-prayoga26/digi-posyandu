@@ -18,20 +18,6 @@ class PageController extends Controller
        return view('admin.profil');
    }
 
-   
-
-   
-
-  
-   
-   
-
-  
-
-   
-
-   
-
    public function kartu()
    {
        return view('kartu');

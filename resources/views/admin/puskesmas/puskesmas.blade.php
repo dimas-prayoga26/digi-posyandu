@@ -20,9 +20,53 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Data Puskesmas</h6>
                 </div>
+              
+                {{-- Modal Tambah --}}
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <a href="{{url ('#')}}" class="btn btn-success" >Tambah data</a>
+                  <button type="button" class="btn btn-success btn-icon-split btn-sm" data-toggle="modal" data-target="#exampleModal"
+                     id="#myBtn">
+                     <span class="icon text-white-50">
+                       <i class="fas fa-plus"></i>
+                     </span>
+                     <span class="text">Tambah Data Puskesmas</span>  
+                   </button>
+                   
+                   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                   aria-hidden="true">
+                   <div class="modal-dialog" role="document">
+                     <div class="modal-content">
+                       <div class="modal-header">
+                         <h5 class="modal-title" id="exampleModalLabel">Tambah Data Puskesmas</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                         </button>
+                       </div>
+                        <div class="modal-body">
+                         @csrf
+                            <div class="form-group">
+                              <label for="nama_puskesmas">Nama Puskesmas</label>
+                              <input type="text" class="form-control @error('nama_puskesmas') is-invalid @enderror" value="{{ old('nama_puskesmas') }}" id="nama_puskesmas" name="nama_puskesmas" placeholder="Masukan nama puskesmas">
+                              @error('nama_puskesmas')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                          </div>
+                          <div class="form-group">
+                            <label for="alamat">Alamat</label>
+                            <input type="text" class="form-control  @error('alamat') is-invalid @enderror" value="{{ old('alamat') }}" id="alamat" name="alamat"placeholder="Masukan alamat puskesmas">
+                            @error('alamat')
+                              <div class="invalid-feedback">{{ $message }}</div>
+                          @enderror
+                        </div>
+                      </div>
+                       <div class="modal-footer">
+                         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Tutup</button>
+                         <button type="button" class="btn btn-primary">Simpan</button>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
                 </div>
+                 {{-- Akhir Modal Tambah --}}
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush" id="dataTable">
                     <thead class="thead-light">
@@ -36,20 +80,6 @@
                         <th>Aksi</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                        <td>
-                        <a href="ubah_data">Edit</a>
-                        |
-                        <a href="hapus">Hapus</a>
-                      </td>
-                      </tr>
                       <tr>
                         <td>Garrett Winters</td>
                         <td>Accountant</td>
@@ -57,16 +87,56 @@
                         <td>63</td>
                         <td>2011/07/25</td>
                         <td>$170,750</td>
-                        <td>
-                        <a href="ubah_data">Edit</a>
-                        |
-                        <a href="hapus">Hapus</a>
+                      <td>
+                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-data"><i class="fas fa-user-edit"></i></button>
+                      <form action="#" method="post" class="d-inline">
+                       @method('delete')
+                       @csrf
+                       <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                      </form>
                       </td>
-                      </tr>
+                      </tr>                     
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
-</div>
+
+            {{-- Modal Edit --}}
+            <div class="modal fade" id="edit-data" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                   aria-hidden="true">
+                   <div class="modal-dialog" role="document">
+                     <div class="modal-content">
+                       <div class="modal-header">
+                         <h5 class="modal-title" id="exampleModalLabel">Tambah Data Puskesmas</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                         </button>
+                       </div>
+                        <div class="modal-body">
+                         @csrf
+                            <div class="form-group">
+                              <label for="nama_puskesmas">Nama Puskesmas</label>
+                              <input type="text" class="form-control @error('nama_puskesmas') is-invalid @enderror" value="{{ old('nama_puskesmas') }}" id="nama_puskesmas" name="nama_puskesmas" placeholder="Masukan nama puskesmas">
+                              @error('nama_puskesmas')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                          </div>
+                          <div class="form-group">
+                            <label for="alamat">Alamat</label>
+                            <input type="text" class="form-control  @error('alamat') is-invalid @enderror" value="{{ old('alamat') }}" id="alamat" name="alamat"placeholder="Masukan alamat puskesmas">
+                            @error('alamat')
+                              <div class="invalid-feedback">{{ $message }}</div>
+                          @enderror
+                        </div>
+                      </div>
+                       <div class="modal-footer">
+                         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Tutup</button>
+                         <button type="button" class="btn btn-primary">Simpan</button>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+                </div>
+                 {{-- Akhir Modal Edit --}}
 @endsection
