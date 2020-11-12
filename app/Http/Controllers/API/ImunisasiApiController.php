@@ -2,22 +2,28 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Puskesmas;
+use App\Imunisasi;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class PuskesmasApiController extends Controller
+class ImunisasiApiController extends Controller
 {
     public function getAll(){
-        $datas = Puskesmas::all();
+        $datas = Imunisasi::all();
         return response()->json($datas);
     }
 
     public function create(Request $request){
-        $data = $request->only('nama_puskesmas', 'alamat');
-        $create = Puskesmas::create($data);
+        $data = [
+            'no_pemeriksaan_imunisasi' => $request->id_imunisasi,
+		    'tgl_imunisasi'            => $request->tgl_imunisasi,
+		    'id_vaksinasi'             => $request->id_vaksinasi,
+            'id_anak'                  => $request->id_puskesmas
+        ];
+        
+        $create = Imunisasi::create($data);
 
         if($create){
             return response()->json([
@@ -28,8 +34,14 @@ class PuskesmasApiController extends Controller
     }
 
     public function update(Request $request, $id){
-        $data   = $request->only('nama_puskesmas', 'alamat');
-        $update = Puskesmas::where('id_puskesmas', $id)->update($data);
+        $data = [
+            'no_pemeriksaan_imunisasi' => $request->id_imunisasi,
+		    'tgl_imunisasi'            => $request->tgl_imunisasi,
+		    'id_vaksinasi'             => $request->id_vaksinasi,
+            'id_anak'                  => $request->id_puskesmas
+        ];
+        $update = Imunisasi::where('no_pemeriksaan_imunisasi', $id)
+                    ->update($data);
         
         if($update){
             return response()->json([
@@ -40,7 +52,7 @@ class PuskesmasApiController extends Controller
     }
 
     public function delete($id){
-        $data = Puskesmas::findOrFail($id);
+        $data = Imunisasi::findOrFail($id);
         try {
             $data->delete();
             return response()->json([

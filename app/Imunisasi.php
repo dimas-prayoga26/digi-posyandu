@@ -17,9 +17,9 @@ class Imunisasi extends Model
 
 	public function vaksinasi(){
         return $this->belongsTo('App\Puskesmas', 'id_vaksinasi');
-
+    }
+    
     public function anak(){
         return $this->belongsTo('App\Anak', 'id_anak');
-    }
     }
 }
