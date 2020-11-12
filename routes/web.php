@@ -30,6 +30,7 @@ Route::get('posyandu','PageController@posyandu');
 Route::get('loginadmin','LoginController@loginadmin');
 
 Route::get('loginbidan','LoginController@loginbidan');
-Route::get('tambah_data/TambahKader','KaderController@create');
+
+Route::get('TambahKader','UserController@create');
 
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class KaderController extends Controller
+class PuskesmasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +13,9 @@ class KaderController extends Controller
      */
     public function index()
     {
-         return view('kader/dashboard');    
+        //
     }
+
     /**
      * Show the form for creating a new resource.
      *

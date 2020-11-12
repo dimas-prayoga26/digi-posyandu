@@ -21,7 +21,7 @@
                   <h6 class="m-0 font-weight-bold text-primary">Data Kader Penanggung Jawab</h6>
                 </div>
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <a href="{{url ('tambah_data/TambahKader')}}" class="btn btn-success">Tambah data</a>
+                <a href="{{url ('admin/tambah_data/TambahKader')}}" class="btn btn-success">Tambah data</a>
                 </div>
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush" id="dataTable">
