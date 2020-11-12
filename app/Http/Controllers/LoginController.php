@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Admin;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -44,8 +46,9 @@ class LoginController extends Controller
                 $admin = Admin::where('username', $request->username)->first();
                 session()->put('admin', $admin->username);
                 session()->put('nama_admin', $admin->nama);
+                session()->put('level', $admin->level);
                 alert()->success('Login success','Anda berhasil login');
-                return redirect('/admin/DashboardAdmin');
+                return redirect('/admin/dashboard');
             }else{
                 return redirect()
                     ->back()
@@ -57,7 +60,7 @@ class LoginController extends Controller
     }
 
     public function loginBidanPost(Request $request){
-        $auth = auth()->guard('admin');
+        $auth = auth()->guard('user');
 
         $credentials = $request->only('username', 'password');
 
@@ -77,7 +80,8 @@ class LoginController extends Controller
             return redirect()->back()->withErrors($validator);
         }else{
             if($auth->attempt($credentials)){
-                $admin = Admin::where('username', $request->username)->first();
+                $admin = User::where('username', $request->username)
+                                ->where('level','bidan')->first();
                 session()->put('admin', $admin->username);
                 session()->put('nama_admin', $admin->nama);
                 alert()->success('Login success','Anda berhasil login');
@@ -99,7 +103,7 @@ class LoginController extends Controller
     }
    
     public function logoutBidan(){
-        session()->forget('admin');
+        session()->forget('user');
         alert()->info('Anda Sudah Logout', 'Logout');
         return redirect('/admin/loginAdmin');
     }

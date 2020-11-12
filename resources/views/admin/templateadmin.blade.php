@@ -13,6 +13,7 @@
   <link href="{{url('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{url('css/ruang-admin.min.css')}}" rel="stylesheet">
   <link href="{{url('vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+  <link href="{{url('vendor/select2/dist/css/select2.min.css')}}" rel="stylesheet" type="text/css">
 </head>
 
 <body id="page-top">
@@ -76,6 +77,13 @@
       <!--  Examples-->
       </div>
     
+      <li class="nav-item">
+        <a class="nav-link" href="{{url('admin/puskesmas/puskesmas')}}">
+          <i class="far fa-calendar-alt"></i>
+          <span>Jadwal Posyandu</span>
+        </a>
+      </li>
+      <hr class="sidebar-divider">
       <li class="nav-item">
         <a class="nav-link" href="{{url('admin/puskesmas/puskesmas')}}">
           <i class="far fa-hospital"></i>
@@ -207,6 +215,10 @@
   $(document).ready(function () {
     $('#dataTable').DataTable(); // ID From dataTable 
     $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+    // Select2 Single  with Placeholder
+   $('.select2-single-placeholder').select2({
+        placeholder: "Select a Province",
+        allowClear: true
   });
 </script>
 </body>

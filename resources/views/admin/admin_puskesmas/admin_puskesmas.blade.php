@@ -36,22 +36,68 @@
                    <div class="modal-dialog" role="document">
                      <div class="modal-content">
                        <div class="modal-header">
-                         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                         <h5 class="modal-title" id="exampleModalLabel">Tambah Data Admin Puskesmas</h5>
                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                            <span aria-hidden="true">&times;</span>
                          </button>
                        </div>
+                       <form>
                        <div class="modal-body">
-                         <p>You Content</p>
+                          <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Masukan Username">
+                          </div>
+                          <div class="form-group">
+                            <label for="nama">Nama</label>
+                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukan Nama">
+                          </div>
+                          <label>Jenis Kelamin</label>
+                          <br>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="jk" id="jk1" value="Laki - Laki">
+                            <label class="form-check-label" for="jk1">Laki - Laki</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="jk" id="jk2" value="Wanita">
+                            <label class="form-check-label" for="jk2">Wanita</label>
+                          </div>
+                          <div class="form-group">
+                            <label for="alamat">Alamat</label>
+                            <textarea class="form-control" id="alamat" name="alamat" rows="2"></textarea>
+                          </div>
+                          <div class="form-group">
+                            <label for="level">Level Admin</label>
+                            <select class="form-control" id="level" name="level">
+                              <option value="">Pilih Level...</option>
+                              <option value="super_admin">Super Admin</option>
+                              <option value="admin_puskesmas">Admin Puskesmas</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="puskesmas">puskesmas</label>
+                            <select class="select2-single-placeholder form-control" name="puskesmas" id="puskesmas">
+                              <option value="">Pilih Puskesmas</option>
+                              <option value="Jawa Barat">Jawa Barat</option>
+                              <option value="Jakarta">Jakarta</option>
+                              <option value="Jawa Tengah">Jawa Tengah</option>
+                              <option value="Yogyakarta">Yogyakarta</option>
+                              <option value="Jawa TImur">Jawa Timur</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Masukan Password">
+                          </div>
                        </div>
                        <div class="modal-footer">
-                         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-                         <button type="button" class="btn btn-primary">Save changes</button>
+                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                         <button type="button" class="btn btn-success">Simpan</button>
                        </div>
                      </div>
                    </div>
                  </div>
                 </div>
+              </form>
                  {{-- Akhir Modal Tambah --}}
 
 
@@ -59,23 +105,21 @@
                   <table class="table align-items-center table-flush" id="dataTable">
                     <thead class="thead-light">
                       <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
+                        <th>Username</th>
+                        <th>Nama</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Alamat</th>
+                        <th>Puskesmas</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
+                        <td>Tigers</td>
                         <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
+                        <td>Laki - Laki</td>
+                        <td>Jatibarang</td>
+                        <td>Jatibarang</td>
                         <td>
                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-data">
                             <i class="fas fa-user-edit"></i>
@@ -84,12 +128,11 @@
                       </td>
                       </tr>
                       <tr>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>63</td>
-                        <td>2011/07/25</td>
-                        <td>$170,750</td>
+                        <td>tiff</td>
+                        <td>Tiffany</td>
+                        <td>Perempuan</td>
+                        <td>Jatibarang</td>
+                        <td>Plumbon</td>
                         <td>
                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-data">
                             <i class="fas fa-user-edit"></i>
@@ -102,5 +145,74 @@
                 </div>
               </div>
             </div>
-</div>
+
+          {{-- Modal edit --}}
+          <div class="modal fade" id="edit-data" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Data Admin Puskesmas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+          <form>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Masukan Username">
+              </div>
+              <div class="form-group">
+                <label for="nama">Nama</label>
+                <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukan Nama">
+              </div>
+              <label>Jenis Kelamin</label>
+              <br>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="jk" id="jk1" value="Laki - Laki">
+                <label class="form-check-label" for="jk1">Laki - Laki</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="jk" id="jk2" value="Wanita">
+                <label class="form-check-label" for="jk2">Wanita</label>
+              </div>
+              <div class="form-group">
+                <label for="alamat">Alamat</label>
+                <textarea class="form-control" id="alamat" name="alamat" rows="2"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="level">Level Admin</label>
+                <select class="form-control" id="level" name="level">
+                  <option value="">Pilih Level...</option>
+                  <option value="super_admin">Super Admin</option>
+                  <option value="admin_puskesmas">Admin Puskesmas</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="puskesmas">puskesmas</label>
+                <select class="select2-single-placeholder form-control" name="puskesmas" id="puskesmas">
+                  <option value="">Pilih Puskesmas</option>
+                  <option value="Jawa Barat">Jawa Barat</option>
+                  <option value="Jakarta">Jakarta</option>
+                  <option value="Jawa Tengah">Jawa Tengah</option>
+                  <option value="Yogyakarta">Yogyakarta</option>
+                  <option value="Jawa TImur">Jawa Timur</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Masukan Password">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-success">Simpan</button>
+            </div>
+          </div>
+          </div>
+          </div>
+          </div>
+          </form>
+{{-- Akhir Modal Tambah --}}
 @endsection
