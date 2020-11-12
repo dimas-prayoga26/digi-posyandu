@@ -11,6 +11,10 @@ class GiziController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     public function gizi()
+   {
+       return view('admin.gizi.gizi');
+   }
     public function index()
     {
         //

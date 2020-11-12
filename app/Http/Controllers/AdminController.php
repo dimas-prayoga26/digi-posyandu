@@ -12,6 +12,10 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function adminpuskesmas()
+   {
+       return view('admin.admin_puskesmas.admin_puskesmas');
+   }
     public function index()
     {
         

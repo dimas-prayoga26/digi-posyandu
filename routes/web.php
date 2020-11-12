@@ -18,19 +18,22 @@ Route::get('/', function () {
 });
 
 Route::get('dashboard','PageController@dashboard');
-Route::get('admin','PageController@admin');
+Route::get('admin/admin_puskesmas/admin_puskesmas','AdminController@adminpuskesmas');
 Route::get('profil','PageController@profil');
-Route::get('kader','PageController@kader');
-Route::get('bidan','PageController@bidan');
-Route::get('vaksinasi','PageController@vaksinasi');
-Route::get('imunisasi','PageController@imunisasi');
-Route::get('gizi','PageController@gizi');
-Route::get('puskesmas','PageController@puskesmas');
-Route::get('posyandu','PageController@posyandu');
-Route::get('loginadmin','LoginController@loginadmin');
+Route::get('admin/kader/kader','UserController@kader');
+Route::get('admin/kader/tambah','UserController@tambahkader');
 
+Route::get('admin/bidan/bidan','UserController@bidan');
+Route::get('admin/vaksinasi/vaksinasi','VaksinasiController@vaksinasi');
+Route::get('admin/imunisasi/imunisasi','ImunisasiController@imunisasi');
+Route::get('admin/gizi/gizi','GiziController@gizi');
+Route::get('admin/puskesmas/puskesmas','PuskesmasController@puskesmas');
+Route::get('admin/posyandu/posyandu','PosyanduController@posyandu');
+
+
+
+Route::get('loginadmin','LoginController@loginadmin');
 Route::get('loginbidan','LoginController@loginbidan');
 
-Route::get('TambahKader','UserController@create');
 
 

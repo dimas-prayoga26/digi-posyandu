@@ -11,6 +11,10 @@ class VaksinasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function vaksinasi()
+   {
+       return view('admin.vaksinasi.vaksinasi');
+   }
     public function index()
     {
         //

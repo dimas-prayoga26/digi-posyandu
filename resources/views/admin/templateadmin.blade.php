@@ -45,9 +45,9 @@
         <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Akun</h6>
-            <a class="collapse-item" href="{{url('kader')}}">Kader Penanggung Jawab</a>
-            <a class="collapse-item" href="{{url('bidan')}}">Bidan Desa</a>
-            <a class="collapse-item" href="{{url('admin')}}">Admin Puskesmas</a>
+            <a class="collapse-item" href="{{url('admin/kader/kader')}}">Kader Penanggung Jawab</a>
+            <a class="collapse-item" href="{{url('admin/bidan/bidan')}}">Bidan Desa</a>
+            <a class="collapse-item" href="{{url('admin/admin_puskesmas/admin_puskesmas')}}">Admin Puskesmas</a>
           </div>
         </div>
       </li>
@@ -60,13 +60,13 @@
         <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!--<h6 class="collapse-header">Imunisasi</h6>-->
-            <a class="collapse-item" href="{{url('vaksinasi')}}">Vaksinasi</a>
-            <a class="collapse-item" href="{{url('imunisasi')}}">Imunisasi</a>
+            <a class="collapse-item" href="{{url('admin/vaksinasi/vaksinasi')}}">Vaksinasi</a>
+            <a class="collapse-item" href="{{url('admin/imunisasi/imunisasi')}}">Imunisasi</a>
           </div>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{url('gizi')}}">
+        <a class="nav-link" href="{{url('admin/gizi/gizi')}}">
           <i class="fas fa-weight"></i>
           <span>Gizi</span>
         </a>
@@ -77,13 +77,13 @@
       </div>
     
       <li class="nav-item">
-        <a class="nav-link" href="{{url('puskesmas')}}">
+        <a class="nav-link" href="{{url('admin/puskesmas/puskesmas')}}">
           <i class="far fa-hospital"></i>
           <span>Puskesmas</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{url('posyandu')}}">
+        <a class="nav-link" href="{{url('admin/posyandu/posyandu')}}">
           <i class="fas fa-clinic-medical"></i>
           <span>Posyandu</span>
         </a>

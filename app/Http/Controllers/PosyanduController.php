@@ -11,6 +11,10 @@ class PosyanduController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function posyandu()
+   {
+       return view('admin.posyandu.posyandu');
+   }
     public function index()
     {
         //

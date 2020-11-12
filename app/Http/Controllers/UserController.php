@@ -11,6 +11,20 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     public function kader()
+   {
+       return view('admin.kader.kader');
+   }
+
+    public function tambahkader()
+   {
+       return view('admin.kader.tambah');
+   }
+
+   public function bidan()
+   {
+       return view('admin.bidan.bidan');
+   }
      public function index()
     {
          return view('kader/dashboard');    

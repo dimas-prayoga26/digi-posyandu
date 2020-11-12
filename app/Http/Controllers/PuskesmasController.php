@@ -11,6 +11,10 @@ class PuskesmasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function puskesmas()
+   {
+       return view('admin.puskesmas.puskesmas');
+   }
     public function index()
     {
         //

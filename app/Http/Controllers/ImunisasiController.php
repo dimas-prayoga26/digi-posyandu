@@ -11,6 +11,10 @@ class ImunisasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function imunisasi()
+   {
+       return view('admin.imunisasi.imunisasi');
+   }
     public function index()
     {
         //
