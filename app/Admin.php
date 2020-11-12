@@ -6,8 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
+    
     use Notifiable;
 
     /**
@@ -15,17 +16,22 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $table = 'users';
+    protected $table = 'admin';
+    
     protected $fillable = [
-        'id_user', 
-        'name',
+        'id_admin', 
         'username', 
-        'password',
-        'jk',
-        'alamat',
-        'level',
-        'id_posyandu'
+        'password', 
+        'nama', 
+        'jk', 
+        'level', 
+        'alamat', 
+        'id_puskesmas'
     ];
+
+    public function puskesmas(){
+        return $this->belongsTo('App\Puskesmas', 'id_puskesmas');
+    }
 
     /**
      * The attributes that should be hidden for arrays.
@@ -33,10 +39,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password'
+        'password', 'remember_token',
     ];
-
-    public function posyandu(){
-        return $this->belongsTo('App\Posyandu', 'id_posyandu');
-    }   
 }

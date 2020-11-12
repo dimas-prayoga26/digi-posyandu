@@ -30,5 +30,5 @@ class PageController extends Controller
    {
        return view('kartu');
    }
- 
+
 }
