@@ -11,6 +11,7 @@ class KecamatanSeeder extends Seeder
      */
     public function run()
     {
+        
         \App\Kecamatan::create([
             'id_kecamatan' => 21807,
             'nama_kecamatan' => 'Widasari'
