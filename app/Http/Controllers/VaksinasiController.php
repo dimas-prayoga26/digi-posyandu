@@ -84,10 +84,14 @@ class VaksinasiController extends Controller
         return redirect()->back()->with('success', 'Data berhasil  diubah');
     }
 
-     public function delete($id_vaksinasi)
+     public function delete($id)
     {
-        $data = Vaksinasi::findOrFail($id_vaksinasi);
-        $data->delete();
-    return redirect()->to('admin/vaksinasi/vaksinasi')->with('status','Data Berhasil Dihapus');
+        $data = Vaksinasi::findOrFail($id);
+        try {
+            $data->delete();
+            return redirect()->back()->with('success', 'Data berhasil dihapus');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Data gagal dihapus');
+        }
     }
 }
