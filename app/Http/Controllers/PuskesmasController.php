@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Puskesmas;
 
 use Illuminate\Http\Request;
 
@@ -13,11 +14,14 @@ class PuskesmasController extends Controller
      */
     public function puskesmas()
    {
-       return view('admin.admin_puskesmas.admin_puskesmas');
+       return view('admin.puskesmas.puskesmas');
    }
+
     public function index()
     {
-        //
+        $datas = Puskesmas::all();
+        return view('admin.puskesmas.puskesmas',compact('datas'))->with('i');
+
     }
 
     /**
@@ -25,9 +29,12 @@ class PuskesmasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data = $request->only('nama_puskesmas','alamat');
+        Puskesmas::create($data);
+        return redirect()->back()->with('success', 'Data berhasil ditambah');
+
     }
 
     /**
@@ -72,7 +79,10 @@ class PuskesmasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->only('nama_puskesmas','alamat');
+        Puskesmas::whereIdPuskesmas($id)->update($data);
+        return redirect()->back()->with('success', 'Data berhasil  diubah');
+
     }
 
     /**
@@ -81,8 +91,14 @@ class PuskesmasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
-    }
+        $data = Puskesmas::findOrFail($id);
+        try {
+            $data->delete();
+            return redirect()->back()->with('success', 'Data berhasil dihapus');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Data gagal dihapus');
+}
+}
 }

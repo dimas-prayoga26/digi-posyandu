@@ -26,7 +26,14 @@ Route::get('bidan','UserController@bidan');
 Route::get('vaksinasi','VaksinasiController@vaksinasi');
 Route::get('imunisasi','ImunisasiController@imunisasi');
 Route::get('gizi','GiziController@gizi');
-Route::get('puskesmas','PuskesmasController@puskesmas');
+
+//================================== Puskesmas=================================
+Route::get('puskesmas','PuskesmasController@index');
+Route::post('addPuskesmas', 'PuskesmasController@create');
+Route::put('editPuskesmas/{id}','PuskesmasController@update');
+Route::delete('deletePuskesmas/{id}','PuskesmasController@delete');
+
+
 Route::get('posyandu','PosyanduController@posyandu');
 
 Route::get('login/admin','LoginController@loginadmin');
