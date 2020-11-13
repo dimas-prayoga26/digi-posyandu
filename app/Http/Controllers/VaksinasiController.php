@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Vaksinasi;
 
 use Illuminate\Http\Request;
 
@@ -11,13 +12,11 @@ class VaksinasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function vaksinasi()
-   {
-       return view('admin.vaksinasi.vaksinasi');
-   }
+
     public function index()
     {
-        //
+     $datas = Vaksinasi::all();
+        return view('admin.vaksinasi.vaksinasi',compact('datas'))->with('i');  
     }
 
     /**
@@ -25,9 +24,21 @@ class VaksinasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+         $datas = [
+            'nama_vaksinasi' => $request->nama_vaksinasi,
+            'id_vaksinasi' => session('id_vaksinasi')
+        ];
+
+        $create = Vaksinasi::create($datas);
+        return redirect('admin.vaksinasi.vaksinasi', compact('datas'))->with('i');  
+       /* if($create){
+            return response()->json([
+                'error'   => 0, 
+                'message' => 'Data berhasil disimpan'
+            ],200);
+        }*/
     }
 
     /**
