@@ -41,14 +41,14 @@ return [
             'provider' => 'users',
         ],
 
-        'user' => [
+        'users' => [
             'driver' => 'session',
-            'provider' => 'user',
+            'provider' => 'users',
         ],
        
-        'admin' => [
+        'admins' => [
             'driver' => 'session',
-            'provider' => 'admin',
+            'provider' => 'admins',
         ],
 
         'api' => [
@@ -76,12 +76,12 @@ return [
     */
 
     'providers' => [
-        'user' => [
+        'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
 
-        'admin' => [
+        'admins' => [
             'driver' => 'eloquent',
             'model' => App\Admin::class,
         ],

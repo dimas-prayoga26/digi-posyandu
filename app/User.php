@@ -27,5 +27,9 @@ class User extends Authenticatable
 
     public function posyandu(){
         return $this->belongsTo('App\Posyandu', 'id_posyandu');
-    }   
+    }
+    
+    public function setPasswordAttribute($value){
+        $this->attributes['password'] = bcrypt($value);
+    }
 }

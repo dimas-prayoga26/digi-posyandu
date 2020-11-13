@@ -28,17 +28,18 @@
 <!--===============================================================================================-->
 </head>
 <body>
-	
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form class="login100-form validate-form">
+				<form class="login100-form validate-form" method="POST"
+					action="{{url('login/adminPost')}}">
+					@csrf
 					<span class="login100-form-title p-b-34">
 						 Login
 					</span>
 					
-					<div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="Type email">
-						<input id="email-e" class="input100" type="text" name="email" placeholder="Email">
+					<div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="Type username">
+						<input id="username" class="input100" type="text" name="username" placeholder="Username">
 						<span class="focus-input100"></span>
 					</div>
 					<div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="Type password">
@@ -47,19 +48,9 @@
 					</div>
 					
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
+						<button class="login100-form-btn" type="submit">
 							Login
 						</button>
-					</div>
-
-					<div class="w-full text-center p-t-27 p-b-239">
-						<span class="txt1">
-							Forgot
-						</span>
-
-						<a href="#" class="txt2">
-							Username / password?
-						</a>
 					</div>
 
 					<div class="w-full text-center">

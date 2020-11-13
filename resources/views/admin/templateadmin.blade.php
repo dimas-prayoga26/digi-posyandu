@@ -89,6 +89,12 @@
           <span>Posyandu</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url('jadwal')}}">
+          <i class="fas fa-clinic-medical"></i>
+          <span>Jadwal</span>
+        </a>
+      </li>
       <hr class="sidebar-divider">
       
     </ul>
@@ -203,8 +209,31 @@
 <script src="{{url('vendor/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{url('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
-<!-- Page level custom scripts -->
 <script>
+  $(document).ready(function () {
+      var frmAddJadwal = $('#frmAddJadwal');
+      frmAddJadwal.submit(function (event) {
+          event.preventDefault();
+          
+          $.ajax({
+              url: frmAddJadwal.attr('action'),
+              type: "POST",
+              data: frmAddJadwal.serialize(),
+              dataType: "json",
+              success: function( response ){
+                  console.log(response);
+                  $('#exampleModal').modal('hide');
+                  if( response.error == 0 ){      
+                    window.location.href = "{{ url('jadwal') }}";
+                  } 
+              }   
+          });
+      });
+  });
+</script>
+
+<!-- Page level custom scripts -->
+{{-- <script>
   $(document).ready(function () {
     $('#dataTable').DataTable(); // ID From dataTable 
     $('#dataTableHover').DataTable(); // ID From dataTable with Hover
@@ -213,7 +242,8 @@
         placeholder: "Select a Province",
         allowClear: true
   });
-</script>
-</body>
+  });
+</script> --}}
 
+</body>
 </html>

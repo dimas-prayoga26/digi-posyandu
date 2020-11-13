@@ -12,5 +12,5 @@ class Puskesmas extends Model
         'id_puskesmas',
 		'nama_puskesmas',
 		'alamat'
-		];
+	];
 }

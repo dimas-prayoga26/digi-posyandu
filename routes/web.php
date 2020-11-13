@@ -28,9 +28,11 @@ Route::get('imunisasi','ImunisasiController@imunisasi');
 Route::get('gizi','GiziController@gizi');
 Route::get('puskesmas','PuskesmasController@puskesmas');
 Route::get('posyandu','PosyanduController@posyandu');
-
+Route::get('jadwal', 'JadwalController@index');
 Route::get('login/admin','LoginController@loginadmin');
 Route::get('login/bidan','LoginController@loginbidan');
 
+Route::post('login/adminPost', 'LoginController@loginAdminPost');
+Route::post('addJadwal', 'JadwalController@create');
 
 

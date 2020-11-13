@@ -41,16 +41,17 @@
                            <span aria-hidden="true">&times;</span>
                          </button>
                        </div>
-                       <form>
+                        <form id="frmAddJadwal" action="{{ url('addJadwal') }}" method="POST" role="form">
+                          @csrf
                        <div class="modal-body">
                           <div class="form-group">
                             <label for="tgl">Tanggal</label>
-                            <input type="date" class="form-control" id="tgl" name="tgl" placeholder="Masukan tgl">
+                            <input type="date" class="form-control" name="tanggal" placeholder="Masukan tgl">
                           </div>                         
                        </div>
                        <div class="modal-footer">
+                         <button type="submit" class="btn btn-success">Simpan</button>
                          <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-                         <button type="button" class="btn btn-success">Simpan</button>
                        </div>
                      </div>
                    </div>
@@ -64,37 +65,28 @@
                   <table class="table align-items-center table-flush" id="dataTable">
                     <thead class="thead-light">
                       <tr>
-                        <th>Jenis Kelamin</th>
-                        <th>Alamat</th>
-                        <th>Puskesmas</th>
+                        <th>No.</th>
+                        <th>Tanggal</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Laki - Laki</td>
-                        <td>Jatibarang</td>
-                        <td>Jatibarang</td>
-                        <td>
-                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-data">
-                            <i class="fas fa-user-edit"></i>
-                           </button>
-                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                      </td>
-                      </tr>
-                      <tr>
-                        <td>tiff</td>
-                        <td>Tiffany</td>
-                        <td>Perempuan</td>
-                        <td>Jatibarang</td>
-                        <td>Plumbon</td>
-                        <td>
-                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-data">
-                            <i class="fas fa-user-edit"></i>
-                           </button>
-                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                      </td>
-                      </tr>
+
+                      @foreach ($datas as $data)
+                        <tr>
+                          <td>{{++$i}}</td>
+                          <td>{{$data->tanggal}}</td>
+                          <td>
+                            <button type="button" class="btn btn-primary" 
+                              data-toggle="modal" data-target="#edit-data">
+                              <i class="fas fa-user-edit"></i>
+                            </button>
+                            <button type="submit" class="btn btn-danger">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      @endforeach
                     </tbody>
                   </table>
                 </div>
@@ -120,8 +112,8 @@
                     </div>                         
                  </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-success">Simpan</button>
+              <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
             </div>
           </div>
           </div>

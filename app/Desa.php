@@ -14,7 +14,7 @@ class Desa extends Model
 		'rt',
 		'rw',
 		'id_kecamatan'
-		];
+	];
 
 	public function kecamatan(){
     return $this->belongsTo('App\Kecamatan', 'id_kecamatan');
