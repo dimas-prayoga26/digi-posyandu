@@ -36,86 +36,69 @@
                    <div class="modal-dialog" role="document">
                      <div class="modal-content">
                        <div class="modal-header">
-                         <h5 class="modal-title" id="exampleModalLabel">Tambah</h5>
+                         <h5 class="modal-title" id="exampleModalLabel">Tambah Data Vaksinasi</h5>
                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                            <span aria-hidden="true">&times;</span>
                          </button>
                        </div>
+                        <form id="frmAddVaksinasi" action="{{ url('addVaksinasi') }}" method="POST" role="form">
+                          @csrf
                        <div class="modal-body">
-                         @csrf
                           <div class="form-group">
                             <label for="nama_vaksinasi">Nama Vaksinasi</label>
-                            <input type="text" class="form-control  @error('nama_vaksinasi') is-invalid @enderror" value="{{ old('nama_vaksinasi') }}" id="nama_vaksinasi" name="nama_vaksinasi"placeholder="Masukan Nama Vaksinasi">
-                            @error('nama_vaksinasi')
-                              <div class="invalid-feedback">{{ $message }}</div>
-                          @enderror
-                        </div>
+                            <input type="text" class="form-control" name="nama_vaksinasi" placeholder="Masukan Nama Vaksinasi">
+                          </div>                         
                        </div>
                        <div class="modal-footer">
-                         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Tutup</button>
-                         <button type="button" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Tutup</button>
+                         <button type="submit" class="btn btn-success">Simpan</button>
+                         
                        </div>
                      </div>
                    </div>
                  </div>
                 </div>
+              </form>
                  {{-- Akhir Modal Tambah --}}
 
-                <div class="table-responsive p-3">
+                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush" id="dataTable">
                     <thead class="thead-light">
                       <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
+                        <th>No.</th>
+                        <th>Nama Vaksinasi</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                        <td>
-                        <a href="ubah_data">Edit</a>
-                        |
-                        <a href="hapus">Hapus</a>
-                      </td>
-                      </tr>
-                      <tr>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>63</td>
-                        <td>2011/07/25</td>
-                        <td>$170,750</td>
-                        <td>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-data">
+
+                      @foreach ($datas as $data)
+                        <tr>
+                          <td>{{++$i}}</td>
+                          <td>{{$data->nama_vaksinasi}}</td>
+                          <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" 
+                        data-target="#edit-data-{{$data->id_vaksinasi}}">
                           <i class="fas fa-user-edit"></i>
-                        </button>
-                        |
-                       <form action=" #" method="post" class="d-inline">
-                       @method('delete')
-                       @csrf
+                       </button>
+
+                        <form action="{{url('deleteVaksinasi', $data->id_vaksinasi)}}" method="POST" class="d-inline">
+                        @csrf
+                        @method('delete')
                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                   </form>
-                      </td>
-                      </tr>
-          
+                      </form>
+                          </td>
+                        </tr>
+                      @endforeach
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
             {{-- Modal Edit --}}
-            <div class="modal fade" id="edit-data" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                   aria-hidden="true">
+            @foreach ($datas as $data)
+            <div class="modal fade" id="edit-data-{{$data->id_vaksinasi}}" tabindex="-1" 
+              role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                    <div class="modal-dialog" role="document">
                      <div class="modal-content">
                        <div class="modal-header">
@@ -125,24 +108,30 @@
                          </button>
                        </div>
                         <div class="modal-body">
-                         @csrf
+                          <form action="{{url('editVaksinasi', $data->id_vaksinasi)}}" method="post">
+                            @csrf
+                            @method('PUT')
                             <div class="form-group">
                               <label for="nama_vaksinasi">Nama Vaksinasi</label>
-                              <input type="text" class="form-control @error('nama_vaksinasi') is-invalid @enderror" value="{{ old('nama_vaksinasi') }}" id="nama_vaksinasi" name="nama_vaksinasi" placeholder="Masukan nama puskesmas">
+                              <input type="text" class="form-control @error('nama_vaksinasi') is-invalid @enderror" 
+                                 value="{{$data->nama_vaksinasi}}" id="nama_vaksinasi" name="nama_vaksinasi" 
+                               >
                               @error('nama_vaksinasi')
                                 <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                          </div>
-                      </div>
-                       <div class="modal-footer">
-                         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Tutup</button>
-                         <button type="button" class="btn btn-primary">Simpan</button>
-                       </div>
+                              @enderror
+                            </div>
+  
+                         </div>
+                         <div class="modal-footer">
+                           <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Tutup</button>
+                           <button type="submit" class="btn btn-primary">Simpan</button>
+                         </div>
+                        </form>
                      </div>
                    </div>
                  </div>
                 </div>
-                 {{-- Akhir Modal Edit --}}
+                @endforeach
 
 
 @endsection
