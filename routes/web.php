@@ -19,14 +19,33 @@ Route::get('/', function () {
 
 Route::get('dashboard','PageController@dashboard');
 Route::get('profil','PageController@profil');
+
+// Route Kader Penanggung Jawab
 Route::get('kader','UserController@kader');
-Route::get('tambahkader','UserController@tambahkader');
+Route::post('add_kader','UserController@createKader');
+Route::put('editkader/{id}','UserController@update');
+Route::delete('deletekeder/{id}','UserController@delete');
+
+// Route Admin Puskesmas
 Route::get('admin_puskesmas','AdminController@adminpuskesmas');
+Route::post('add_adminpuskes','AdminController@create');
+Route::put('editadminpuskes/{id}','AdminController@update');
+Route::delete('deleteadminpuskes/{id}','AdminController@delete');
+
+// Route Bidan Desa
 Route::get('bidan','UserController@bidan');
+<<<<<<< HEAD
+Route::post('add_bidan','UserController@createBidan');
+Route::put('editbidan/{id}','UserController@update');
+Route::delete('deletebidan/{id}','UserController@delete');
+
+Route::get('vaksinasi','VaksinasiController@vaksinasi');
+=======
 Route::get('vaksinasi','VaksinasiController@index');
 Route::post('addVaksinasi', 'VaksinasiController@create');
 Route::put('editVaksinasi/{id}','VaksinasiController@update');
 Route::delete('deleteVaksinasi/{id}','VaksinasiController@delete');
+>>>>>>> 6beb22964af9b59391ad3f88c3cbeb7998392191
 Route::get('imunisasi','ImunisasiController@imunisasi');
 Route::get('gizi','GiziController@gizi');
 

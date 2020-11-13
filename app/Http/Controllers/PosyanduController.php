@@ -33,7 +33,7 @@ class PosyanduController extends Controller
     {
         $data = $request->only('nama_posyandu','id_desa','id_puskesmas');
         Posyandu::whereIdPosyandu($id)->update($data);
-        return redirect()->back()->with('success', 'Data berhasil ditambah');
+        return redirect()->back()->with('success', 'Data Berhasil Diubah');
     }
 
     public function delete($id)
