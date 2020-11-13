@@ -11,12 +11,7 @@ class Admin extends Authenticatable
     
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $table = 'admin';
+    protected $table = 'admins';
     
     protected $fillable = [
         'id_admin', 
@@ -41,4 +36,8 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function setPasswordAttribute($value){
+        $this->attributes['password'] = bcrypt($value);
+    }
 }

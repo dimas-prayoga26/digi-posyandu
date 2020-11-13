@@ -8,6 +8,8 @@ class Posyandu extends Model
 {
 	protected $table = 'posyandu';
     
+    protected $primaryKey = 'id_posyandu';
+
     public $timestamps = false;
     
     protected $fillable = [

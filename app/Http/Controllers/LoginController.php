@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use App\User;
+use App\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function loginadmin()
     {
          return view('loginadmin');    
@@ -20,11 +20,12 @@ class LoginController extends Controller
     {
          return view('loginbidan');    
     }
+
     public function loginAdminPost(Request $request){
-        $auth = auth()->guard('admin');
+        $auth = auth()->guard('admins');
 
-        $credentials = $request->only('username', 'password');
-
+        $credentials = ['username' => $request->username, 'password' => $request->password];
+    
         $validator = Validator::make($request->all(),
             [
                 'username'  => 'required|string|exists:admin',
@@ -37,15 +38,16 @@ class LoginController extends Controller
             ],
         );
 
-        if($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
-        }else{
+        //if($validator->fails()) {
+        //    return redirect()->back()->withErrors($validator);
+        //}else{
             if($auth->attempt($credentials)){
                 $admin = Admin::where('username', $request->username)->first();
                 session()->put('admin', $admin->username);
                 session()->put('nama_admin', $admin->nama);
-                alert()->success('Login success','Anda berhasil login');
-                return redirect('/admin/DashboardAdmin');
+                session()->put('level', $admin->level);
+                session()->put('puskesmas', $admin->id_puskesmas);
+                return redirect('dashboard');
             }else{
                 return redirect()
                     ->back()
@@ -53,11 +55,11 @@ class LoginController extends Controller
                         ['password' => 'password anda salah']
                     );
             }
-        }
+        //}
     }
 
     public function loginBidanPost(Request $request){
-        $auth = auth()->guard('admin');
+        $auth = auth()->guard('user');
 
         $credentials = $request->only('username', 'password');
 
@@ -73,14 +75,12 @@ class LoginController extends Controller
             ],
         );
 
-        if($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
-        }else{
+        
             if($auth->attempt($credentials)){
-                $admin = Admin::where('username', $request->username)->first();
+                $admin = User::where('username', $request->username)
+                                ->where('level','bidan')->first();
                 session()->put('admin', $admin->username);
                 session()->put('nama_admin', $admin->nama);
-                alert()->success('Login success','Anda berhasil login');
                 return redirect('/admin/DashboardAdmin');
             }else{
                 return redirect()
@@ -89,18 +89,15 @@ class LoginController extends Controller
                         ['password' => 'password anda salah']
                     );
             }
-        }
     }
 
     public function logoutAdmin(){
         session()->forget('admin');
-        alert()->info('Anda Sudah Logout', 'Logout');
         return redirect('/admin/loginAdmin');
     }
    
     public function logoutBidan(){
-        session()->forget('admin');
-        alert()->info('Anda Sudah Logout', 'Logout');
+        session()->forget('user');
         return redirect('/admin/loginAdmin');
     }
 }

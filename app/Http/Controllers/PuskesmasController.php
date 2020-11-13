@@ -7,14 +7,9 @@ use Illuminate\Http\Request;
 
 class PuskesmasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function puskesmas()
    {
-       return view('admin.puskesmas.puskesmas');
+    //
    }
 
     public function index()
@@ -29,60 +24,24 @@ class PuskesmasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create(Request $request)
     {
-        $data = $request->only('nama_puskesmas','alamat');
-        Puskesmas::create($data);
-        return redirect()->back()->with('success', 'Data berhasil ditambah');
-
+        Puskesmas::create($request->only('nama_puskesmas', 'alamat'));
+        return redirect()->back()->with('success', 'Data berhasil disimpan');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
+
         $data = $request->only('nama_puskesmas','alamat');
         Puskesmas::whereIdPuskesmas($id)->update($data);
         return redirect()->back()->with('success', 'Data berhasil  diubah');
-
     }
 
     /**
@@ -91,6 +50,11 @@ class PuskesmasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+        Puskesmas::where('id_puskesmas', $id)
+            ->update($request->only('nama_puskesmas', 'alamat'));
+        return redirect()->back()->with('success', 'Data berhasil diubah');
+    }
+
     public function delete($id)
     {
         $data = Puskesmas::findOrFail($id);
@@ -98,7 +62,10 @@ class PuskesmasController extends Controller
             $data->delete();
             return redirect()->back()->with('success', 'Data berhasil dihapus');
         } catch (\Throwable $th) {
+
             return redirect()->back()->with('error', 'Data gagal dihapus');
 }
-}
-}
+
+            return redirect()->back()->with('success', 'Data gagal dihapus');
+        }
+    }

@@ -2,87 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Desa;
+use App\Puskesmas;
+use App\Posyandu;
 use Illuminate\Http\Request;
 
 class PosyanduController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function posyandu()
-   {
-       return view('admin.posyandu.posyandu');
-   }
-    public function index()
     {
-        //
+        $datas     = Posyandu::all();
+        $puskesmas = Puskesmas::all();
+        $desa      = Desa::all();
+        return view('admin.posyandu.posyandu', compact('datas', 'puskesmas', 'desa'))->with('i');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data = $request->only('nama_posyandu','id_desa','id_puskesmas');
+        Posyandu::create($data);
+        return redirect()->back()->with('success', 'Data berhasil ditambah');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->only('nama_posyandu','id_desa','id_puskesmas');
+        Posyandu::whereIdPosyandu($id)->update($data);
+        return redirect()->back()->with('success', 'Data berhasil ditambah');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $data = Posyandu::findOrFail($id);
+        try {
+            $data->delete();
+            return redirect()->back()->with('success', 'Data berhasil dihapus');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Data gagal dihapus');
+        }
     }
 }

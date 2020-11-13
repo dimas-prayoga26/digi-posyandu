@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Vaksinasi;
 
 use Illuminate\Http\Request;
 
@@ -11,13 +12,11 @@ class VaksinasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function vaksinasi()
-   {
-       return view('admin.vaksinasi.vaksinasi');
-   }
+
     public function index()
     {
-        //
+     $datas = Vaksinasi::all();
+        return view('admin.vaksinasi.vaksinasi',compact('datas'))->with('i');  
     }
 
     /**
@@ -25,9 +24,17 @@ class VaksinasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data = $request->only('nama_vaksinasi');
+        Vaksinasi::create($data);
+        return redirect()->back()->with('success', 'Data berhasil ditambah');
+       /* if($create){
+            return response()->json([
+                'error'   => 0, 
+                'message' => 'Data berhasil disimpan'
+            ],200);
+        }*/
     }
 
     /**
@@ -71,18 +78,20 @@ class VaksinasiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+     {
+        $data = $request->only('nama_vaksinasi');
+        Vaksinasi::whereIdVaksinasi($id)->update($data);
+        return redirect()->back()->with('success', 'Data berhasil  diubah');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+     public function delete($id)
     {
-        //
+        $data = Vaksinasi::findOrFail($id);
+        try {
+            $data->delete();
+            return redirect()->back()->with('success', 'Data berhasil dihapus');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Data gagal dihapus');
+        }
     }
 }

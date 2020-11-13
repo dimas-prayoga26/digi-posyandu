@@ -55,8 +55,8 @@ class GiziApiController extends Controller
 
     public function countWeightAge($jk, $age, $weight){
         $div = $weight/$age;
-        
-        $a = StandarWho::where('kategori', 'BB/U')
+
+        $std = StandarWho::where('kategori', 'BB/U')
                 ->where('jk', $jk)
                 ->where('parameter', $age)
                 ->get();

@@ -13,6 +13,7 @@
   <link href="{{url('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{url('css/ruang-admin.min.css')}}" rel="stylesheet">
   <link href="{{url('vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+  <link href="{{url('vendor/select2/dist/css/select2.min.css')}}" rel="stylesheet" type="text/css">
 </head>
 
 <body id="page-top">
@@ -20,10 +21,9 @@
     <!-- Sidebar -->
     <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('dashboard')}}">
-        <div class="sidebar-brand-icon">
+        {{-- <div class="sidebar-brand-icon">
         <!--<img src="img/logo/logo2.png">-->
-        <i class="fa fa-id-card fa-3x" aria-hidden="true"></i>
-        </div>
+        </div> --}}
         <div class="sidebar-brand-text mx-3">Integrasi Posyandu</div>
       </a>
       <hr class="sidebar-divider my-0">
@@ -86,6 +86,12 @@
         <a class="nav-link" href="{{url('posyandu')}}">
           <i class="fas fa-clinic-medical"></i>
           <span>Posyandu</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url('jadwal')}}">
+          <i class="fas fa-clinic-medical"></i>
+          <span>Jadwal</span>
         </a>
       </li>
       <hr class="sidebar-divider">
@@ -202,13 +208,44 @@
 <script src="{{url('vendor/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{url('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
-<!-- Page level custom scripts -->
 <script>
+  $(document).ready(function () {
+      var frmAddJadwal = $('#frmAddJadwal');
+      frmAddJadwal.submit(function (event) {
+          event.preventDefault();
+          
+          $.ajax({
+              url: frmAddJadwal.attr('action'),
+              type: "POST",
+              data: frmAddJadwal.serialize(),
+              dataType: "json",
+              success: function( response ){
+                  console.log(response);
+                  if( response.error == 0 ){      
+                      var jadwal = '<tr id="row_ ' + response.data.id_jadwal + '"><td>'+{{++$i}}+'</td><td>' + response.data.tanggal + '</td>';
+                      jadwal += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-data"><i class="fas fa-user-edit"></i></button>';
+                      jadwal += '<button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button></td></tr>';
+                      $('table tbody').append(jadwal);
+                  }
+                  $('#exampleModal').modal('hide');
+              }   
+          });
+      });
+  });
+</script>
+
+<!-- Page level custom scripts -->
+{{-- <script>
   $(document).ready(function () {
     $('#dataTable').DataTable(); // ID From dataTable 
     $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+    // Select2 Single  with Placeholder
+   $('.select2-single-placeholder').select2({
+        placeholder: "Select a Province",
+        allowClear: true
   });
-</script>
-</body>
+  });
+</script> --}}
 
+</body>
 </html>
