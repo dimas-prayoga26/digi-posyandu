@@ -221,10 +221,13 @@
               dataType: "json",
               success: function( response ){
                   console.log(response);
-                  $('#exampleModal').modal('hide');
                   if( response.error == 0 ){      
-                    window.location.href = "{{ url('jadwal') }}";
-                  } 
+                      var jadwal = '<tr id="row_ ' + response.data.id_jadwal + '"><td>'+{{++$i}}+'</td><td>' + response.data.tanggal + '</td>';
+                      jadwal += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-data"><i class="fas fa-user-edit"></i></button>';
+                      jadwal += '<button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button></td></tr>';
+                      $('table tbody').append(jadwal);
+                  }
+                  $('#exampleModal').modal('hide');
               }   
           });
       });

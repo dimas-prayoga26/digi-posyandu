@@ -26,6 +26,7 @@ class JadwalController extends Controller
         if($create){
             return response()->json([
                 'error'   => 0, 
+                'data'    => $data,
                 'message' => 'Data berhasil disimpan'
             ],200);
         }

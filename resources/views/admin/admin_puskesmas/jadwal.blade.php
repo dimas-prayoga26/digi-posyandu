@@ -46,7 +46,7 @@
                        <div class="modal-body">
                           <div class="form-group">
                             <label for="tgl">Tanggal</label>
-                            <input type="date" class="form-control" name="tanggal" placeholder="Masukan tgl">
+                            <input type="date" id="tgl" class="form-control" name="tanggal" placeholder="Masukan tgl">
                           </div>                         
                        </div>
                        <div class="modal-footer">
@@ -73,9 +73,9 @@
                     <tbody>
 
                       @foreach ($datas as $data)
-                        <tr>
+                        <tr id="row_{{$data->id_jadwal}}">
                           <td>{{++$i}}</td>
-                          <td>{{$data->tanggal}}</td>
+                          <td id="td_tgl">{{$data->tanggal}}</td>
                           <td>
                             <button type="button" class="btn btn-primary" 
                               data-toggle="modal" data-target="#edit-data">
