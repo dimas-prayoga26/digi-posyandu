@@ -36,18 +36,53 @@
                    <div class="modal-dialog" role="document">
                      <div class="modal-content">
                        <div class="modal-header">
-                         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                         <h5 class="modal-title" id="exampleModalLabel">Tambah Data Posyandu</h5>
                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                            <span aria-hidden="true">&times;</span>
                          </button>
                        </div>
                        <div class="modal-body">
-                         <p>You Content</p>
+                        <form action="{{url('addPosyandu')}}" method="POST">
+                          @csrf
+                          <div class="form-group">
+                            <label for="nama_posyandu">Nama Posyandu</label>
+                            <input type="text" class="form-control @error('nama_posyandu') is-invalid @enderror" 
+                              value="{{ old('nama_posyandu') }}" id="nama_posyandu" name="nama_posyandu" 
+                              placeholder="Masukan nama posyandu">
+                            @error('nama_posyandu')
+                              <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                          </div>
+
+                          <div class="form-group">
+                            <label for="puskesmas">Puskesmas</label>
+                            <select class="select2-single-placeholder form-control" 
+                              name="id_puskesmas" id="puskesmas">
+                              @foreach ($puskesmas as $item)
+                                <option value="{{$item->id_puskesmas}}">
+                                  {{$item->nama_puskesmas}}
+                                </option>
+                              @endforeach
+                            </select>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="puskesmas">Desa</label>
+                            <select class="select2-single-placeholder form-control" 
+                              name="id_desa" id="puskesmas">
+                              @foreach ($desa as $item)
+                                <option value="{{$item->id_desa}}">
+                                  {{$item->nama_desa}}
+                                </option>
+                              @endforeach
+                            </select>
+                          </div>
                        </div>
                        <div class="modal-footer">
+                         <button type="submit" class="btn btn-primary">Save changes</button>
                          <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-                         <button type="button" class="btn btn-primary">Save changes</button>
                        </div>
+                      </form>
                      </div>
                    </div>
                  </div>
@@ -58,43 +93,32 @@
                   <table class="table align-items-center table-flush" id="dataTable">
                     <thead class="thead-light">
                       <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
+                        <th>No</th>
+                        <th>Nama Posyandu</th>
+                        <th>Nama Puskesmas</th>
+                        <th>Nama Desa</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
+                      @foreach ($datas as $data)
                       <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                      <td>
-                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-data"><i class="fas fa-user-edit"></i></button>
-                      <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                      </td>
-                      </tr>
-                      <tr>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>63</td>
-                        <td>2011/07/25</td>
-                        <td>$170,750</td>
+                      <td>{{++$i}}</td>
+                      <td>{{$data->nama_posyandu}}</td>
+                      <td>{{$data->puskesmas->nama_puskesmas}}</td>
+                      <td>{{$data->desa->nama_desa}}</td>
                         <td>
-                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-data"><i class="fas fa-user-edit"></i></button>
-                      <form action="#" method="post" class="d-inline">
-                       @method('delete')
-                       @csrf
+                       <button type="button" class="btn btn-primary" data-toggle="modal" 
+                        data-target="#edit-data-{{$data->id_posyandu}}">
+                          <i class="fas fa-user-edit"></i>
+                       </button>
+                        <form action="{{url('deletePosyandu', $data->id_posyandu)}}" method="POST" class="d-inline">
+                        @csrf
+                        @method('delete')
                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                       </form>
                       </td>
+                      @endforeach
                       </tr>                      
                     </tbody>
                   </table>
@@ -103,40 +127,65 @@
             </div>
 
             {{-- Modal Edit --}}
-            <div class="modal fade" id="edit-data" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                   aria-hidden="true">
+            @foreach ($datas as $data)
+            <div class="modal fade" id="edit-data-{{$data->id_posyandu}}" tabindex="-1" 
+              role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                    <div class="modal-dialog" role="document">
                      <div class="modal-content">
                        <div class="modal-header">
-                         <h5 class="modal-title" id="exampleModalLabel">Tambah Data Puskesmas</h5>
+                         <h5 class="modal-title" id="exampleModalLabel">Edit Data Posyandu</h5>
                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                            <span aria-hidden="true">&times;</span>
                          </button>
                        </div>
                         <div class="modal-body">
-                         @csrf
+                          <form action="{{url('editPosyandu', $data->id_posyandu)}}" method="post">
+                            @csrf
+                            @method('PUT')
                             <div class="form-group">
-                              <label for="nama_puskesmas">Nama Puskesmas</label>
-                              <input type="text" class="form-control @error('nama_puskesmas') is-invalid @enderror" value="{{ old('nama_puskesmas') }}" id="nama_puskesmas" name="nama_puskesmas" placeholder="Masukan nama puskesmas">
-                              @error('nama_puskesmas')
+                              <label for="nama_posyandu">Nama Posyandu</label>
+                              <input type="text" class="form-control @error('nama_posyandu') is-invalid @enderror" 
+                                value="{{ old('nama_posyandu') }}" id="nama_posyandu" name="nama_posyandu" 
+                                placeholder="Masukan nama posyandu">
+                              @error('nama_posyandu')
                                 <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                          </div>
-                          <div class="form-group">
-                            <label for="alamat">Alamat</label>
-                            <input type="text" class="form-control  @error('alamat') is-invalid @enderror" value="{{ old('alamat') }}" id="alamat" name="alamat"placeholder="Masukan alamat puskesmas">
-                            @error('alamat')
-                              <div class="invalid-feedback">{{ $message }}</div>
-                          @enderror
-                        </div>
-                      </div>
-                       <div class="modal-footer">
-                         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Tutup</button>
-                         <button type="button" class="btn btn-primary">Simpan</button>
-                       </div>
+                              @enderror
+                            </div>
+  
+                            <div class="form-group">
+                              <label for="puskesmas">Puskesmas</label>
+                              <select class="select2-single-placeholder form-control" 
+                                name="id_puskesmas" id="puskesmas">
+                                @foreach ($puskesmas as $item)
+                                  <option value="{{$item->id_puskesmas}}">
+                                    {{$item->nama_puskesmas}}
+                                  </option>
+                                @endforeach
+                              </select>
+                            </div>
+  
+                            <div class="form-group">
+                              <label for="desa">Desa</label>
+                              <select class="select2-single-placeholder form-control" 
+                                name="id_desa" id="desa">
+                                @foreach ($desa as $item)
+                                  <option value="{{$item->id_desa}}">
+                                    {{$item->nama_desa}}
+                                  </option>
+                                @endforeach
+                              </select>
+                            </div>
+                         </div>
+                         <div class="modal-footer">
+                           <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                           <button type="submit" class="btn btn-primary">Save changes</button>
+                         </div>
+                        </form>
                      </div>
                    </div>
                  </div>
                 </div>
+                @endforeach
+        </div>
                  {{-- Akhir Modal Edit --}}
 @endsection

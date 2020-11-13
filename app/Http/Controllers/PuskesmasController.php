@@ -13,7 +13,7 @@ class PuskesmasController extends Controller
      */
     public function puskesmas()
    {
-       return view('admin.admin_puskesmas.admin_puskesmas');
+       return view('admin.puskesmas.puskesmas');
    }
     public function index()
     {

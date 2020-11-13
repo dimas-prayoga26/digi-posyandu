@@ -14,7 +14,7 @@ class AdminController extends Controller
      */
     public function adminpuskesmas()
    {
-       return view('admin/admin_puskemas/admin_puskesmas');
+       return view('admin.admin_puskesmas.admin_puskesmas');
    }
     public function index()
     {
