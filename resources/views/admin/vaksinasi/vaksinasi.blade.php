@@ -50,8 +50,9 @@
                           </div>                         
                        </div>
                        <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Tutup</button>
                          <button type="submit" class="btn btn-success">Simpan</button>
-                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                         
                        </div>
                      </div>
                    </div>
@@ -76,13 +77,16 @@
                           <td>{{++$i}}</td>
                           <td>{{$data->nama_vaksinasi}}</td>
                           <td>
-                            <button type="button" class="btn btn-primary" 
-                              data-toggle="modal" data-target="#edit-data">
-                              <i class="fas fa-user-edit"></i>
-                            </button>
-                            <button type="submit" class="btn btn-danger">
-                              <i class="fas fa-trash"></i>
-                            </button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" 
+                        data-target="#edit-data-{{$data->id_vaksinasi}}">
+                          <i class="fas fa-user-edit"></i>
+                       </button>
+
+                        <form action="{{url('deleteVaksinasi', $data->id_vaksinasi)}}" method="POST" class="d-inline">
+                        @csrf
+                        @method('delete')
+                       <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                      </form>
                           </td>
                         </tr>
                       @endforeach
@@ -92,8 +96,9 @@
               </div>
             </div>
             {{-- Modal Edit --}}
-            <div class="modal fade" id="edit-data" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                   aria-hidden="true">
+            @foreach ($datas as $data)
+            <div class="modal fade" id="edit-data-{{$data->id_vaksinasi}}" tabindex="-1" 
+              role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                    <div class="modal-dialog" role="document">
                      <div class="modal-content">
                        <div class="modal-header">
@@ -103,24 +108,30 @@
                          </button>
                        </div>
                         <div class="modal-body">
-                         @csrf
+                          <form action="{{url('editVaksinasi', $data->id_vaksinasi)}}" method="post">
+                            @csrf
+                            @method('PUT')
                             <div class="form-group">
                               <label for="nama_vaksinasi">Nama Vaksinasi</label>
-                              <input type="text" class="form-control @error('nama_vaksinasi') is-invalid @enderror" value="{{ old('nama_vaksinasi') }}" id="nama_vaksinasi" name="nama_vaksinasi" placeholder="Masukan nama puskesmas">
+                              <input type="text" class="form-control @error('nama_vaksinasi') is-invalid @enderror" 
+                                 value="{{$data->nama_vaksinasi}}" id="nama_vaksinasi" name="nama_vaksinasi" 
+                               >
                               @error('nama_vaksinasi')
                                 <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                          </div>
-                      </div>
-                       <div class="modal-footer">
-                         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Tutup</button>
-                         <button type="button" class="btn btn-primary">Simpan</button>
-                       </div>
+                              @enderror
+                            </div>
+  
+                         </div>
+                         <div class="modal-footer">
+                           <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Tutup</button>
+                           <button type="submit" class="btn btn-primary">Simpan</button>
+                         </div>
+                        </form>
                      </div>
                    </div>
                  </div>
                 </div>
-                 {{-- Akhir Modal Edit --}}
+                @endforeach
 
 
 @endsection

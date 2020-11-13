@@ -26,13 +26,9 @@ class VaksinasiController extends Controller
      */
     public function create(Request $request)
     {
-         $datas = [
-            'nama_vaksinasi' => $request->nama_vaksinasi,
-            'id_vaksinasi' => session('id_vaksinasi')
-        ];
-
-        $create = Vaksinasi::create($datas);
-        return redirect('admin.vaksinasi.vaksinasi', compact('datas'))->with('i');  
+        $data = $request->only('nama_vaksinasi');
+        Vaksinasi::create($data);
+        return redirect()->back()->with('success', 'Data berhasil ditambah');
        /* if($create){
             return response()->json([
                 'error'   => 0, 
@@ -82,18 +78,16 @@ class VaksinasiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+     {
+        $data = $request->only('nama_vaksinasi');
+        Vaksinasi::whereIdVaksinasi($id)->update($data);
+        return redirect()->back()->with('success', 'Data berhasil  diubah');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+     public function delete($id_vaksinasi)
     {
-        //
+        $data = Vaksinasi::findOrFail($id_vaksinasi);
+        $data->delete();
+    return redirect()->to('admin/vaksinasi/vaksinasi')->with('status','Data Berhasil Dihapus');
     }
 }

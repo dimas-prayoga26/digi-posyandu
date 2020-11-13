@@ -25,6 +25,8 @@ Route::get('admin_puskesmas','AdminController@adminpuskesmas');
 Route::get('bidan','UserController@bidan');
 Route::get('vaksinasi','VaksinasiController@index');
 Route::post('addVaksinasi', 'VaksinasiController@create');
+Route::put('editVaksinasi/{id}','VaksinasiController@update');
+Route::delete('deleteVaksinasi/{id}','VaksinasiController@delete');
 Route::get('imunisasi','ImunisasiController@imunisasi');
 Route::get('gizi','GiziController@gizi');
 Route::get('puskesmas','PuskesmasController@puskesmas');
