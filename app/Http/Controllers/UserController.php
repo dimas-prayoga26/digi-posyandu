@@ -101,9 +101,37 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateBidan(Request $request, $id)
     {
-        //
+        
+        $user= User::whereIdPosyandu($id);
+        if ($request->filled('password')) {
+            $user->update([
+                'name'         => $request->name,
+                'alamat'       => $request->alamat,
+                'id_posyandu'  => $request->posyandu,
+                'password'     => $request->password,
+            ]);
+        } else {
+            $user->update($request->except('password'));
+        }
+        return redirect()->back()->with('success', 'Data berhasil ditambah');
+    }
+    
+    public function updateKader(Request $request, $id)
+    {
+        $user= User::whereIdPosyandu($id);
+        if ($request->filled('password')) {
+            $user->update([
+                'name'         => $request->name,
+                'alamat'       => $request->alamat,
+                'id_posyandu'  => $request->posyandu,
+                'password'     => $request->password,
+            ]);
+        } else {
+            $user->update($request->except('password'));
+        }
+        return redirect()->back()->with('success', 'Data berhasil ditambah');
     }
 
     /**
@@ -112,8 +140,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $data = User::findOrFail($id);
+        try {
+            $data->delete();
+            return redirect()->back()->with('success', 'Data berhasil dihapus');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Data gagal dihapus');
+        }
     }
 }

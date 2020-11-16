@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login Super Admin</title>
+	<title>Login Admin</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -53,11 +53,6 @@
 						</button>
 					</div>
 
-					<div class="w-full text-center">
-						<a href="#" class="txt3">
-							Sign Up
-						</a>
-					</div>
 				</form>
 
 				<div class="login100-more" style="background-image: url('images/logopuskesmas.png');"></div>

@@ -36,12 +36,14 @@
       <div class="sidebar-heading">
         <!--Features-->
       </div>
+
+      @if (session('level') == 'super_admin')
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
           aria-expanded="true" aria-controls="collapseBootstrap">
           <i class="fa fa-address-card" aria-hidden="true"></i>
           <span>Akun</span>
-        </a>
+        </a>         
         <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Akun</h6>
@@ -51,6 +53,8 @@
           </div>
         </div>
       </li>
+      @endif
+
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
           aria-controls="collapseTable">
@@ -60,7 +64,9 @@
         <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!--<h6 class="collapse-header">Imunisasi</h6>-->
+            @if (session('level') == 'super_admin')
             <a class="collapse-item" href="{{url('vaksinasi')}}">Vaksinasi</a>
+            @endif
             <a class="collapse-item" href="{{url('imunisasi')}}">Imunisasi</a>
           </div>
         </div>
@@ -76,24 +82,28 @@
       <!--  Examples-->
       </div>
     
+      @if (session('level') == 'super_admin')
       <li class="nav-item">
         <a class="nav-link" href="{{url('puskesmas')}}">
           <i class="far fa-hospital"></i>
           <span>Puskesmas</span>
         </a>
       </li>
+      @endif
       <li class="nav-item">
         <a class="nav-link" href="{{url('posyandu')}}">
           <i class="fas fa-clinic-medical"></i>
           <span>Posyandu</span>
         </a>
       </li>
+      @if (session('level') == 'admin_puskesmas')
       <li class="nav-item">
         <a class="nav-link" href="{{url('jadwal')}}">
-          <i class="fas fa-clinic-medical"></i>
+          <i class="fas fa-calendar-alt"></i>
           <span>Jadwal</span>
         </a>
       </li>
+      @endif
       <hr class="sidebar-divider">
       
     </ul>
@@ -107,10 +117,7 @@
           </button>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-              </a>
+             
               <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                 aria-labelledby="searchDropdown">
                 <form class="navbar-search">
@@ -118,9 +125,7 @@
                     <input type="text" class="form-control bg-light border-1 small" placeholder="What do you want to look for?"
                       aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
                     <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
+                     
                     </div>
                   </div>
                 </form>
@@ -131,8 +136,13 @@
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                <img class="img-profile rounded-circle" src="{{url('img/boy.png')}}" style="max-width: 60px">
-                <span class="ml-2 d-none d-lg-inline text-white small"> Admin</span>
+                <span class="ml-2 d-none d-lg-inline text-white small"> 
+                  @if (session('level') == 'bidan')
+                  {{session('name')}}</span> 
+                  @else
+                  {{session('nama_admin')}}</span>    
+                  @endif
+                  
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="{{url('profil')}}">
@@ -172,7 +182,12 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
-                  <a href="login.html" class="btn btn-primary">Logout</a>
+                  @if (session('level') == 'bidan')
+                  <a href="{{url('/login/bidan')}}" class="btn btn-primary">Logout</a>
+                  @else
+                  <a href="{{url('/login/admin')}}" class="btn btn-primary">Logout</a>
+                      
+                  @endif
                 </div>
               </div>
             </div>
@@ -222,7 +237,7 @@
               success: function( response ){
                   console.log(response);
                   if( response.error == 0 ){      
-                      var jadwal = '<tr id="row_ ' + response.data.id_jadwal + '"><td>'+{{++$i}}+'</td><td>' + response.data.tanggal + '</td>';
+                      var jadwal = '<tr id="row_ ' + response.data.id_jadwal + '"><td>'+'</td><td>' + response.data.tanggal + '</td>';
                       jadwal += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-data"><i class="fas fa-user-edit"></i></button>';
                       jadwal += '<button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button></td></tr>';
                       $('table tbody').append(jadwal);

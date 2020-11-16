@@ -1,16 +1,29 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Puskesmas;
+
 use Illuminate\Http\Request;
 
 class PuskesmasController extends Controller
 {
     public function puskesmas()
+   {
+    //
+   }
+
+    public function index()
     {
-       return view('admin.puskesmas.puskesmas');
+        $datas = Puskesmas::all();
+        return view('admin.puskesmas.puskesmas',compact('datas'))->with('i');
+
     }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
     public function create(Request $request)
     {
@@ -25,9 +38,10 @@ class PuskesmasController extends Controller
 
     public function update(Request $request, $id)
     {
-        Puskesmas::where('id_puskesmas', $id)
-            ->update($request->only('nama_puskesmas', 'alamat'));
-        return redirect()->back()->with('success', 'Data berhasil diubah');
+
+        $data = $request->only('nama_puskesmas','alamat');
+        Puskesmas::whereIdPuskesmas($id)->update($data);
+        return redirect()->back()->with('success', 'Data berhasil  diubah');
     }
 
     public function delete($id)
@@ -37,7 +51,8 @@ class PuskesmasController extends Controller
             $data->delete();
             return redirect()->back()->with('success', 'Data berhasil dihapus');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('success', 'Data gagal dihapus');
-        }
+
+            return redirect()->back()->with('error', 'Data gagal dihapus');
+        }          
     }
 }

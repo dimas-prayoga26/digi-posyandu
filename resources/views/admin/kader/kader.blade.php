@@ -9,7 +9,7 @@
             <h1 class="h3 mb-0 text-gray-800">Kader Penanggung Jawab</h1>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="./">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Kader Penanggung Jawab</li>
+              <li class="breadcrumb-item active" aria-current="page">Kader Penanggung Jawab</li>         
             </ol>
           </div>
 
@@ -20,7 +20,19 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Data Kader Penanggung Jawab</h6>
                 </div>
-              
+
+                <div class="card-header">
+                  @if (session('success'))
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h6><i class="fas fa-check"></i><b> Berhasil!</b></h6>
+                    {{ session('success') }}
+                  </div>
+                  @endif
+                </div>
+                
                 {{-- Modal Tambah --}}
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <button type="button" class="btn btn-success btn-icon-split btn-sm" data-toggle="modal" data-target="#exampleModal"
@@ -109,15 +121,19 @@
                       <tr>
                         <th scope="row">{{$loop->iteration}}</th>
                         <td>{{$data->username}}</td>
-                        <td>{{$data->nama}}</td>
+                        <td>{{$data->name}}</td>
                         <td>{{$data->jk}}</td>
                         <td>{{$data->alamat}}</td>
                         <td>{{$data->posyandu->nama_posyandu}}</td>
                         <td>
-                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-data">
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-data-{{$data->id_user}}">
                             <i class="fas fa-user-edit"></i>
                            </button>
+                           <form action="{{url('deletekeder', $data->id_user)}}" method="POST" class="d-inline">
+                            @csrf
+                        @method('delete')
                         <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                           </form>
                       </td>
                       </tr>
                       @endforeach
@@ -126,8 +142,9 @@
                 </div>
               </div>
             </div>
+@foreach ($datas as $data)
 {{-- Modal edit --}}
-<div class="modal fade" id="edit-data" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="edit-data-{{$data->id_user}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 aria-hidden="true">
 <div class="modal-dialog" role="document">
   <div class="modal-content">
@@ -137,30 +154,31 @@ aria-hidden="true">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-<form action="add_bidan" method="POST">
+<form action="{{url('editkader', $data->id_user)}}" method="POST">
   @csrf
+  @method('PUT')
   <div class="modal-body">
-     <div class="form-group">
-       <label for="username-edit">Username</label>
-       <input type="text" class="form-control" id="username-edit" name="username" placeholder="Masukan Username">
-     </div>
-     <div class="form-group">
-       <label for="nama-edit">Nama</label>
-       <input type="text" class="form-control" id="nama-edit" name="nama" placeholder="Masukan Nama">
-     </div>
+    <div class="form-group">
+      <label for="username">Username</label>
+    <input type="text" class="form-control" id="username" name="username" value="{{$data->username}}" readonly>
+    </div>
+    <div class="form-group">
+      <label for="name">Nama</label>
+      <input type="text" class="form-control" id="name" name="name" value="{{$data->name}}">
+    </div>
      <label>Jenis Kelamin</label>
      <br>
      <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="jk" id="jk1" value="laki-laki">
+      <input class="form-check-input" type="radio" name="jk" id="jk1" value="laki-laki" {{ ($data->jk=="laki-laki")? "checked" : "" }}>
       <label class="form-check-label" for="jk1">Laki - Laki</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="jk" id="jk2" value="perempuan">
+      <input class="form-check-input" type="radio" name="jk" id="jk2" value="perempuan" {{ ($data->jk=="perempuan")? "checked" : "" }}>
       <label class="form-check-label" for="jk2">Perempuan</label>
     </div>
      <div class="form-group">
        <label for="alamat">Alamat</label>
-       <textarea class="form-control" id="alamat-edit" name="alamat" rows="2"></textarea>
+     <textarea class="form-control" id="alamat-edit" name="alamat" rows="2">{{$data->alamat}}</textarea>
      </div>
     <div class="form-group">
       <label for="posyandu">Posyandu</label>
@@ -178,12 +196,13 @@ aria-hidden="true">
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-    <button type="button" class="btn btn-success">Simpan</button>
+    <button type="sumbit" class="btn btn-success">Simpan</button>
   </div>
 </div>
 </div>
 </div>
-</div>
+
 </form>
-{{-- Akhir Modal Tambah --}}
+{{-- Akhir Modal Edit --}}
+@endforeach
 @endsection

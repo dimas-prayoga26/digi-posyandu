@@ -21,6 +21,28 @@
                   <h6 class="m-0 font-weight-bold text-primary">Data Posyandu</h6>
                 </div>
               
+                <div class="card-header">
+                  @if (session('success'))
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h6><i class="fas fa-check"></i><b> Berhasil!</b></h6>
+                    {{ session('success') }}
+                  </div>
+                  @endif
+
+                  @if (session('error'))
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h6><i class="fas fa-ban"></i><b> Gagal!</b></h6>
+                    {{ session('error') }}
+                  </div>
+                  @endif
+                </div>
+
                 {{-- Modal Tambah --}}
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <button type="button" class="btn btn-success btn-icon-split btn-sm" data-toggle="modal" data-target="#exampleModal"
@@ -79,8 +101,8 @@
                           </div>
                        </div>
                        <div class="modal-footer">
-                         <button type="submit" class="btn btn-primary">Save changes</button>
-                         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Tutup</button>
+                         <button type="submit" class="btn btn-success">Simpan</button>
                        </div>
                       </form>
                      </div>
@@ -177,8 +199,8 @@
                             </div>
                          </div>
                          <div class="modal-footer">
-                           <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-                           <button type="submit" class="btn btn-primary">Save changes</button>
+                           <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                           <button type="submit" class="btn btn-success">Simpan</button>
                          </div>
                         </form>
                      </div>

@@ -47,7 +47,7 @@ class LoginController extends Controller
                 session()->put('nama_admin', $admin->nama);
                 session()->put('level', $admin->level);
                 session()->put('puskesmas', $admin->id_puskesmas);
-                return redirect('dashboard');
+                return redirect('dashboard')->with('success', 'Selamat Datang');
             }else{
                 return redirect()
                     ->back()
@@ -77,11 +77,13 @@ class LoginController extends Controller
 
         
             if($auth->attempt($credentials)){
-                $admin = User::where('username', $request->username)
+                $user = User::where('username', $request->username)
                                 ->where('level','bidan')->first();
-                session()->put('admin', $admin->username);
-                session()->put('nama_admin', $admin->nama);
-                return redirect('/admin/DashboardAdmin');
+                                session()->put('bidan', $user->username);
+                                session()->put('name', $user->name);
+                                session()->put('level', $user->level);
+                                session()->put('posyandu', $user->id_posyandu);
+                return redirect('dashboard')->with('success', 'Selamat Datang');
             }else{
                 return redirect()
                     ->back()
@@ -93,11 +95,11 @@ class LoginController extends Controller
 
     public function logoutAdmin(){
         session()->forget('admin');
-        return redirect('/admin/loginAdmin');
+        return redirect('/login/admin');
     }
    
     public function logoutBidan(){
         session()->forget('user');
-        return redirect('/admin/loginAdmin');
+        return redirect('/login/bidan');
     }
 }
