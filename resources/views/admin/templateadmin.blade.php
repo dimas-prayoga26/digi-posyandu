@@ -222,7 +222,7 @@
               success: function( response ){
                   console.log(response);
                   if( response.error == 0 ){      
-                      var jadwal = '<tr id="row_ ' + response.data.id_jadwal + '"><td>'+{{++$i}}+'</td><td>' + response.data.tanggal + '</td>';
+                      var jadwal = '<tr id="row_ ' + response.data.id_jadwal + '"><td>'</td><td>' + response.data.tanggal + '</td>';
                       jadwal += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-data"><i class="fas fa-user-edit"></i></button>';
                       jadwal += '<button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button></td></tr>';
                       $('table tbody').append(jadwal);

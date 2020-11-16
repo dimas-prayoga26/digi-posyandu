@@ -44,17 +44,6 @@ class PuskesmasController extends Controller
         return redirect()->back()->with('success', 'Data berhasil  diubah');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-        Puskesmas::where('id_puskesmas', $id)
-            ->update($request->only('nama_puskesmas', 'alamat'));
-        return redirect()->back()->with('success', 'Data berhasil diubah');
-    }
-
     public function delete($id)
     {
         $data = Puskesmas::findOrFail($id);
@@ -64,8 +53,6 @@ class PuskesmasController extends Controller
         } catch (\Throwable $th) {
 
             return redirect()->back()->with('error', 'Data gagal dihapus');
-}
-
-            return redirect()->back()->with('success', 'Data gagal dihapus');
-        }
+        }          
     }
+}

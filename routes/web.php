@@ -34,18 +34,18 @@ Route::delete('deleteadminpuskes/{id}','AdminController@delete');
 
 // Route Bidan Desa
 Route::get('bidan','UserController@bidan');
-<<<<<<< HEAD
+
 Route::post('add_bidan','UserController@createBidan');
 Route::put('editbidan/{id}','UserController@update');
 Route::delete('deletebidan/{id}','UserController@delete');
 
 Route::get('vaksinasi','VaksinasiController@vaksinasi');
-=======
+
 Route::get('vaksinasi','VaksinasiController@index');
 Route::post('addVaksinasi', 'VaksinasiController@create');
 Route::put('editVaksinasi/{id}','VaksinasiController@update');
 Route::delete('deleteVaksinasi/{id}','VaksinasiController@delete');
->>>>>>> 6beb22964af9b59391ad3f88c3cbeb7998392191
+
 Route::get('imunisasi','ImunisasiController@imunisasi');
 Route::get('gizi','GiziController@gizi');
 
