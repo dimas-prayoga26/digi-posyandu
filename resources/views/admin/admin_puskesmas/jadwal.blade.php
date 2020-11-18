@@ -21,6 +21,18 @@
                   <h6 class="m-0 font-weight-bold text-primary">Data Jadwal Posyandu</h6>
                 </div>
                 
+                <div class="card-header">
+                  @if (session('success'))
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h6><i class="fas fa-check"></i><b> Berhasil!</b></h6>
+                    {{ session('success') }}
+                  </div>
+                  @endif
+                </div>
+
                 {{-- Modal Tambah --}}
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <button type="button" class="btn btn-success btn-icon-split btn-sm" data-toggle="modal" data-target="#exampleModal"
@@ -74,8 +86,8 @@
 
                       @foreach ($datas as $data)
                         <tr id="row_{{$data->id_jadwal}}">
-                          <td>{{++$i}}</td>
-                          <td id="td_tgl">{{$data->tanggal}}</td>
+                          <th scope="row">{{$loop->iteration}}</th>
+                          <td id="td_tgl">{{date('d-m-Y', strtotime($data->tanggal))}}</td>
                           <td>
                             <button type="button" class="btn btn-primary" 
                               data-toggle="modal" data-target="#edit-data">

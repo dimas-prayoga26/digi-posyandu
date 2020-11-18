@@ -21,6 +21,18 @@
                   <h6 class="m-0 font-weight-bold text-primary">Data Puskesmas</h6>
                 </div>
               
+                <div class="card-header">
+                  @if (session('success'))
+                  <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h6><i class="fas fa-check"></i><b> Berhasil!</b></h6>
+                    {{ session('success') }}
+                  </div>
+                  @endif
+                </div>
+
                 {{-- Modal Tambah --}}
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <button type="button" class="btn btn-success btn-icon-split btn-sm" data-toggle="modal" data-target="#exampleModal"
@@ -41,6 +53,16 @@
                            <span aria-hidden="true">&times;</span>
                          </button>
                        </div>
+                        <div class="modal-body">
+                          <form action="addPuskesmas" method="POST">
+                         @csrf
+                            <div class="form-group">
+                              <label for="nama_puskesmas">Nama Puskesmas</label>
+                              <input type="text" class="form-control @error('nama_puskesmas') is-invalid @enderror" value="{{ old('nama_puskesmas') }}" id="nama_puskesmas" name="nama_puskesmas" placeholder="Masukan nama puskesmas">
+                              @error('nama_puskesmas')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                          </div>
                         <form id="frmAddPuskesmas" action="{{ url('addPuskesmas') }}" method="POST" role="form">
                           @csrf
                        <div class="modal-body">
@@ -56,9 +78,8 @@
                        </div>
 
                        <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Tutup</button>
-                         <button type="submit" class="btn btn-success">Simpan</button>
-                         
+                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Tutup</button>
+                         <button type="submit" class="btn btn-success">Simpan</button>                        
                        </div>
                      </div>
                    </div>

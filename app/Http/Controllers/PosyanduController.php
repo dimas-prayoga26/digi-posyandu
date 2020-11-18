@@ -41,9 +41,9 @@ class PosyanduController extends Controller
         $data = Posyandu::findOrFail($id);
         try {
             $data->delete();
-            return redirect()->back()->with('success', 'Data berhasil dihapus');
+            return redirect()->back()->with('success', 'Data Berhasil Dihapus');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Data gagal dihapus');
+            return redirect()->back()->with('error', 'Data Gagal Dihapus');
         }
     }
 }

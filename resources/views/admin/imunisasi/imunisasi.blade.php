@@ -20,8 +20,8 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Data Imunisasi</h6>
                 </div>
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <a href="{{url ('#')}}" class="btn btn-success" >Tambah data</a>
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
+                  <button type="button" class="btn btn-outline-success ">Export Laporan</button>
                 </div>
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush" id="dataTable">

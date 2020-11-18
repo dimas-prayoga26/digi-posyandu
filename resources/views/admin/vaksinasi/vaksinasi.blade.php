@@ -20,8 +20,8 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Data Vaksinasi</h6>
                 </div>
-              
-               <div class="card-header">
+
+                <div class="card-header">
                   @if (session('success'))
                   <div class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -32,7 +32,7 @@
                   </div>
                   @endif
                 </div>
-
+                
                 {{-- Modal Tambah --}}
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <button type="button" class="btn btn-success btn-icon-split btn-sm" data-toggle="modal" data-target="#exampleModal"
