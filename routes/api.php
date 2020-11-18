@@ -19,3 +19,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post("/Login", "API\KaderApiController@login");
+Route::post('/anak', 'API\AnakApiController@create');
+Route::post('/getAnak', 'API\AnakApiController@getAll');
+Route::post('/data-gizi', 'API\GiziApiController@create');
+//Route::get('/try/{weight}/{gender}/{age}', 'API\GiziApiController@countWeightAge');
+//Route::get('/coba', 'API\GiziApiController@hitung');
+Route::get('/getDesa', 'API\DesaApiController@getAll');
+Route::get('/getKecamatan', 'API\KecamatanApiController@getAll');
+Route::get('/getPosyandu', 'API\PosyanduApiController@getAll');

@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class StandarWho extends Model
 {
     protected $table = 'standar_who';
-    
+	
+	protected $primaryKey = 'id_standar_who';
+	
     protected $fillable = [
         'id_standar_who',
 		'parameter',

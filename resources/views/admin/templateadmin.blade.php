@@ -33,9 +33,7 @@
           <span>Dashboard</span></a>
       </li>
       <hr class="sidebar-divider">
-      <div class="sidebar-heading">
-        <!--Features-->
-      </div>
+      <div class="sidebar-heading"><!--Features--></div>
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
           aria-expanded="true" aria-controls="collapseBootstrap">
@@ -59,7 +57,6 @@
         </a>
         <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <!--<h6 class="collapse-header">Imunisasi</h6>-->
             <a class="collapse-item" href="{{url('vaksinasi')}}">Vaksinasi</a>
             <a class="collapse-item" href="{{url('imunisasi')}}">Imunisasi</a>
           </div>
@@ -72,9 +69,7 @@
         </a>
       </li>
       <hr class="sidebar-divider">
-      <div class="sidebar-heading">
-      <!--  Examples-->
-      </div>
+      <div class="sidebar-heading"> <!--  Examples--></div>
     
       <li class="nav-item">
         <a class="nav-link" href="{{url('puskesmas')}}">
@@ -94,9 +89,9 @@
           <span>Jadwal</span>
         </a>
       </li>
-      <hr class="sidebar-divider">
-      
+      <hr class="sidebar-divider"> 
     </ul>
+    
     <!-- Sidebar -->
     <div id="content-wrapper" class="d-flex flex-column">
       <div id="content">
@@ -111,20 +106,6 @@
                 aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
               </a>
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                aria-labelledby="searchDropdown">
-                <form class="navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-1 small" placeholder="What do you want to look for?"
-                      aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
             </li>
                         
             <div class="topbar-divider d-none d-sm-block"></div>
@@ -146,8 +127,6 @@
                 </a>
               </div>
             </li>
-
-
           </ul>
         </nav>
         <!-- Topbar -->
@@ -177,7 +156,6 @@
               </div>
             </div>
           </div>
-
         </div>
         <!---Container Fluid-->
       </div>
@@ -194,7 +172,6 @@
       <!-- Footer -->
     </div>
   </div>
-
  <!-- Scroll to top -->
  <a class="scroll-to-top rounded" href="#page-top">
   <i class="fas fa-angle-up"></i>
@@ -208,7 +185,7 @@
 <script src="{{url('vendor/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{url('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
-<script>
+{{-- <script>
   $(document).ready(function () {
       var frmAddJadwal = $('#frmAddJadwal');
       frmAddJadwal.submit(function (event) {
@@ -232,7 +209,7 @@
           });
       });
   });
-</script>
+</script> --}}
 
 <!-- Page level custom scripts -->
 {{-- <script>
