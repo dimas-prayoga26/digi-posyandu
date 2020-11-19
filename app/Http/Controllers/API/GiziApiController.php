@@ -35,20 +35,20 @@ class GiziApiController extends Controller
         $bb_pb_tb    = $this->countWeightHeight($bb, $anak->jk, $pb_tb, $usia);
 
         $data_status = [
-            'bb_u'      => $bb_u,
-		    'pb_tb_u'   => $pb_tb_u,
-		    'bb_pb_tb'  => $bb_pb_tb
+            	'bb_u'      => $bb_u,
+		'pb_tb_u'   => $pb_tb_u,
+		'bb_pb_tb'  => $bb_pb_tb
         ];
 
         StatusGizi::create($data_status);
         
         $id_status = StatusGizi::where('bb_u', $bb_u)
-                    ->where('pb_tb_u', $pb_tb)
+                    ->where('pb_tb_u', $pb_tb_u)
                     ->where('bb_pb_tb', $bb_pb_tb)
                     ->value('id_status_gizi');
         
         $data_gizi = [
-            'no_pemeriksaan_gizi' => $request->id_gizi,
+            'no_pemeriksaan_gizi' => $request->no_pemeriksaan_gizi,
             'usia'                => $usia,
             'pb_tb'               => $pb_tb,
             'bb'                  => $bb,
