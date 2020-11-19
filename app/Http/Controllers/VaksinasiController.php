@@ -26,19 +26,15 @@ class VaksinasiController extends Controller
      */
     public function create(Request $request)
     {
-        $this->validate($request, [
-        'nama_vaksinasi'  => 'required|string|min:1|max:15',
-            
+        $request->validate([
+            'nama_vaksinasi' => 'required|unique:vaksinasi|string|max:100', 
         ],
         [
-                'required'      => 'Data tidak boleh kosong',
-                'numeric'       => 'Data harus diisi dengan angka',
-                'string'        => 'Data harus diisi dengan huruf',
-                'min'           => 'Data kurang dari batas minimum',
-                'max'           => 'Data lebih dari batas maksimal',
-                      
-        ]
-    );
+            'nama_vaksinasi.required'    => 'Nama Vaksinasi harus diisi',
+            'nama_vaksinasi.unique'      => 'Nama Vaksinasi sudah ada', 
+            'nama_vaksinasi.max'         => 'Nama Vaksinasi panjang karakter maksima 100',
+        ]);
+
         $data = $request->only('nama_vaksinasi');
         Vaksinasi::create($data);
         return redirect()->back()->with('success', 'Data berhasil ditambah');

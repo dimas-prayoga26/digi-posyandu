@@ -8,6 +8,8 @@ class Anak extends Model
 {
     protected $table = 'anak';
     
+    protected $primaryKey = 'id_anak';
+
     protected $fillable = [
         'id_anak', 
         'nik',
@@ -26,4 +28,8 @@ class Anak extends Model
         public function posyandu(){
         return $this->belongsTo('App\Posyandu', 'id_posyandu');
     }
+        public function keluarga()
+        {
+            return $this->belongsTo('App\Keluarga', 'no_kk');
+        }       
 }

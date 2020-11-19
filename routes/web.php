@@ -43,6 +43,11 @@ Route::get('vaksinasi','VaksinasiController@index');
 Route::post('addVaksinasi', 'VaksinasiController@create');
 Route::put('editVaksinasi/{id}','VaksinasiController@update');
 Route::delete('deleteVaksinasi/{id}','VaksinasiController@delete');
+Route::get('imunisasi','ImunisasiController@imunisasi');
+Route::get('gizi','GiziController@index');
+Route::get('/gizi/export_gizi', 'GiziController@export_gizi');
+
+//================================== Puskesmas=================================
 Route::get('puskesmas','PuskesmasController@index');
 Route::post('addPuskesmas', 'PuskesmasController@create');
 Route::put('editPuskesmas/{id}','PuskesmasController@update');
