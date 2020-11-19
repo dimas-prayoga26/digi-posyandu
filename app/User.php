@@ -10,6 +10,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected $primaryKey = 'id_user';
     protected $fillable = [
         'id_user', 
         'name',
@@ -22,7 +23,7 @@ class User extends Authenticatable
     ];
 
     protected $hidden = [
-        'password'
+        'password','remember_token'
     ];
 
     public function posyandu(){

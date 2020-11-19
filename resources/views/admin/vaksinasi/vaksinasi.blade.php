@@ -91,6 +91,7 @@
         </div>
       </div>
     </div>
+  </div>
   
     {{-- Modal Edit --}}
     @foreach ($datas as $data)
@@ -125,6 +126,5 @@
           </div>
         </div>
       </div>
-    </div>
     @endforeach
 @endsection

@@ -18,20 +18,31 @@
         <div class="card mb-4">
           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Data Jadwal Posyandu</h6>
+          </div>      
+          <div class="card-header">
+            @if (session('success'))
+            <div class="alert alert-success alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h6><i class="fas fa-check"></i><b> Berhasil!</b></h6>
+              {{ session('success') }}
+            </div>
+            @endif
           </div>
 
           {{-- Modal Tambah --}}
           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <button type="button" class="btn btn-success btn-icon-split btn-sm" 
-              data-toggle="modal" data-target="#exampleModal" id="#myBtn">
+            <button type="button" class="btn btn-success btn-icon-split btn-sm" data-toggle="modal" data-target="#exampleModal"
+                id="#myBtn">
                 <span class="icon text-white-50">
                   <i class="fas fa-plus"></i>
                 </span>
                 <span class="text">Tambah Data Jadwal Posyandu</span>  
-            </button>
-
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" 
-              aria-labelledby="exampleModalLabel" aria-hidden="true">
+              </button>
+              
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" 
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -49,8 +60,8 @@
                       </div>                         
                     </div>
                     <div class="modal-footer">
-                      <button type="submit" class="btn btn-success">Simpan</button>
                       <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-success">Simpan</button>
                     </div>
                   </form>
                 </div>
@@ -58,6 +69,7 @@
             </div>
           </div>
           {{-- Akhir Modal Tambah --}}
+
 
           <div class="table-responsive p-3">
             <table class="table align-items-center table-flush" id="dataTable">
@@ -69,10 +81,11 @@
                 </tr>
               </thead>
               <tbody>
+
                 @foreach ($datas as $data)
                   <tr id="row_{{$data->id_jadwal}}">
-                    <td>{{++$i}}</td>
-                    <td id="td_tgl">{{$data->tanggal}}</td>
+                    <th scope="row">{{$loop->iteration}}</th>
+                    <td id="td_tgl">{{date('d-m-Y', strtotime($data->tanggal))}}</td>
                     <td>
                       <button type="button" class="btn btn-primary" 
                         data-toggle="modal" data-target="#edit-data">
@@ -89,33 +102,93 @@
           </div>
         </div>
       </div>
+    </div>
 
-      {{-- Modal edit --}}
-      <div class="modal fade" id="edit-data" tabindex="-1" role="dialog" 
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Edit Data Jadwal Puskesmas</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <form>
-              <div class="modal-body">
-                  <div class="form-group">
-                    <label for="tgl">Tanggal</label>
-                    <input type="date" class="form-control" id="tgl" name="tgl" placeholder="Masukan tgl">
-                  </div>                         
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-success">Simpan</button>
-                  <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-                </div>
+    {{-- Modal edit --}}
+    <div class="modal fade" id="edit-data" tabindex="-1" role="dialog" 
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Data Jadwal Puskesmas</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form>
+            <div class="modal-body">
+                <div class="form-group">
+                  <label for="tgl">Tanggal</label>
+                  <input type="date" class="form-control" id="tgl" name="tgl" placeholder="Masukan tgl">
+                </div>                         
               </div>
-            </form>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success">Simpan</button>
+              </div>
+          </form>
+      </div>
+    </div>
+    {{-- Akhir Modal Tambah --}}
+
+    <div class="table-responsive p-3">
+      <table class="table align-items-center table-flush" id="dataTable">
+        <thead class="thead-light">
+          <tr>
+            <th>No.</th>
+            <th>Tanggal</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($datas as $data)
+            <tr id="row_{{$data->id_jadwal}}">
+              <td>{{++$i}}</td>
+              <td id="td_tgl">{{$data->tanggal}}</td>
+              <td>
+                <button type="button" class="btn btn-primary" 
+                  data-toggle="modal" data-target="#edit-data">
+                  <i class="fas fa-user-edit"></i>
+                </button>
+                <button type="submit" class="btn btn-danger">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+</div>
+
+{{-- Modal edit --}}
+<div class="modal fade" id="edit-data" tabindex="-1" role="dialog" 
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Data Jadwal Puskesmas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+            <div class="form-group">
+              <label for="tgl">Tanggal</label>
+              <input type="date" class="form-control" id="tgl" name="tgl" placeholder="Masukan tgl">
+            </div>                         
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success">Simpan</button>
+            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
           </div>
         </div>
-      </div>
-      {{-- Akhir Modal edit --}}
+      </form>
+    </div>
+  </div>
+</div>
+{{-- Akhir Modal edit --}}
 @endsection

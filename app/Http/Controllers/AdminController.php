@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Admin;
+use App\Puskesmas;
 use DB;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,9 @@ class AdminController extends Controller
      */
     public function adminpuskesmas()
    {
-       return view('admin.admin_puskesmas.admin_puskesmas');
+        $puskes = Puskesmas::all();
+        $datas  = Admin::all();
+       return view('admin.admin_puskesmas.admin_puskesmas', compact('puskes', 'datas'));
    }
     public function index()
     {
@@ -26,9 +29,20 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        
+        $data = [
+            'username'      =>$request->username, 
+            'password'      =>$request->password, 
+            'nama'          =>$request->nama, 
+            'jk'            =>$request->jk, 
+            'level'         =>'admin_puskesmas', 
+            'alamat'        =>$request->alamat, 
+            'id_puskesmas'  =>$request->puskes
+
+        ];
+        $create = Admin::create($data);
+        return redirect()->back()->with('success','Data Berhasil Ditambah');
     }
 
     /**
@@ -37,7 +51,7 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
         //
     }
@@ -73,7 +87,9 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->only('nama','jk','id_puskesmas');
+        Admin::whereIdPosyandu($id)->update($data);
+        return redirect()->back()->with('success', 'Data berhasil ditambah');
     }
 
     /**
@@ -82,8 +98,14 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $data = Admin::findOrFail($id);
+        try {
+            $data->delete();
+            return redirect()->back()->with('success', 'Data berhasil dihapus');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Data gagal dihapus');
+        }
     }
 }
