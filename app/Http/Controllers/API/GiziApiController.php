@@ -35,13 +35,12 @@ class GiziApiController extends Controller
         $bb_pb_tb    = $this->countWeightHeight($bb, $anak->jk, $pb_tb, $usia);
 
         $data_status = [
-            	'bb_u'      => $bb_u,
+        'bb_u'      => $bb_u,
 		'pb_tb_u'   => $pb_tb_u,
 		'bb_pb_tb'  => $bb_pb_tb
         ];
 
         StatusGizi::create($data_status);
-        
         $id_status = StatusGizi::where('bb_u', $bb_u)
                     ->where('pb_tb_u', $pb_tb_u)
                     ->where('bb_pb_tb', $bb_pb_tb)
@@ -94,7 +93,6 @@ class GiziApiController extends Controller
             return $status = "O";
         }   
     }
-
     public function countHeightAge($height, $gender, $age)
     {
         $status;
@@ -113,12 +111,12 @@ class GiziApiController extends Controller
                 ->first();
         }
 
-        if($height < $std->sd_min_dua){
+        if($height < $std->sd_min_tiga){
             return $status = "SP";
-        }elseif($height < $std->sd_min_satu && $height >= $std->sd_min_dua){
+        }elseif($height <= $std->sd_min_dua && $height >= $std->sd_min_tiga){
             return $status = "P";
-        }elseif($height < $std->median && $height >= $std->sd_min_satu){
-            return $status = "BP";
+        }elseif($height <= $std->sd_min_satu && $height > $std->sd_min_dua){
+            return $status = "BP";  
         }elseif($height < $std->sd_plus_satu && $height >= $std->median){
             return $status = "N";
         }elseif($height < $std->sd_plus_dua && $height >= $std->sd_plus_satu){
