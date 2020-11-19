@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Anak;
+use App\Keluarga;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class AnakApiController extends Controller
             'jk'          => $request->jk,
             'anak_ke'     => $request->anak_ke, 
             'bb_lahir'    => $request->bb_lahir ,
-            'pp_lahir'    => $request->pb_lahir,
+            'pb_lahir'    => $request->pb_lahir,
             'kia'         => $request->kia,
             'imd'         => $request->imd,
             'no_kk'       => $request->no_kk,
@@ -42,13 +43,13 @@ class AnakApiController extends Controller
             'id_desa'        => $request->id_desa
         ];
         
-        $create_anak     = Anak::create($data);
-        $create_keluarga = Keluarga::create($data);
-
+        $create_keluarga = Keluarga::create($data_keluarga);
+        $create_anak     = Anak::create($data_anak);
+        
         if($create_anak && $create_keluarga){
             return response()->json([
-                'error'   => 0, 
-                'message' => 'Data berhasil disimpan'
+                $data_anak, 
+                $data_keluarga
             ]);
         }
     }

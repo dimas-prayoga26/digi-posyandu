@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use DateTime;
 use App\Anak;
 use App\Gizi;
+use App\StatusGizi;
 use App\StandarWho;
-use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -20,30 +21,46 @@ class GiziApiController extends Controller
 
     public function create(Request $request){
         $anak         = Anak::where('id_anak', $request->id_anak)->first();
-        $tgl_lahir    = Carbon::parse($anak->tgl_lahir)->format('m');
-        $tgl_periksa  = Carbon::parse($request->tgl_periksa)->format('m');
-        $usia         = $tgl_periksa - $tgl_lahir;
-        $ukur;
-        if($usia > 25){
-            $ukur = 1;
-        }else{
-            $ukur = 2;
-        }
-        $data = [
-            'no_pemeriksaan_gizi' => $request->id_gizi,
+        $tgl_lahir    = new DateTime($anak->tgl_lahir);
+        $tgl_periksa  = new DateTime($request->tgl_periksa);
+        $year         = date_diff($tgl_periksa, $tgl_lahir)->y;
+        $month        = date_diff($tgl_periksa, $tgl_lahir)->m;
+        $usia         = ($year*12)+$month;
+        $ukur         = $usia<25 ? 1 : 2;
+        $bb           = $request->bb;
+        $pb_tb        = $request->pb_tb;
+
+        $bb_u        = $this->countWeightAge($bb, $anak->jk, $usia);
+        $pb_tb_u     = $this->countHeightAge($pb_tb, $anak->jk, $usia);
+        $bb_pb_tb    = $this->countWeightHeight($bb, $anak->jk, $pb_tb, $usia);
+
+        $data_status = [
+        'bb_u'      => $bb_u,
+		'pb_tb_u'   => $pb_tb_u,
+		'bb_pb_tb'  => $bb_pb_tb
+        ];
+
+        StatusGizi::create($data_status);
+        $id_status = StatusGizi::where('bb_u', $bb_u)
+                    ->where('pb_tb_u', $pb_tb_u)
+                    ->where('bb_pb_tb', $bb_pb_tb)
+                    ->value('id_status_gizi');
+        
+        $data_gizi = [
+            'no_pemeriksaan_gizi' => $request->no_pemeriksaan_gizi,
             'usia'                => $usia,
-            'pb_tb'               => $request->pb_tb,
-            'bb'                  => $request->bb,
+            'pb_tb'               => $pb_tb,
+            'bb'                  => $bb,
             'tgl_periksa'         => $request->tgl_periksa,
             'cara_ukur'           => $ukur,
             'asi_eks'             => $request->asi_eks,
             'vit_a'               => $request->vit_a,
             'validasi'            => $request->validasi,
-            'id_status_gizi'      => $request->id_status_gizi,
+            'id_status_gizi'      => $id_status,
             'id_anak'             => $request->id_anak
         ];
         
-        $create = Gizi::create($data);
+        $create = Gizi::create($data_gizi);
 
         if($create){
             return response()->json([
@@ -53,20 +70,96 @@ class GiziApiController extends Controller
         }
     }
 
-    public function countWeightAge($jk, $age, $weight){
-        $div = $weight/$age;
+    public function countWeightAge($weight, $gender, $age)
+    {
+        $status;
+        $std    = StandarWho::where('kategori', 'BB/U')
+                    ->where('jk', $gender)
+                    ->where('parameter', $age)
+                    ->first();
+        if($weight < $std->sd_min_dua){
+            return $status = "SK";
+        }elseif($weight < $std->sd_min_satu && $weight >= $std->sd_min_dua){
+            return $status = "K";
+        }elseif($weight < $std->median && $weight >= $std->sd_min_satu){
+            return $status = "BK";
+        }elseif($weight < $std->sd_plus_satu && $weight >= $std->median){
+            return $status = "N";
+        }elseif($weight < $std->sd_plus_dua && $weight >= $std->sd_plus_satu){
+            return $status = "BG";
+        }elseif($weight < $std->sd_plus_tiga && $weight >= $std->sd_plus_dua){
+            return $status = "G";
+        }elseif($weight >= $std->sd_plus_tiga){
+            return $status = "O";
+        }   
+    }
+    public function countHeightAge($height, $gender, $age)
+    {
+        $status;
+        //cara ukur
+        $measure = $age<25 ? 1 : 2;
 
-        $std = StandarWho::where('kategori', 'BB/U')
-                ->where('jk', $jk)
+        if($measure == 1){
+            $std = StandarWho::where('kategori', 'PB/U')
+                ->where('jk', $gender)
                 ->where('parameter', $age)
-                ->get();
+                ->first();    
+        }elseif($measure == 2){
+            $std = StandarWho::where('kategori', 'TB/U')
+                ->where('jk', $gender)
+                ->where('parameter', $age)
+                ->first();
+        }
+
+        if($height < $std->sd_min_tiga){
+            return $status = "SP";
+        }elseif($height <= $std->sd_min_dua && $height >= $std->sd_min_tiga){
+            return $status = "P";
+        }elseif($height <= $std->sd_min_satu && $height > $std->sd_min_dua){
+            return $status = "BP";  
+        }elseif($height < $std->sd_plus_satu && $height >= $std->median){
+            return $status = "N";
+        }elseif($height < $std->sd_plus_dua && $height >= $std->sd_plus_satu){
+            return $status = "BT";
+        }elseif($height < $std->sd_plus_tiga && $height >= $std->sd_plus_dua){
+            return $status = "T";
+        }elseif($height >= $std->sd_plus_tiga){
+            return $status = "ST";
+        }   
     }
 
-    public function countHeightAge($jk, $height, $age){
+    public function countWeightHeight($weight, $gender, $height, $age)
+    {
+        $status;
+        //cara ukur
+        $measure = $age<25 ? 1 : 2;
 
-    }
-
-    public function countWeightHeight($jk, $weight, $height){
-            
+        if($measure == 1){
+            $std = StandarWho::where('kategori', 'BB/PB')
+                ->where('jk', $gender)
+                ->where('parameter', $height)
+                ->first();    
+        }elseif($measure == 2){
+            $std = StandarWho::where('kategori', 'BB/TB')
+                ->where('jk', $gender)
+                ->where('parameter', $height)
+                ->first();
+        }
+        
+        if($weight < $std->sd_min_dua){
+            return $status = "SK";
+        }elseif($weight < $std->sd_min_satu && $weight >= $std->sd_min_dua){
+            return $status = "K";
+        }elseif($weight < $std->median && $weight >= $std->sd_min_satu){
+            return $status = "BK";
+        }elseif($weight < $std->sd_plus_satu && $weight >= $std->median){
+            return $status = "N";
+        }elseif($weight < $std->sd_plus_dua && $weight >= $std->sd_plus_satu){
+            return $status = "BG";
+        }elseif($weight < $std->sd_plus_tiga && $weight >= $std->sd_plus_dua){
+            return $status = "G";
+        }elseif($weight >= $std->sd_plus_tiga){
+            return $status = "O";
+        }           
     }
 }

@@ -18,18 +18,18 @@ class Anak extends Model
         'jk',
         'anak_ke',
         'bb_lahir',
-        'pp_lahir',
+        'pb_lahir',
         'kia',
         'imd',
         'no_kk',
         'id_posyandu'
         ];
 
-        public function posyandu(){
+    public function posyandu(){
         return $this->belongsTo('App\Posyandu', 'id_posyandu');
     }
-        public function keluarga()
-        {
-            return $this->belongsTo('App\Keluarga', 'no_kk');
-        }       
+
+    public function keluarga(){
+        return $this->belongsTo('App\Keluarga', 'no_kk');
+    }
 }

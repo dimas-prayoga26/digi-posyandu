@@ -78,9 +78,7 @@
         </a>
       </li>
       <hr class="sidebar-divider">
-      <div class="sidebar-heading">
-      <!--  Examples-->
-      </div>
+      <div class="sidebar-heading"> <!--  Examples--></div>
     
       @if (session('level') == 'super_admin')
       <li class="nav-item">
@@ -107,6 +105,7 @@
       <hr class="sidebar-divider">
       
     </ul>
+    
     <!-- Sidebar -->
     <div id="content-wrapper" class="d-flex flex-column">
       <div id="content">
@@ -156,8 +155,6 @@
                 </a>
               </div>
             </li>
-
-
           </ul>
         </nav>
         <!-- Topbar -->
@@ -193,7 +190,6 @@
               </div>
             </div>
           </div>
-
         </div>
         <!---Container Fluid-->
       </div>
@@ -210,7 +206,6 @@
       <!-- Footer -->
     </div>
   </div>
-
  <!-- Scroll to top -->
  <a class="scroll-to-top rounded" href="#page-top">
   <i class="fas fa-angle-up"></i>
@@ -224,7 +219,7 @@
 <script src="{{url('vendor/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{url('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
-<script>
+{{-- <script>
   $(document).ready(function () {
       var frmAddJadwal = $('#frmAddJadwal');
       frmAddJadwal.submit(function (event) {
@@ -248,7 +243,7 @@
           });
       });
   });
-</script>
+</script> --}}
 
 <!-- Page level custom scripts -->
 {{-- <script>
