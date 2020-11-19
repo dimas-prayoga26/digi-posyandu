@@ -87,8 +87,8 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->only('nama','jk','id_puskesmas');
-        Admin::whereIdPosyandu($id)->update($data);
+        $data = $request->only('nama','jk','alamat','id_puskesmas');
+        Admin::whereIdAdmin($id)->update($data);
         return redirect()->back()->with('success', 'Data berhasil ditambah');
     }
 
