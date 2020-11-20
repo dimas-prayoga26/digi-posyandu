@@ -70,6 +70,35 @@ class GiziApiController extends Controller
         }
     }
 
+    
+    public function Update(Request $request, $id)
+    {
+            $data_gizi = [
+                'no_pemeriksaan_gizi' => $request->no_pemeriksaan_gizi,
+                'usia'                => $usia,
+                'pb_tb'               => $pb_tb,
+                'bb'                  => $bb,
+                'tgl_periksa'         => $request->tgl_periksa,
+                'cara_ukur'           => $ukur,
+                'asi_eks'             => $request->asi_eks,
+                'vit_a'               => $request->vit_a,
+                'validasi'            => $request->validasi,
+                'id_status_gizi'      => $id_status,
+                'id_anak'             => $request->id_anak
+            ];
+
+            $update = Gizi::where('no_pemeriksaan_gizi', $id)
+            ->update($data_gizi);
+
+            if($update){
+            return response()->json([
+                'error'   => 0, 
+                'message' => 'Data berhasil diubah'
+            ]);
+        }
+    }
+
+
     public function countWeightAge($weight, $gender, $age)
     {
         $status;

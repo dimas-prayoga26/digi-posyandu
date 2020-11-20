@@ -20,8 +20,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post("/Login", "API\KaderApiController@login");
 Route::post('/anak', 'API\AnakApiController@create');
+Route::put('/edit-anak/{id}', 'API\AnakApiController@update');
 Route::get('/getAnak', 'API\AnakApiController@getAll');
 Route::post('/data-gizi', 'API\GiziApiController@create');
+Route::get('/getVaksinasi', 'API\ImunisasiApiController@getVaksinasi');
+Route::get('/getImun', 'API\ImunisasiApiController@getAll');
+Route::post('/imunisasi', 'API\ImunisasiApiController@create');
 //Route::get('/try/{weight}/{gender}/{age}', 'API\GiziApiController@countWeightAge');
 //Route::get('/coba', 'API\GiziApiController@hitung');
 Route::get('/getDesa', 'API\DesaApiController@getAll');
