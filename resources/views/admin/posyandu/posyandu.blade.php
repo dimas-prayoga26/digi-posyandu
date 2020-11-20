@@ -167,7 +167,7 @@
                             <div class="form-group">
                               <label for="nama_posyandu">Nama Posyandu</label>
                               <input type="text" class="form-control @error('nama_posyandu') is-invalid @enderror" 
-                                value="{{ old('nama_posyandu') }}" id="nama_posyandu" name="nama_posyandu" 
+                                value="{{ $data->nama_posyandu }}" id="nama_posyandu" name="nama_posyandu" 
                                 placeholder="Masukan nama posyandu">
                               @error('nama_posyandu')
                                 <div class="invalid-feedback">{{ $message }}</div>

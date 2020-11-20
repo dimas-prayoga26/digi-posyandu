@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
+use DateTime;
+use App\Anak;
 use App\Imunisasi;
+use App\Vaksinasi;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -10,6 +13,11 @@ use Illuminate\Support\Facades\Validator;
 
 class ImunisasiApiController extends Controller
 {
+    public function getVaksinasi()
+    {
+        $datas = vaksinasi::all();
+        return response()->json($datas);
+    }
     public function getAll(){
         $datas = Imunisasi::all();
         return response()->json($datas);
@@ -25,7 +33,7 @@ class ImunisasiApiController extends Controller
             'no_pemeriksaan_imunisasi' => $id_imunisasi,
 		    'tgl_imunisasi'            => $now,
 		    'id_vaksinasi'             => $request->id_vaksinasi,
-            'id_anak'                  => $request->id_puskesmas
+            'id_anak'                  => $request->id_anak
         ];
         
         $create = Imunisasi::create($data);

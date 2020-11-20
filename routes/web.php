@@ -35,7 +35,7 @@ Route::delete('deleteadminpuskes/{id}','AdminController@delete');
 // Route Bidan Desa
 Route::get('bidan','UserController@bidan');
 Route::post('add_bidan','UserController@createBidan');
-Route::put('editbidan/{id}','UserController@update');
+Route::put('editbidan/{id}','UserController@updateBidan');
 Route::delete('deletebidan/{id}','UserController@delete');
 
 Route::get('vaksinasi','VaksinasiController@vaksinasi');

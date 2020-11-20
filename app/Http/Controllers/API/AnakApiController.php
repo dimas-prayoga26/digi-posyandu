@@ -48,8 +48,8 @@ class AnakApiController extends Controller
         
         if($create_anak && $create_keluarga){
             return response()->json([
-                $data_anak, 
-                $data_keluarga
+                'error'   => 0, 
+                'message' => 'Data berhasil disimpan'
             ]);
         }
     }
@@ -81,8 +81,8 @@ class AnakApiController extends Controller
             'id_desa'        => $request->id_desa
         ];
         
-        $update_anak     = Anak::create($data);
-        $update_keluarga = Keluarga::create($data);
+        $update_anak     = Anak::where($id)->update($data_anak);
+        $update_keluarga = Keluarga::where($id)->update($data_keluarga);
         
         if($update_anak && $update_keluarga){
             return response()->json([

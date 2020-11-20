@@ -11,6 +11,5 @@ class Vaksinasi extends Model
     protected $fillable = [
         'id_vaksinasi', 
         'nama_vaksinasi', 
- 
     ];
 }
