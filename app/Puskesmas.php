@@ -15,4 +15,8 @@ class Puskesmas extends Model
 		'nama_puskesmas',
 		'alamat'
 	];
+
+	/* public function admin(){
+		return $this->belongsTo('App\Admin', 'id_admin');
+	} */
 }

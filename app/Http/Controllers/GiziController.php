@@ -1,8 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Gizi;
+use App\Anak;
+use App\StatusGizi;
+use App\Keluarga;
+use DB;
 use Illuminate\Http\Request;
+use App\Exports\GiziExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GiziController extends Controller
 {
@@ -11,13 +17,21 @@ class GiziController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function gizi()
-   {
-       return view('admin.gizi.gizi');
-   }
+
     public function index()
     {
-        //
+        /* $datas = DB::table('gizi')
+            ->join('status_gizi', 'gizi.id_status_gizi', '=', 'status_gizi.id_status_gizi')
+            ->join('anak', 'gizi.id_anak', '=', 'anak.id_anak')
+            ->select('gizi.*', 'status_gizi.*', 'anak.*')
+            ->get(); */
+        $datas = Gizi::all();
+        return view('admin.gizi.gizi', compact('datas'));
+    }
+
+    public function export_gizi(){
+        
+        return Excel::download(new GiziExport, 'gizi.xlsx');
     }
 
     /**

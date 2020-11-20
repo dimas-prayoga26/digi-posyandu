@@ -16,7 +16,7 @@ class AdminController extends Controller
     public function adminpuskesmas()
    {
         $puskes = Puskesmas::all();
-        $datas  = Admin::all();
+        $datas  = Admin::where('level', 'admin_puskesmas')->get();
        return view('admin.admin_puskesmas.admin_puskesmas', compact('puskes', 'datas'));
    }
     public function index()
