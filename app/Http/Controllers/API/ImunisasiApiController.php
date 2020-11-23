@@ -24,12 +24,14 @@ class ImunisasiApiController extends Controller
     }
 
     public function create(Request $request){
-        $anak           = Anak::where('id_anak', $request->id_anak)->first();
-        $vaksinasi      = Vaksinasi::where('id_vaksinasi', $request->id_vaksinasi)->first();
-        $tgl_imunisasi  = new DateTime($request->tgl_periksa);
+        $now          = date('Y-m-d');
+        $countId      = Imunisasi::where('created_at', $tgl_periksa)->count();
+        $increment    = $countId + 1;
+        $id_imunisasi = date('Ymd').'0000'.$increment;
+
         $data = [
-            'no_pemeriksaan_imunisasi' => $request->id_imunisasi,
-		    'tgl_imunisasi'            => $request->tgl_imunisasi,
+            'no_pemeriksaan_imunisasi' => $id_imunisasi,
+		    'tgl_imunisasi'            => $now,
 		    'id_vaksinasi'             => $request->id_vaksinasi,
             'id_anak'                  => $request->id_anak
         ];

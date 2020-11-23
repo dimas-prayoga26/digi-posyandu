@@ -50,8 +50,6 @@
                         <!-- <th>Vit. A Agt</th> -->
                         <th>Status Gizi</th>
                         <th>Validasi</th>
-                        
-
 
                       </tr>
                     </thead>

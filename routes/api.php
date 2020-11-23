@@ -27,7 +27,7 @@ Route::get('/getVaksinasi', 'API\ImunisasiApiController@getVaksinasi');
 Route::get('/getImun', 'API\ImunisasiApiController@getAll');
 Route::post('/imunisasi', 'API\ImunisasiApiController@create');
 //Route::get('/try/{weight}/{gender}/{age}', 'API\GiziApiController@countWeightAge');
-//Route::get('/coba', 'API\GiziApiController@hitung');
+//Route::get('/coba', 'API\GiziApiController@test');
 Route::get('/getDesa', 'API\DesaApiController@getAll');
 Route::get('/getKecamatan', 'API\KecamatanApiController@getAll');
 Route::get('/getPosyandu', 'API\PosyanduApiController@getAll');

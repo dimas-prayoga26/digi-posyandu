@@ -22,22 +22,26 @@ class GiziApiController extends Controller
     public function create(Request $request){
         $anak         = Anak::where('id_anak', $request->id_anak)->first();
         $tgl_lahir    = new DateTime($anak->tgl_lahir);
-        $tgl_periksa  = new DateTime($request->tgl_periksa);
-        $year         = date_diff($tgl_periksa, $tgl_lahir)->y;
-        $month        = date_diff($tgl_periksa, $tgl_lahir)->m;
+        $now          = new DateTime('now');;
+        $year         = date_diff($now, $tgl_lahir)->y;
+        $month        = date_diff($now, $tgl_lahir)->m;
         $usia         = ($year*12)+$month;
         $ukur         = $usia<25 ? 1 : 2;
+        $tgl_periksa  = $now->format('Y-m-d');
+        $countId      = Gizi::where('created_at', $tgl_periksa)->count();
+        $increment    = $countId + 1;
+        $id_gizi      = date('Ymd').'0000'.$increment;
         $bb           = $request->bb;
         $pb_tb        = $request->pb_tb;
 
-        $bb_u        = $this->countWeightAge($bb, $anak->jk, $usia);
-        $pb_tb_u     = $this->countHeightAge($pb_tb, $anak->jk, $usia);
-        $bb_pb_tb    = $this->countWeightHeight($bb, $anak->jk, $pb_tb, $usia);
+        $bb_u         = $this->countWeightAge($bb, $anak->jk, $usia);
+        $pb_tb_u      = $this->countHeightAge($pb_tb, $anak->jk, $usia);
+        $bb_pb_tb     = $this->countWeightHeight($bb, $anak->jk, $pb_tb, $usia);
 
         $data_status = [
-        'bb_u'      => $bb_u,
-		'pb_tb_u'   => $pb_tb_u,
-		'bb_pb_tb'  => $bb_pb_tb
+            'bb_u'      => $bb_u,
+            'pb_tb_u'   => $pb_tb_u,
+            'bb_pb_tb'  => $bb_pb_tb
         ];
 
         StatusGizi::create($data_status);
@@ -47,7 +51,7 @@ class GiziApiController extends Controller
                     ->value('id_status_gizi');
         
         $data_gizi = [
-            'no_pemeriksaan_gizi' => $request->no_pemeriksaan_gizi,
+            'no_pemeriksaan_gizi' => $id_gizi,
             'usia'                => $usia,
             'pb_tb'               => $pb_tb,
             'bb'                  => $bb,
