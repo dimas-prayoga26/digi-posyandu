@@ -214,7 +214,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    
     </form>
     {{-- Akhir Modal Tambah --}}
     @endforeach

@@ -178,7 +178,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    
     @endforeach
 
     {{-- Akhir Modal Edit --}}

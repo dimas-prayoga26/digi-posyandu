@@ -31,6 +31,17 @@ class AdminController extends Controller
      */
     public function create(Request $request)
     {
+        $request->validate([
+            'username' => 'required|unique:admins|string|max:100', 
+            'password' => 'required|string|min:5',
+            'nama' => 'required|string',
+            'alamat' => 'required|string' 
+        ],
+        [
+            'required'    => 'Data harus diisi',
+            'unique'      => 'Data sudah ada', 
+            'max'         => 'panjang karakter maksima 100',
+        ]);
         $data = [
             'username'      =>$request->username, 
             'password'      =>$request->password, 
@@ -89,7 +100,7 @@ class AdminController extends Controller
     {
         $data = $request->only('nama','jk','alamat','id_puskesmas');
         Admin::whereIdAdmin($id)->update($data);
-        return redirect()->back()->with('success', 'Data berhasil ditambah');
+        return redirect()->back()->with('success', 'Data berhasil diubah');
     }
 
     /**

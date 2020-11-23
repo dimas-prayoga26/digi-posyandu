@@ -34,6 +34,18 @@ class UserController extends Controller
      */
     public function createBidan(Request $request)
     {
+        $request->validate([
+            'username' => 'required|unique:admins|string|max:100', 
+            'password' => 'required|string|min:5',
+            'name' => 'required|string',
+            'alamat' => 'required|string',
+            'jk' => 'required|string'  
+        ],
+        [
+            'required'    => 'Data harus diisi',
+            'unique'      => 'Data sudah ada', 
+            'max'         => 'panjang karakter maksima 100',
+        ]);
         $data = [
             'name'          =>$request->name,
             'username'      =>$request->username, 
@@ -49,6 +61,18 @@ class UserController extends Controller
     
     public function createKader(Request $request)
     {
+         $request->validate([
+            'username' => 'required|unique:admins|string|max:100', 
+            'password' => 'required|string|min:5',
+            'name' => 'required|string',
+            'alamat' => 'required|string',
+            'jk' => 'required|string'  
+        ],
+        [
+            'required'    => 'Data harus diisi',
+            'unique'      => 'Data sudah ada', 
+            'max'         => 'panjang karakter maksima 100',
+        ]);
         $data = [
             'name'          =>$request->name,
             'username'      =>$request->username, 
@@ -115,7 +139,7 @@ class UserController extends Controller
         } else {
             $user->update($request->except('password'));
         }
-        return redirect()->back()->with('success', 'Data berhasil ditambah');
+        return redirect()->back()->with('success', 'Data berhasil diubah');
     }
     
     public function updateKader(Request $request, $id)
@@ -131,7 +155,7 @@ class UserController extends Controller
         } else {
             $user->update($request->except('password'));
         }
-        return redirect()->back()->with('success', 'Data berhasil ditambah');
+        return redirect()->back()->with('success', 'Data berhasil diubah');
     }
 
     /**
