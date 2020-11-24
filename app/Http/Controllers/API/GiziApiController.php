@@ -28,7 +28,7 @@ class GiziApiController extends Controller
         $usia         = ($year*12)+$month;
         $ukur         = $usia<25 ? 1 : 2;
         $tgl_periksa  = $now->format('Y-m-d');
-        $countId      = Gizi::where('created_at', $tgl_periksa)->count();
+        $countId      = Gizi::where('tgl_periksa', $tgl_periksa)->count();
         $increment    = $countId + 1;
         $id_gizi      = date('Ymd').'0000'.$increment;
         $bb           = $request->bb;
@@ -44,7 +44,15 @@ class GiziApiController extends Controller
             'bb_pb_tb'  => $bb_pb_tb
         ];
 
-        StatusGizi::create($data_status);
+        $exists = StatusGizi::where('bb_u', $bb_u)
+                    ->where('pb_tb_u', $pb_tb_u)
+                    ->where('bb_pb_tb', $bb_pb_tb)
+                    ->exists();
+        
+        if($exists == false){
+            StatusGizi::create($data_status);
+        }
+
         $id_status = StatusGizi::where('bb_u', $bb_u)
                     ->where('pb_tb_u', $pb_tb_u)
                     ->where('bb_pb_tb', $bb_pb_tb)
@@ -55,7 +63,7 @@ class GiziApiController extends Controller
             'usia'                => $usia,
             'pb_tb'               => $pb_tb,
             'bb'                  => $bb,
-            'tgl_periksa'         => $request->tgl_periksa,
+            'tgl_periksa'         => $tgl_periksa,
             'cara_ukur'           => $ukur,
             'asi_eks'             => $request->asi_eks,
             'vit_a'               => $request->vit_a,
@@ -74,30 +82,70 @@ class GiziApiController extends Controller
         }
     }
 
+    public function show($id){
+        $data = Gizi::where('no_pemeriksaan_gizi', $id)->get();
+        return response()->json($data);
+    }
+
     
-    public function Update(Request $request, $id)
+    public function update(Request $request, $id)
     {
-            $data_gizi = [
-                'no_pemeriksaan_gizi' => $request->no_pemeriksaan_gizi,
-                'usia'                => $usia,
-                'pb_tb'               => $pb_tb,
-                'bb'                  => $bb,
-                'tgl_periksa'         => $request->tgl_periksa,
-                'cara_ukur'           => $ukur,
-                'asi_eks'             => $request->asi_eks,
-                'vit_a'               => $request->vit_a,
-                'validasi'            => $request->validasi,
-                'id_status_gizi'      => $id_status,
-                'id_anak'             => $request->id_anak
-            ];
+        $anak         = Anak::where('id_anak', $request->id_anak)->first();
+        $tgl_lahir    = new DateTime($anak->tgl_lahir);
+        $now          = new DateTime('now');;
+        $year         = date_diff($now, $tgl_lahir)->y;
+        $month        = date_diff($now, $tgl_lahir)->m;
+        $usia         = ($year*12)+$month;
 
-            $update = Gizi::where('no_pemeriksaan_gizi', $id)
-            ->update($data_gizi);
+        $bb           = $request->bb;
+        $pb_tb        = $request->pb_tb;
 
-            if($update){
+        $bb_u         = $this->countWeightAge($bb, $anak->jk, $usia);
+        $pb_tb_u      = $this->countHeightAge($pb_tb, $anak->jk, $usia);
+        $bb_pb_tb     = $this->countWeightHeight($bb, $anak->jk, $pb_tb, $usia);
+
+        $data_status = [
+            'bb_u'      => $bb_u,
+            'pb_tb_u'   => $pb_tb_u,
+            'bb_pb_tb'  => $bb_pb_tb
+        ];
+
+        $exists = StatusGizi::where('bb_u', $bb_u)
+                    ->where('pb_tb_u', $pb_tb_u)
+                    ->where('bb_pb_tb', $bb_pb_tb)
+                    ->exists();
+        
+        if($exists == false){
+            StatusGizi::create($data_status);
+        }
+
+        $id_status = StatusGizi::where('bb_u', $bb_u)
+                    ->where('pb_tb_u', $pb_tb_u)
+                    ->where('bb_pb_tb', $bb_pb_tb)
+                    ->value('id_status_gizi');
+
+        $data_gizi = [
+            'pb_tb'               => $pb_tb,
+            'bb'                  => $bb,
+            'asi_eks'             => $request->asi_eks,
+            'vit_a'               => $request->vit_a,
+            'validasi'            => $request->validasi,
+            'id_status_gizi'      => $id_status,
+            'id_anak'             => $request->id_anak
+        ];
+
+        $update = Gizi::where('no_pemeriksaan_gizi', $id)
+                    ->update($data_gizi);
+
+        if($update){
             return response()->json([
                 'error'   => 0, 
                 'message' => 'Data berhasil diubah'
+            ]);
+        }else{
+            return response()->json([
+                'error'   => 1, 
+                'message' => 'Data gagal diubah'
             ]);
         }
     }
