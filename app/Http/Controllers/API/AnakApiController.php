@@ -54,6 +54,11 @@ class AnakApiController extends Controller
         }
     }
 
+    public function show($id){
+        $data = Anak::where('id_anak', $id)->get();
+        return response()->json($data);
+    }
+
     public function update(Request $request, $id){
         $data_anak = [ 
             'nik'         => $request->nik,
@@ -88,6 +93,11 @@ class AnakApiController extends Controller
             return response()->json([
                 'error'   => 0, 
                 'message' => 'Data berhasil diubah'
+            ]);
+        }else{
+            return response()->json([
+                'error'   => 1, 
+                'message' => 'Data gagal diubah'
             ]);
         }
     }

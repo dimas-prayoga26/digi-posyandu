@@ -29,12 +29,17 @@ class VaksinasiApiController extends Controller
 
     public function update(Request $request, $id){
         $data   = $request->only('nama_vaksinasi');
-        $update = Vaksinasi::where('id_Vaksinasi', $id)->update($data);
+        $update = Vaksinasi::where('id_vaksinasi', $id)->update($data);
         
         if($update){
             return response()->json([
                 'error'   => 0, 
                 'message' => 'Data berhasil diubah'
+            ]);
+        }else{
+            return response()->json([
+                'error'   => 1, 
+                'message' => 'Data gagal diubah'
             ]);
         }
     }
