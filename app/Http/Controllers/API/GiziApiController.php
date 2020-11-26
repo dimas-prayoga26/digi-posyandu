@@ -26,7 +26,7 @@ class GiziApiController extends Controller
         $year         = date_diff($now, $tgl_lahir)->y;
         $month        = date_diff($now, $tgl_lahir)->m;
         $usia         = ($year*12)+$month;
-        $ukur         = $usia<25 ? 1 : 2;
+        $ukur         = $request->usia<25 ? 1 : 2;
         $tgl_periksa  = $now->format('Y-m-d');
         $countId      = Gizi::where('tgl_periksa', $tgl_periksa)->count();
         $increment    = $countId + 1;
