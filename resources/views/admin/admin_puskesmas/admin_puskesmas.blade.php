@@ -93,7 +93,7 @@
                                         <div class="form-group">
                                             <label for="alamat">Alamat</label>
                                             <textarea class="form-control" id="alamat" name="alamat"
-                                                rows="2"></textarea>
+                                                rows="2"></textarea> 
                                         </div>
                                         <div class="form-group">
                                             <label for="puskes">Puskesmas</label>

@@ -40,7 +40,7 @@ class UserController extends Controller
             'name' => 'required|string',
             'alamat' => 'required|string',
             'jk' => 'required|string' ,
-            'id_posyandu' => 'required' 
+ 
         ],
         [
             'username.unique'           => 'Username sudah ada yang pakai',
@@ -48,7 +48,6 @@ class UserController extends Controller
             'name.required'             => 'Nama harus diisi',
             'alamat.required'           => 'Alamat harus diisi',
             'password.required'         => 'Password harus diisi', 
-            'id_posyandu.required'      => 'Posyandu harus diisi',
             'jk.required'               => 'Jenis Kelamin harus diisi',
             'max'                       => 'panjang karakter maksima 100',
         ]);

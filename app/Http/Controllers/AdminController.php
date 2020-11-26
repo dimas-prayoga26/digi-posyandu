@@ -36,7 +36,6 @@ class AdminController extends Controller
             'password'      => 'required|string|min:5',
             'nama'          => 'required|string',
             'alamat'        => 'required|string',
-            'id_puskesmas'  => 'required',
             'jk'            => 'required'
         ],
         [
@@ -45,7 +44,6 @@ class AdminController extends Controller
             'nama.required'             => 'Nama harus diisi',
             'alamat.required'           => 'Alamat harus diisi',
             'password.required'         => 'Password harus diisi', 
-            'id_puskesmas.required'     => 'Puskesmas harus diisi',
             'jk.required'               => 'Jenis Kelamin harus diisi',
             'max'                       => 'panjang karakter maksima 100',
         ]);
