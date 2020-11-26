@@ -39,7 +39,7 @@
 					</span>
 					
 					<div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="Type username">
-						<input id="username" class="input100" type="text" name="username" placeholder="Username">
+						<input id="username" class="input100" type="text" name="username" placeholder="Username" autocomplete="off">
 						<span class="focus-input100"></span>
 					</div>
 					<div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="Type password">

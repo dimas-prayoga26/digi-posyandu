@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('dashboard','PageController@dashboard');
+Route::get('dashboard','DashboardController@index');
 Route::get('profil','PageController@profil');
 
 // Route Kader Penanggung Jawab

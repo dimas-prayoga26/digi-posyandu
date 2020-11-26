@@ -54,6 +54,11 @@ class AnakApiController extends Controller
         }
     }
 
+    public function show($id){
+        $data = Anak::where('id_anak', $id)->get();
+        return response()->json($data);
+    }
+
     public function update(Request $request, $id){
         $data_anak = [ 
             'nik'         => $request->nik,
@@ -82,12 +87,17 @@ class AnakApiController extends Controller
         ];
         
         $update_anak     = Anak::where($id)->update($data_anak);
-        $update_keluarga = Keluarga::where($id)->update($data_keluarga);
+        $update_keluarga = Keluarga::where($request->no_kk)->update($data_keluarga);
         
         if($update_anak && $update_keluarga){
             return response()->json([
                 'error'   => 0, 
                 'message' => 'Data berhasil diubah'
+            ]);
+        }else{
+            return response()->json([
+                'error'   => 1, 
+                'message' => 'Data gagal diubah'
             ]);
         }
     }

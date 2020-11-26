@@ -42,7 +42,7 @@ class GiziController extends Controller
             ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
             ->select('gizi.*', 'anak.*', 'posyandu.nama_posyandu',
                  'puskesmas.*', 'keluarga.*', 'status_gizi.*')
-                 ->where('puskesmas.id_puskesmas', 'puskesmas.id_puskesmas') 
+                //  ->where('puskesmas.id_puskesmas', 'puskesmas.id_puskesmas') 
             ->get();
             return view('admin.gizi.gizi', compact('datas'));
         }    

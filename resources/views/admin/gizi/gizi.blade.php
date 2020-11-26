@@ -26,7 +26,7 @@
                 </div>
                 @else
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
-                  <button type="button" data-toggle="modal"  data-target="#modal" id="#myBtn" class="btn btn-outline-success " >Export Laporan</a>
+                  <button type="button" data-toggle="modal"  data-target="#modalexport" id="#myBtn" class="btn btn-outline-success " >Export Laporan</a>
                 </div>
                 @endif
                 <div class="table-responsive p-3">
@@ -34,56 +34,39 @@
                     <thead class="thead-light">
                       <tr>
                         <th>No.</th>
-                        <th>No Kartu Keluarga</th>
                         <th>NIK</th>
-                        <th>Anak Ke-</th>
                         <th>Nama Anak</th>
-                        <th>Tanggal Lahir</th>
                         <th>Tanggal Ukur</th>
                         <th>Umur (Bln)</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Status Ekonomi</th>
-                        <th>BB Lahir</th>
-                        <th>Nama Orang Tua</th>
-                        <th>NIK Ayah</th>
-                        <th>No Telp</th>
-                        <th>BB(Kg)</th>
-                        <th>TB(Cm)</th>
-                        <th>Cara Ukur</th>
-                        <th>Asi Ekslusif</th>
-                        <th>IMD</th>
-                        <th>Vit. A Feb</th>
                         <!-- <th>Vit. A Agt</th> -->
-                        <th>Status Gizi</th>
-                        <th>Validasi</th>
-
+                        <th>Detail</th>
+                        <th>Data Anak</th>
                       </tr>
                     </thead>
                     <tbody>
                     @foreach($datas as $data)
                       <tr>
                        <td>{{$loop->iteration}}</td>
-                       <td>{{$data->no_kk }}</td>
                        <td>{{$data->nik }}</td>
-                       <td>{{$data->anak_ke }}</td>
                        <td>{{$data->nama_anak }}</td>
-                       <td>{{$data->tgl_lahir}}</td>
-                       <td>{{$data->tgl_periksa}}</td>
+                       <td>{{date('d-m-Y', strtotime($data->tgl_periksa))}}</td>
                        <td>{{$data->usia}}</td>
-                       <td>{{$data->jk}}</td>
-                       <td>{{$data->status_ekonomi}}</td>
-                       <td>{{$data->bb_lahir}}</td>
-                       <td>{{$data->nama_ayah}} / {{$data->nama_ibu}} </td>
-                       <td>{{$data->nik_ayah}}</td>
-                       <td>{{$data->no_telp}}</td>
-                       <td>{{$data->bb}}</td>
-                       <td>{{$data->pb_tb}}</td>
-                       <td>{{$data->cara_ukur}}</td>
-                       <td>{{$data->asi_eks}}</td>
-                       <td>{{$data->imd}}</td>
-                       <td>{{$data->vit_a}}</td>
-                       <td>{{$data->bb_u}}</td>
-                       <td>{{$data->validasi}}</td>
+                       <td>
+                        <button type="button" class="btn btn-primary btn-icon-split btn-sm" data-toggle="modal" data-target="#modal-detail-{{$data->no_pemeriksaan_gizi}}">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-info-circle"></i>
+                        </span>
+                        <span class="text">Detail</span>  
+                      </button> 
+                       <td>
+                        <button type="button" class="btn btn-success btn-icon-split btn-sm" data-toggle="modal" data-target="#modal-anak-{{$data->no_pemeriksaan_gizi}}"
+                        id="#modalScroll">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-info-circle"></i>
+                        </span>
+                        <span class="text">Detail Data Anak</span>  
+                      </button> 
+                      </td>
                       </tr>
                       
                       @endforeach 
@@ -93,9 +76,85 @@
               </div>
             </div>
 </div>
+@foreach($datas as $data)
+    <!-- Modal Detail -->
+      <div class="modal fade" id="modal-detail-{{$data->no_pemeriksaan_gizi}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{$data->nama_anak }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Berat Badan : {{$data->bb}}</li>
+              <li class="list-group-item">Panjang / Tinggi Badan  : {{$data->pb_tb}}</li>
+              <li class="list-group-item">Cara ukur : {{$data->cara_ukur}} </li>
+              <li class="list-group-item">Asi Eksklusif : {{$data->asi_eks}} </li>
+              <li class="list-group-item">Imd : {{$data->imd}} </li>
+              <li class="list-group-item">Vitamin A Feb : {{$data->vit_a}} </li>
+              <h4>Status Gizi</h4>
+              <li class="list-group-item">BB / U : <td>{{$data->bb_u}} </li>
+              <li class="list-group-item">PB_TB / U : <td>{{$data->pb_tb_u}} </li>
+              <li class="list-group-item">BB_PB / TB : <td>{{$data->bb_pb_tb}} </li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+      </div>
 
-{{-- Modal Tambah --}}
-                    <div class="modal fade" id="modal" tabindex="-1" role="dialog"
+
+
+       <!-- Modal Detail Anak -->
+       <div class="modal fade" id="modal-anak-{{$data->no_pemeriksaan_gizi}}" tabindex="-1" role="dialog"
+       aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+       <div class="modal-dialog modal-dialog-scrollable" role="document">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalScrollableTitle">Detail Data Anak & Keluarga</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+           <div class="modal-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">No Kartu Keluarga : {{$data->no_kk }} </li>
+              <li class="list-group-item">No Induk Kependudukan : {{$data->nik }} </li>
+              <li class="list-group-item">Nama : {{$data->nama_anak }}</li>
+              <li class="list-group-item">Tanggal Lahir : {{date('d-m-Y', strtotime($data->tgl_lahir))}}</li>
+              <li class="list-group-item">Usia : {{$data->usia}}</li>
+              <li class="list-group-item">Jenis Kelamin : {{$data->jk}}</li>
+              <li class="list-group-item">Anak Ke- : {{$data->anak_ke }} </li>
+              <li class="list-group-item">Berat Badan Lahir : {{$data->bb_lahir}}</li>
+              <li class="list-group-item">Panjang Badan Lahir : {{$data->pb_lahir}}</li>
+              <br>
+              <h3>Data Keluarga</h3>
+              <br>
+              <li class="list-group-item">Nik Ayah  : {{$data->nik_ayah}}</li>
+              <li class="list-group-item">Nama Ayah : {{$data->nama_ayah}}</li>
+              <li class="list-group-item">Nik Ibu   : {{$data->nik_ibu}}</li>
+              <li class="list-group-item">Nama Ibu  : {{$data->nama_ibu}} </li>
+              <li class="list-group-item">Status Ekonomi : {{$data->status_ekonomi}}</li>
+              <li class="list-group-item">No Telp : {{$data->no_telp}}</li>
+            </ul>
+           </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Tutup</button>
+           </div>
+         </div>
+       </div>
+     </div>
+     @endforeach 
+
+     {{-- Modal Tambah --}}
+                    <div class="modal fade" id="modalexport" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -127,6 +186,4 @@
                             </div>
                         </div>
                     </div>
-                
-                {{-- Akhir Modal Tambah --}}
 @endsection

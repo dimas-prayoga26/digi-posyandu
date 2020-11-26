@@ -28,7 +28,7 @@ class SuperAdminExportGizi extends StringValueBinder implements FromView, Should
             ->select('gizi.*', 'anak.*', 'posyandu.nama_posyandu',
                  'puskesmas.id_puskesmas','puskesmas.nama_puskesmas'
                  , 'keluarga.*', 'status_gizi.*')
-                 ->where('puskesmas.id_puskesmas', $datas->id_puskesmas) 
+                 ->where('puskesmas.id_puskesmas') 
             ->get()
         ]);
         // return view('admin.gizi.exportgizi', [
