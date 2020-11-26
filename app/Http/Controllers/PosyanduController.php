@@ -11,12 +11,18 @@ class PosyanduController extends Controller
 {
     public function posyandu()
     {
-        $datas     = Posyandu::all();
+        if (session('level') == 'admin_puskesmas'){
+        $datas     = Posyandu::where('id_posyandu', session('puskesmas'))->get();
         $puskesmas = Puskesmas::all();
         $desa      = Desa::all();
         return view('admin.posyandu.posyandu', compact('datas', 'puskesmas', 'desa'))->with('i');
+       }else{
+       $datas     = Posyandu::all();
+       $puskesmas = Puskesmas::all();
+       $desa      = Desa::all();
+       return view('admin.posyandu.posyandu', compact('datas', 'puskesmas', 'desa'))->with('i');
+       }
     }
-
     public function create(Request $request)
     {
         $request->validate([
