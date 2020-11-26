@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Exports;
-
 use DB;
 use App\Gizi;
 use Illuminate\Contracts\View\View;
@@ -12,7 +11,7 @@ use PhpOffice\PhpSpreadsheet\Cell\StringValueBinder;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class GiziExport extends StringValueBinder implements FromView, ShouldAutoSize
+class SuperAdminExportGizi extends StringValueBinder implements FromView, ShouldAutoSize
 {
     use Exportable;
     public function view(): View
@@ -29,7 +28,7 @@ class GiziExport extends StringValueBinder implements FromView, ShouldAutoSize
             ->select('gizi.*', 'anak.*', 'posyandu.nama_posyandu',
                  'puskesmas.id_puskesmas','puskesmas.nama_puskesmas'
                  , 'keluarga.*', 'status_gizi.*')
-            ->where('puskesmas.id_puskesmas', session('puskesmas'))
+                 ->where('puskesmas.id_puskesmas', $datas->id_puskesmas) 
             ->get()
         ]);
         // return view('admin.gizi.exportgizi', [

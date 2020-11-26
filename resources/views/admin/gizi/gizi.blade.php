@@ -2,7 +2,7 @@
 
 @section('title', 'Gizi')
     
-@section('content')
+@section('content') 
 
         <div class="container-fluid" id="container-wrapper">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -20,9 +20,15 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Data Gizi</h6>
                 </div>
+                @if (session('level') == 'admin_puskesmas')
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
                   <a href="{{ url('gizi/export_gizi')}}" class="btn btn-outline-success " >Export Laporan</a>
                 </div>
+                @else
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
+                  <button type="button" data-toggle="modal"  data-target="#modal" id="#myBtn" class="btn btn-outline-success " >Export Laporan</a>
+                </div>
+                @endif
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush" id="dataTable">
                     <thead class="thead-light">
@@ -57,26 +63,26 @@
                     @foreach($datas as $data)
                       <tr>
                        <td>{{$loop->iteration}}</td>
-                       <td>{{$data->anak->no_kk }}</td>
-                       <td>{{$data->anak->nik }}</td>
-                       <td>{{$data->anak->anak_ke }}</td>
-                       <td>{{$data->anak->nama_anak }}</td>
-                       <td>{{$data->anak->tgl_lahir}}</td>
+                       <td>{{$data->no_kk }}</td>
+                       <td>{{$data->nik }}</td>
+                       <td>{{$data->anak_ke }}</td>
+                       <td>{{$data->nama_anak }}</td>
+                       <td>{{$data->tgl_lahir}}</td>
                        <td>{{$data->tgl_periksa}}</td>
                        <td>{{$data->usia}}</td>
-                       <td>{{$data->anak->jk}}</td>
-                       <td>{{$data->anak->keluarga->status_ekonomi}}</td>
-                       <td>{{$data->anak->bb_lahir}}</td>
-                       <td>{{$data->anak->keluarga->nama_ayah}} / {{$data->anak->keluarga->nama_ibu}} </td>
-                       <td>{{$data->anak->keluarga->nik_ayah}}</td>
-                       <td>{{$data->anak->keluarga->no_telp}}</td>
+                       <td>{{$data->jk}}</td>
+                       <td>{{$data->status_ekonomi}}</td>
+                       <td>{{$data->bb_lahir}}</td>
+                       <td>{{$data->nama_ayah}} / {{$data->nama_ibu}} </td>
+                       <td>{{$data->nik_ayah}}</td>
+                       <td>{{$data->no_telp}}</td>
                        <td>{{$data->bb}}</td>
                        <td>{{$data->pb_tb}}</td>
                        <td>{{$data->cara_ukur}}</td>
                        <td>{{$data->asi_eks}}</td>
-                       <td>{{$data->anak->imd}}</td>
+                       <td>{{$data->imd}}</td>
                        <td>{{$data->vit_a}}</td>
-                       <td>{{$data->status_gizi->bb_u}}</td>
+                       <td>{{$data->bb_u}}</td>
                        <td>{{$data->validasi}}</td>
                       </tr>
                       
@@ -87,4 +93,40 @@
               </div>
             </div>
 </div>
+
+{{-- Modal Tambah --}}
+                    <div class="modal fade" id="modal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Export Laporan Gizi</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form id="addExportGizi" action="{{ url('gizi/export_gizi_superadmin')}}" method="GET" role="form">
+                                    @csrf
+                                    <div class="form-group">
+                                            <label for="id_puskesmas">Laporan Puskesmas</label>
+                                            <select class="select2-single-placeholder form-control" name="id_puskesmas"
+                                                id="id_puskesmas">
+                                                <option value="#">Pilih Puskesmas</option>
+                                                @foreach ($datas as $item)
+                                                <option value="{{$item->id_puskesmas}}">{{$item->nama_puskesmas}}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-danger"
+                                            data-dismiss="modal">Tutup</button>
+                                        <button type="submit" class="btn btn-success">Export</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                
+                {{-- Akhir Modal Tambah --}}
 @endsection

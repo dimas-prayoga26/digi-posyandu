@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Vaksinasi;
-
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
 class VaksinasiController extends Controller
@@ -13,10 +13,13 @@ class VaksinasiController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
-    {
-     $datas = Vaksinasi::all();
+    public function index(){
+         if(!session()->exists('admin')){
+            return redirect('login/admin')->with('alert','Tidak bisa membuka halaman, Anda harus login');
+        }else{ 
+        $datas = Vaksinasi::all();
         return view('admin.vaksinasi.vaksinasi',compact('datas'))->with('i');  
+        }
     }
 
     /**

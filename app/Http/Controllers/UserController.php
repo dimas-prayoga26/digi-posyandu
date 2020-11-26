@@ -35,16 +35,22 @@ class UserController extends Controller
     public function createBidan(Request $request)
     {
         $request->validate([
-            'username' => 'required|unique:admins|string|max:100', 
+            'username' => 'required|unique:users|string|max:100', 
             'password' => 'required|string|min:5',
             'name' => 'required|string',
             'alamat' => 'required|string',
-            'jk' => 'required|string'  
+            'jk' => 'required|string' ,
+            'id_posyandu' => 'required' 
         ],
         [
-            'required'    => 'Data harus diisi',
-            'unique'      => 'Data sudah ada', 
-            'max'         => 'panjang karakter maksima 100',
+            'username.unique'           => 'Username sudah ada yang pakai',
+            'username.required'         => 'Username harus diisi',
+            'name.required'             => 'Nama harus diisi',
+            'alamat.required'           => 'Alamat harus diisi',
+            'password.required'         => 'Password harus diisi', 
+            'id_posyandu.required'      => 'Posyandu harus diisi',
+            'jk.required'               => 'Jenis Kelamin harus diisi',
+            'max'                       => 'panjang karakter maksima 100',
         ]);
         $data = [
             'name'          =>$request->name,
@@ -62,16 +68,21 @@ class UserController extends Controller
     public function createKader(Request $request)
     {
          $request->validate([
-            'username' => 'required|unique:admins|string|max:100', 
+            'username' => 'required|unique:users|string|max:100', 
             'password' => 'required|string|min:5',
             'name' => 'required|string',
             'alamat' => 'required|string',
             'jk' => 'required|string'  
         ],
         [
-            'required'    => 'Data harus diisi',
-            'unique'      => 'Data sudah ada', 
-            'max'         => 'panjang karakter maksima 100',
+            'username.unique'           => 'Username sudah ada yang pakai',
+            'username.required'         => 'Username harus diisi',
+            'name.required'             => 'Nama harus diisi',
+            'alamat.required'           => 'Alamat harus diisi',
+            'password.required'         => 'Password harus diisi', 
+            'id_posyandu.required'      => 'Posyandu harus diisi',
+            'jk.required'               => 'Jenis Kelamin harus diisi',
+            'max'                       => 'panjang karakter maksima 100',
         ]);
         $data = [
             'name'          =>$request->name,
