@@ -48,22 +48,24 @@
             <td></td>
             <td></td>
         </tr>
-
+       
         <tr>
+       
             <td colspan="3">KECAMATAN</td>
-            <td>nama_kecamatan</td>
-            
+            <td>{{$items->nama_kecamatan}}</td>
+        
             <td></td>
             <td></td>
             <td>RT/RW</td>
-            <td>:id rt/rw</td>
+            <td>{{$items->rt}} / {{$items->rw}}</td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td>Tanggal Ukur</td>
+            <!-- <td>Tanggal Ukur</td> -->
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -75,10 +77,9 @@
             <td></td>
         </tr>
 
-        @foreach($datas as $data)
         <tr>
             <td colspan="3">PUSKESMAS</td>
-            <td>{{$data->nama_puskesmas}}</td>
+            <td>{{$items->nama_puskesmas}}</td>
             <td></td>
             <td></td>
             <td></td>
@@ -100,10 +101,10 @@
             <td></td>
             <td></td>
         </tr>
-        @endforeach
+
         <tr>
             <td colspan="3">DESA</td>
-            <td>id_desa</td>
+            <td>{{$desa}}</td>
             <td></td>
             <td></td>
             <td></td>
@@ -125,9 +126,10 @@
             <td></td>
             <td></td>
         </tr>
+       
         <tr>
             <td colspan="3">POSYANDU</td>
-            <td></td>
+            <td>{{$posyandu}}</td>
             <td></td>
             <td></td>
             <td></td>
