@@ -59,7 +59,7 @@ class LoginController extends Controller
     }
 
     public function loginBidanPost(Request $request){
-        $auth = auth()->guard('user');
+        $auth = auth()->guard('users');
 
         $credentials = $request->only('username', 'password');
 
@@ -99,7 +99,7 @@ class LoginController extends Controller
     }
    
     public function logoutBidan(){
-        session()->forget('user');
+        session()->forget('bidan');
         return redirect('/login/bidan');
     }
 }

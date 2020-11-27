@@ -21,10 +21,9 @@ class KaderApiController extends Controller
         ];
 
         if($auth->attempt($credentials)) {
-            $user = User::where('username', $username)->first();
+            $user = User::with('posyandu')->where('username', $username)->first();
             return response()->json([
-                'value'     => 1,
-		'message'   => 'Login berhasil'
+                $user
             ]);
         }
         else {
