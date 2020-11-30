@@ -34,7 +34,7 @@ class GiziController extends Controller
                     'puskesmas.*', 'keluarga.*', 'status_gizi.*', 'desa.nama_desa', 'kecamatan.nama_kecamatan')
                 ->where('puskesmas.id_puskesmas', session('puskesmas'))
                 ->get();
-             
+            
             return view('admin.gizi.gizi', compact('datas'));
         }elseif (session('level') == 'bidan') {
                 $datas = DB::table('gizi')

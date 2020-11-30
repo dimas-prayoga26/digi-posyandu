@@ -75,7 +75,7 @@
                 </div>
               </div>
             </div>
-</div>
+          </div>
 @foreach($datas as $data)
     <!-- Modal Detail -->
       <div class="modal fade" id="modal-detail-{{$data->no_pemeriksaan_gizi}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
