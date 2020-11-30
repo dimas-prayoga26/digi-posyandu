@@ -6,7 +6,7 @@
 
         <div class="container-fluid" id="container-wrapper">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+          <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="./">Home</a></li>
               <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
@@ -30,6 +30,7 @@
           </div>
 
           <div class="row mb-3">
+            @if (session('level') == 'super_admin')
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card h-100">
@@ -50,6 +51,7 @@
                 </div>
               </div>
             </div>
+            @endif
             <!-- Earnings (Annual) Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card h-100">
@@ -57,7 +59,15 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-uppercase mb-1">Posyandu</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{$posyandu}}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      @if (session('level') == 'bidan')
+                      {{$posBidan}}
+                      @elseif (session('level') == 'admin_puskesmas')
+                      {{$posPuskes}}  
+                      @else
+                      {{$posyandu}} 
+                      @endif
+                      </div>
                       <div class="mt-2 mb-0 text-muted text-xs">
                         <!--<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
                         <span>Since last years</span>-->
@@ -77,7 +87,15 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-uppercase mb-1">Anak</div>
-                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$anak}}</div>
+                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                        @if (session('level') == 'bidan')
+                        {{$anakBidan}}
+                        @elseif (session('level') == 'admin_puskesmas')
+                        {{$anakAdmin}}
+                        @else
+                        {{$anak}}
+                        @endif
+                      </div>
                       <div class="mt-2 mb-0 text-muted text-xs">
                         <!--<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 20.4%</span>
                         <span>Since last month</span>-->
@@ -90,6 +108,7 @@
                 </div>
               </div>
             </div>
+            @if (session('level') == 'super_admin' || 'admin_puskesmas')
             <!-- Pending Requests Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card h-100">
@@ -97,7 +116,14 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-uppercase mb-1">Bidan</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{$bidan}}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">
+                        @if (session('level') == 'admin_puskesmas')
+                        {{$bidanPuskes}}  
+                        @else
+                        {{$bidan}}
+                        @endif
+
+                      </div>
                       <div class="mt-2 mb-0 text-muted text-xs">
                         <!--<span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
                         <span>Since yesterday</span>-->
@@ -110,7 +136,7 @@
                 </div>
               </div>
             </div>
-
+         
              <div class="col-xl-3 col-md-6 mb-4">
               <div class="card h-100">
                 <div class="card-body">
@@ -130,6 +156,7 @@
                 </div>
               </div>
             </div>
+            @endif
           </div>
           @if (session('level') == 'super_admin')
             <!-- Bar Chart -->

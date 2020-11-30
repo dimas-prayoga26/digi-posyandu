@@ -75,7 +75,7 @@
                 </div>
               </div>
             </div>
-</div>
+          </div>
 @foreach($datas as $data)
     <!-- Modal Detail -->
       <div class="modal fade" id="modal-detail-{{$data->no_pemeriksaan_gizi}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -103,8 +103,7 @@
             </ul>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Tutup</button>
           </div>
         </div>
       </div>
@@ -129,7 +128,7 @@
               <li class="list-group-item">No Induk Kependudukan : {{$data->nik }} </li>
               <li class="list-group-item">Nama : {{$data->nama_anak }}</li>
               <li class="list-group-item">Tanggal Lahir : {{date('d-m-Y', strtotime($data->tgl_lahir))}}</li>
-              <li class="list-group-item">Usia : {{$data->usia}}</li>
+              <li class="list-group-item">Usia : {{$data->usia}} Bulan</li>
               <li class="list-group-item">Jenis Kelamin : {{$data->jk}}</li>
               <li class="list-group-item">Anak Ke- : {{$data->anak_ke }} </li>
               <li class="list-group-item">Berat Badan Lahir : {{$data->bb_lahir}}</li>
