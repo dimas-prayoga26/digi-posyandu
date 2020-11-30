@@ -7,7 +7,7 @@ use App\StatusGizi;
 use App\Keluarga;
 use DB;
 use Illuminate\Http\Request;
-use App\Exports\GiziExport;
+use App\Exports\GiziExportSheet;
 use App\Exports\SuperAdminExportGizi;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -34,6 +34,8 @@ class GiziController extends Controller
                     'puskesmas.*', 'keluarga.*', 'status_gizi.*', 'desa.nama_desa', 'kecamatan.nama_kecamatan')
                 ->where('puskesmas.id_puskesmas', session('puskesmas'))
                 ->get();
+
+            //dd($datas);
              
             return view('admin.gizi.gizi', compact('datas'));
         }else{
@@ -60,7 +62,7 @@ class GiziController extends Controller
 
     public function export_gizi(){
         
-        return Excel::download(new GiziExport, 'gizi.xlsx');
+        return Excel::download(new GiziExportSheet(session('puskesmas')), 'gizi.xlsx');
     }
 
     public function export_gizi_superadmin(){
