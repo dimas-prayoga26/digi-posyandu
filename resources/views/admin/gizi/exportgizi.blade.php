@@ -48,16 +48,15 @@
             <td></td>
             <td></td>
         </tr>
-       
+        @foreach($datas as $data)
         <tr>
        
             <td colspan="3">KECAMATAN</td>
-            <td>{{$items->nama_kecamatan}}</td>
-        
+            <td>{{$data->nama_kecamatan}}</td>
             <td></td>
             <td></td>
             <td>RT/RW</td>
-            <td>{{$items->rt}} / {{$items->rw}}</td>
+            <td>{{$data->rt}} / {{$data->rw}}</td>
             <td></td>
             <td></td>
             <td></td>
@@ -79,7 +78,7 @@
 
         <tr>
             <td colspan="3">PUSKESMAS</td>
-            <td>{{$items->nama_puskesmas}}</td>
+            <td>{{$data->nama_puskesmas}}</td>
             <td></td>
             <td></td>
             <td></td>
@@ -104,7 +103,7 @@
 
         <tr>
             <td colspan="3">DESA</td>
-            <td>{{$desa}}</td>
+            <td>{{$data->nama_desa}}</td>
             <td></td>
             <td></td>
             <td></td>
@@ -126,10 +125,10 @@
             <td></td>
             <td></td>
         </tr>
-       
+        
         <tr>
             <td colspan="3">POSYANDU</td>
-            <td>{{$posyandu}}</td>
+            <td>{{$data->nama_posyandu }}</td>
             <td></td>
             <td></td>
             <td></td>
@@ -151,6 +150,7 @@
             <td></td>
             <td></td>
         </tr>
+        @endforeach
         <tr>
             <td></td>
             <td></td>
@@ -254,10 +254,8 @@
             <td>{{$data->imd}}</td>
             <td>{{$data->vit_a}}</td>
             <td>{{$data->bb_u}}</td>
-
             <td>{{$data->pb_tb_u}}</td>
             <td>{{$data->bb_pb_tb}}</td>
-
             <td>{{$data->validasi}}</td>
         </tr>
         @endforeach
