@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Gizi;
 use App\Anak;
+use App\Puskesmas;
 use App\StatusGizi;
 use App\Keluarga;
 use DB;
@@ -21,6 +22,7 @@ class GiziController extends Controller
 
     public function index()
     {
+        $puskesmas = Puskesmas::all();
         if (session('level') == 'admin_puskesmas'){
             $datas = DB::table('gizi')
                 ->join('status_gizi', 'status_gizi.id_status_gizi', '=', 'gizi.id_status_gizi')
@@ -35,7 +37,7 @@ class GiziController extends Controller
                 ->where('puskesmas.id_puskesmas', session('puskesmas'))
                 ->get();
             
-                return view('admin.gizi.gizi', compact('datas'));
+                return view('admin.gizi.gizi', compact('datas', 'puskesmas'));
         }elseif (session('level') == 'bidan') {
                 $datas = DB::table('gizi')
                 ->join('status_gizi', 'status_gizi.id_status_gizi', '=', 'gizi.id_status_gizi')
@@ -57,94 +59,23 @@ class GiziController extends Controller
             ->join('anak', 'gizi.id_anak', '=', 'anak.id_anak')
             ->join('keluarga', 'keluarga.no_kk', 'anak.no_kk')
             ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+            ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
+            ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
             ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
             ->select('gizi.*', 'anak.*', 'posyandu.nama_posyandu',
-                 'puskesmas.*', 'keluarga.*', 'status_gizi.*')
+                'puskesmas.*', 'keluarga.*', 'status_gizi.*', 'desa.nama_desa', 'kecamatan.nama_kecamatan')
             ->get();
-
-            // $items      = DB::table('puskesmas')
-            //             ->join('posyandu', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
-            //             ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
-            //             ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
-            //             ->select('kecamatan.nama_kecamatan', 'puskesmas.nama_puskesmas','puskesmas.id_puskesmas', 'desa.rt', 'desa.rw')
-            //             ->where('puskesmas.id_puskesmas', session('puskesmas'))
-            //             ->first();
-            return view('admin.gizi.gizi', compact('datas'));
+            return view('admin.gizi.gizi', compact('datas', 'puskesmas'));
         }    
     }
 
     public function export_gizi(){
-        
-        return Excel::download(new GiziExportSheet(session('puskesmas')), 'gizi.xlsx');
+        return Excel::download(new GiziExportSheet, 'gizi.xlsx');
     }
 
-    public function export_gizi_superadmin(){
-        
-        return Excel::download(new SuperAdminExportGizi, 'superadmingizi.xlsx');
-    }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function export_gizi_superadmin(Request $request){
+        $export = new GiziExportSheet();
+        $export->setPuskesmas($request->id_puskesmas);
+        return Excel::download($export, 'superadmingizi.xlsx');
     }
 }

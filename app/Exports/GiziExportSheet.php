@@ -1,34 +1,48 @@
-<?php
-
-namespace App\Exports;
+<?php namespace App\Exports;
 
 use DB;
 use App\Posyandu;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Concerns\Exportable;
-class GiziExportSheet implements WithMultipleSheets
-{
+
+
+class GiziExportSheet implements WithMultipleSheets {
     /**
     * @return \Illuminate\Support\Collection
     */
     use Exportable;
-    protected $puskesmas;
-    //protected $posyandu;
-    public function __constructor(int $puskesmas)
-    {
-        $this->$puskesmas = $puskesmas;
+    private $puskesmas;
+
+    public function setPuskesmas(int $puskesmas){
+        $this->puskesmas = $puskesmas;
     }
-    public function sheets(): array
-    {
-        //$length = Posyandu::where('id_puskesmas', session('puskesmas'))->count(); 
-        $posyandu = Posyandu::where('id_puskesmas', session('puskesmas'))
-                    ->select('posyandu.*')
-                    ->get();
-                    //->value('nama_posyandu');
-        $sheets = [];
-        foreach($posyandu as $data){
-            $sheets[] = new GiziExport($data->id_posyandu, $data->nama_posyandu);
-        } 
-        return $sheets;
+
+    public function sheets(): array {
+        //dd($this->puskesmas);
+        if (session('level')=='admin_puskesmas') {
+            $posyandu = Posyandu::where('id_puskesmas', session('puskesmas'))
+                            ->select('posyandu.*')
+                            ->get();
+            $sheets=[];
+
+            foreach($posyandu as $data) {
+                $sheets[]=new GiziExport($data->id_posyandu, $data->nama_posyandu);
+            }
+
+            return $sheets;
+        }
+
+        elseif(session('level')=='super_admin') {
+            //dd($this->puskesmas);
+            $posyandu=Posyandu::where('id_puskesmas', $this->puskesmas)
+                ->select('posyandu.*')
+                ->get();
+            $sheets=[];
+            foreach($posyandu as $data) {
+                $sheets[] = new GiziExport($data->id_posyandu, $data->nama_posyandu);
+            }
+
+            return $sheets;
+        }
     }
 }

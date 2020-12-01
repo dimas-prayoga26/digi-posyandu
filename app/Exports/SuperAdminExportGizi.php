@@ -15,10 +15,21 @@ use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use PhpOffice\PhpSpreadsheet\Cell\StringValueBinder;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Maatwebsite\Excel\Concerns\WithTitle;
 
-class SuperAdminExportGizi extends StringValueBinder implements WithCustomValueBinder, FromView, ShouldAutoSize
+class SuperAdminExportGizi extends StringValueBinder implements WithCustomValueBinder, FromView, ShouldAutoSize, WithTitle
 {
     use Exportable;
+
+    private $puskesmas;
+    private $name;
+
+    public function __construct($puskesmas, $name)
+    {
+        $this->puskesmas = $puskesmas;
+        $this->name = $name;
+    }
+
     public function view(): View
     {
         $datas = DB::table('gizi')
@@ -31,32 +42,23 @@ class SuperAdminExportGizi extends StringValueBinder implements WithCustomValueB
             ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
             ->select('gizi.*', 'anak.*', 'posyandu.nama_posyandu','puskesmas.*', 'keluarga.*', 
                     'status_gizi.*', 'desa.*', 'kecamatan.*')
-            ->where('puskesmas.id_puskesmas', session('puskesmas'))
+            ->where('puskesmas.id_puskesmas', $this->puskesmas)
             ->get();
-        $desa = Desa::where('desa.id_desa', session('puskesmas'))->count();
-        $kecamatan = kecamatan::where('kecamatan.nama_kecamatan', session('puskesmas'))->get();
-        $puskesmas = Puskesmas::where('puskesmas.nama_puskesmas', session('puskesmas'))->get();
-        $posyandu = Posyandu::where('posyandu.id_posyandu', session('puskesmas'))->count();
         $items      = DB::table('puskesmas')
                         ->join('posyandu', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
                         ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
                         ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
                         ->select('kecamatan.nama_kecamatan', 'puskesmas.nama_puskesmas', 'desa.rt', 'desa.rw')
-                        ->where('puskesmas.id_puskesmas', session('puskesmas'))
+                        ->where('puskesmas.id_puskesmas', $this->puskesmas)
                         ->first();
-
-        //dd($items);
         return view('admin.gizi.exportgizi', [
             'datas'     => $datas,
-            'desa'      => $desa,
-            'posyandu'  => $posyandu,
-            'kecamatan' => $kecamatan,
-            'puskesmas' => $puskesmas,
             'items'     => $items
         ]);
-        // return view('admin.gizi.exportgizi', [
-        //     'datas' => Gizi::all()
-        // ]);
-        // return Gizi::all();
+    }
+
+    public function title(): string 
+    {
+        return ''.$this->name;
     }
 }
