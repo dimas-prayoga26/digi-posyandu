@@ -225,7 +225,7 @@
 <script src="{{url('js/demo/chart-bar-demo.js')}}"></script>
 
 
-<script>
+{{-- <script>
   $(document).ready(function () {
       var frmAddJadwal = $('#frmAddJadwal');
       var increments   = {{$i}}; 
@@ -250,7 +250,7 @@
           });
       });
   });
-</script>
+</script> --}}
 
 <!-- Page level custom scripts -->
 {{-- <script>
