@@ -25,12 +25,13 @@ Route::put('/edit-profile/{id}', 'API\KaderApiController@update');
 
 // ------    Anak    --------
 Route::get('/getAnak', 'API\AnakApiController@getAll');
+Route::get('/showByPosyandu/{id}', 'API\AnakApiController@showByPosyandu');
 Route::post('/anak', 'API\AnakApiController@create');
 Route::get('/detail-anak/{id}', 'API\AnakApiController@show');
 Route::post('/edit-anak/{id}', 'API\AnakApiController@update');
 
 // ------    Gizi    --------
-Route::get('/getGizi', 'API\GiziApiController@getAll');
+Route::get('/getGizi/{id}', 'API\GiziApiController@getAll');
 Route::post('/add-gizi', 'API\GiziApiController@create');
 Route::get('/detail-gizi/{id}', 'API\GiziApiController@show');
 Route::put('/edit-gizi/{id}', 'API\GiziApiController@update');
