@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kecamatan extends Model
 {
-     protected $table = 'kecamatan';
+    protected $table = 'kecamatan';
     
-    protected $fillable = [
-        'id_kecamatan',
-		'nama_kecamatan'
-		];
+    protected $primaryKey = 'id_kecamatan';
+
+    protected $fillable = ['id_kecamatan', 'nama_kecamatan'];
 }

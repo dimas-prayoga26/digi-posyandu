@@ -21,34 +21,27 @@ class KaderApiController extends Controller
         ];
 
         if($auth->attempt($credentials)) {
-            $user = User::where('username', $username)->first();
-            return response()->json([
-                'value'     => 1,
-		'message'   => 'Login berhasil'
-            ]);
+            $user = User::with('posyandu')->where('username', $username)->first();
+            return response()->json($user);
         }
         else {
-            return response()->json(['status' => 'fail']);
+            return response()->json([
+                'error'   => 1, 
+                'message' => 'Gagal Login'
+            ]);
         }
     }
 
     public function show($id){
-        $data = User::where('id_user', $id)->get();
+        $data = User::with('posyandu')->where('id_user', $id)->get();
         return respons()->json($data);
     }
 
     public function update(Request $request, $id){
-        $user = [
-            'name'          => $request->name,
-            'username'      => $request->username,
-            'alamat'        => $request->alamat,
-        ];
-        $data = User::where('id_user', $id)->update($data);
+        $user = $request->only('username', 'name', 'alamat');
+        $data = User::with('posyandu')->where('id_user', $id)->update($user);
         if($data){
-            return response()->json([
-                'error'   => 0, 
-                'message' => 'Data berhasil diubah'
-            ]);
+            return response()->json($data);
         }else{
             return response()->json([
                 'error'   => 1, 

@@ -23,7 +23,7 @@ class Anak extends Model
         'imd',
         'no_kk',
         'id_posyandu'
-        ];
+    ];
 
     public function posyandu(){
         return $this->belongsTo('App\Posyandu', 'id_posyandu');

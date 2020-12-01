@@ -2,13 +2,13 @@
 
 namespace App\Exports;
 
-
 use App\Gizi;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
+use PhpOffice\PhpSpreadsheet\Cell\StringValueBinder;
 
-class GiziExport implements FromView
+class GiziExport extends StringValueBinder implements FromView
 {
     use Exportable;
     public function view(): View

@@ -8,6 +8,7 @@ use App\Keluarga;
 use DB;
 use Illuminate\Http\Request;
 use App\Exports\GiziExport;
+use App\Exports\GiziCollectExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class GiziController extends Controller
