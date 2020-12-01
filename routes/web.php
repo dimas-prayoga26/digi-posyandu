@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('dashboard','PageController@dashboard');
+Route::get('dashboard','DashboardController@index');
 Route::get('profil','PageController@profil');
 
 // Route Kader Penanggung Jawab
@@ -43,9 +43,10 @@ Route::get('vaksinasi','VaksinasiController@index');
 Route::post('addVaksinasi', 'VaksinasiController@create');
 Route::put('editVaksinasi/{id}','VaksinasiController@update');
 Route::delete('deleteVaksinasi/{id}','VaksinasiController@delete');
-Route::get('imunisasi','ImunisasiController@imunisasi');
+Route::get('imunisasi','ImunisasiController@index');
 Route::get('gizi','GiziController@index');
 Route::get('/gizi/export_gizi', 'GiziController@export_gizi');
+Route::get('/gizi/export_gizi_superadmin', 'GiziController@export_gizi_superadmin');
 
 //================================== Puskesmas=================================
 Route::get('puskesmas','PuskesmasController@index');

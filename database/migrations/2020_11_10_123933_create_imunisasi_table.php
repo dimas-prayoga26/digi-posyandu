@@ -14,7 +14,7 @@ class CreateImunisasiTable extends Migration
     public function up()
     {
         Schema::create('imunisasi', function (Blueprint $table) {
-            $table->string('no_pemeriksaan_imunisasi',11)->primary();
+            $table->string('no_pemeriksaan_imunisasi',14)->primary();
             $table->date('tgl_imunisasi');
             $table->unsignedInteger('id_vaksinasi');
             $table->foreign('id_vaksinasi')->references('id_vaksinasi')->on('vaksinasi');

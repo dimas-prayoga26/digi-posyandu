@@ -21,14 +21,27 @@
                     <h6 class="m-0 font-weight-bold text-primary">Data Kader Penanggung Jawab</h6>
                 </div>
 
-
-                @if (session('success'))
-                <div class="alert alert-success alert-dismissible" role="alert">
+                <div class="card-header">
+                    @if (session('success'))
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h6><i class="fas fa-check"></i><b> Berhasil!</b></h6>
+                        {{ session('success') }}
+                    </div>
+                    @endif
+                </div>
+                @if($errors->any())
+                <div class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h6><i class="fas fa-check"></i><b> Berhasil!</b></h6>
-                    {{ session('success') }}
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
                 </div>
                 @endif
 

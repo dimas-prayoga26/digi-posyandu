@@ -14,7 +14,7 @@ class CreateGiziTable extends Migration
     public function up()
     {
         Schema::create('gizi', function (Blueprint $table) {
-            $table->string('no_pemeriksaan_gizi',11)->primary();
+            $table->string('no_pemeriksaan_gizi',14)->primary();
             $table->string('usia');
             $table->float('pb_tb');
             $table->float('bb');

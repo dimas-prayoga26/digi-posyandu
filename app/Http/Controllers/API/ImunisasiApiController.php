@@ -21,7 +21,7 @@ class ImunisasiApiController extends Controller
 
     public function create(Request $request){
         $now          = date('Y-m-d');
-        $countId      = Imunisasi::where('created_at', $tgl_periksa)->count();
+        $countId      = Imunisasi::where('tgl_imunisasi', $now)->count();
         $increment    = $countId + 1;
         $id_imunisasi = 'I'.date('Ymd').'0000'.$increment;
 

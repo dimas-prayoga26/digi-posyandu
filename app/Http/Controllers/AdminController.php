@@ -32,18 +32,23 @@ class AdminController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'username' => 'required|unique:admins|string|max:100', 
-            'password' => 'required|string|min:5',
-            'nama' => 'required|string',
-            'alamat' => 'required|string' 
+            'username'      => 'required|unique:admins|string|max:100', 
+            'password'      => 'required|string|min:5',
+            'nama'          => 'required|string',
+            'alamat'        => 'required|string',
+            'jk'            => 'required'
         ],
         [
-            'required'    => 'Data harus diisi',
-            'unique'      => 'Data sudah ada', 
-            'max'         => 'panjang karakter maksima 100',
+            'username.unique'           => 'Username sudah ada yang pakai',
+            'username.required'         => 'Username harus diisi',
+            'nama.required'             => 'Nama harus diisi',
+            'alamat.required'           => 'Alamat harus diisi',
+            'password.required'         => 'Password harus diisi', 
+            'jk.required'               => 'Jenis Kelamin harus diisi',
+            'max'                       => 'panjang karakter maksima 100',
         ]);
         $data = [
-            'username'      =>$request->username, 
+            'username'      =>$request->username,  
             'password'      =>$request->password, 
             'nama'          =>$request->nama, 
             'jk'            =>$request->jk, 

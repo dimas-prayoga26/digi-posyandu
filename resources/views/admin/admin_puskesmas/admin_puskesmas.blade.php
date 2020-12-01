@@ -22,16 +22,28 @@
                 </div>
 
                 <div class="card-header">
-                    @if (session('success'))
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h6><i class="fas fa-check"></i><b> Berhasil!</b></h6>
-                        {{ session('success') }}
-                    </div>
-                    @endif
-                </div>
+        @if (session('success'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h6><i class="fas fa-check"></i><b> Berhasil!</b></h6>
+            {{ session('success') }}
+        </div>
+        @endif
+    </div>
+    @if($errors->any())
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{$error}}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 
                 {{-- Modal Tambah --}}
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -81,7 +93,7 @@
                                         <div class="form-group">
                                             <label for="alamat">Alamat</label>
                                             <textarea class="form-control" id="alamat" name="alamat"
-                                                rows="2"></textarea>
+                                                rows="2"></textarea> 
                                         </div>
                                         <div class="form-group">
                                             <label for="puskes">Puskesmas</label>
