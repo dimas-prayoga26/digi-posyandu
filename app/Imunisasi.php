@@ -13,14 +13,14 @@ class Imunisasi extends Model
 	protected $keyType = 'string'; 
 
     protected $fillable = [
-        'no_pemeriksaan_imunisasi',
+                'no_pemeriksaan_imunisasi',
 		'tgl_imunisasi',
 		'id_vaksinasi',
 		'id_anak'
 	];
 
 	public function vaksinasi(){
-        return $this->belongsTo('App\Puskesmas', 'id_vaksinasi');
+        return $this->belongsTo('App\Vaksinasi', 'id_vaksinasi');
     }
     
     public function anak(){

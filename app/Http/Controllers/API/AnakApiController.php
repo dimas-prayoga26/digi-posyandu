@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class AnakApiController extends Controller
 {
     public function getAll(){
-        $datas = Anak::all();
+        $datas = Anak::with('keluarga.desa')->get();
         return response()->json($datas);
     }
 
@@ -55,7 +55,7 @@ class AnakApiController extends Controller
     }
 
     public function show($id){
-        $data = Anak::where('id_anak', $id)->get();
+        $data = Anak::with('keluarga.desa')->where('id_anak', $id)->get();
         return response()->json($data);
     }
 
@@ -67,7 +67,7 @@ class AnakApiController extends Controller
             'jk'          => $request->jk,
             'anak_ke'     => $request->anak_ke, 
             'bb_lahir'    => $request->bb_lahir ,
-            'pp_lahir'    => $request->pb_lahir,
+            'pb_lahir'    => $request->pb_lahir,
             'kia'         => $request->kia,
             'imd'         => $request->imd,
             'no_kk'       => $request->no_kk,
@@ -85,9 +85,9 @@ class AnakApiController extends Controller
             'alamat'         => $request->alamat,
             'id_desa'        => $request->id_desa
         ];
-        
-        $update_anak     = Anak::where($id)->update($data_anak);
-        $update_keluarga = Keluarga::where($request->no_kk)->update($data_keluarga);
+
+        $update_keluarga = Keluarga::where('no_kk', $request->no_kk)->update($data_keluarga);
+        $update_anak     = Anak::where('id_anak', $id)->update($data_anak);
         
         if($update_anak && $update_keluarga){
             return response()->json([
@@ -99,6 +99,6 @@ class AnakApiController extends Controller
                 'error'   => 1, 
                 'message' => 'Data gagal diubah'
             ]);
-        }
+        } 
     }
 }

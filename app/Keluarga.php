@@ -10,6 +10,8 @@ class Keluarga extends Model
 	
 	protected $primaryKey = 'no_kk';
 	
+	protected $keyType = 'string'; 
+
     protected $fillable = [
         'no_kk',
 		'nik_ayah',
@@ -20,10 +22,13 @@ class Keluarga extends Model
 		'status_ekonomi',
 		'alamat',
 		'id_desa'
-
 	];
 	
 	public function desa(){
         return $this->belongsTo('App\Desa', 'id_desa');
-    }
+	}
+	
+	/* public function anak(){
+		return $this->hasOne('App\Anak', 'no_kk');
+	} */
 }

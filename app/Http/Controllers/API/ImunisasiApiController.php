@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use DateTime;
+use DB;
 use App\Anak;
-use App\Imunisasi;
+use DateTime;
 use App\Vaksinasi;
+use App\Imunisasi;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 class ImunisasiApiController extends Controller
 {
     public function getAll(){
-        $datas = Imunisasi::all();
+        $datas = Imunisasi::with('vaksinasi', 'anak')->get();
         return response()->json($datas);
     }
 
@@ -22,12 +23,12 @@ class ImunisasiApiController extends Controller
         $now          = date('Y-m-d');
         $countId      = Imunisasi::where('tgl_imunisasi', $now)->count();
         $increment    = $countId + 1;
-        $id_imunisasi = date('Ymd').'0000'.$increment;
-        
+        $id_imunisasi = 'I'.date('Ymd').'0000'.$increment;
+
         $data = [
             'no_pemeriksaan_imunisasi' => $id_imunisasi,
-		    'tgl_imunisasi'            => $now,
-		    'id_vaksinasi'             => $request->id_vaksinasi,
+            'tgl_imunisasi'            => $now,
+            'id_vaksinasi'             => $request->id_vaksinasi,
             'id_anak'                  => $request->id_anak
         ];
         
@@ -47,7 +48,9 @@ class ImunisasiApiController extends Controller
     }
 
     public function show($id){
-        $data = Imunisasi::where('no_pemeriksaan_imunisasi', $id)->get();
+        $data = Imunisasi::with('vaksinasi', 'anak')
+                    ->where('no_pemeriksaan_imunisasi', $id)
+                    ->get();
         return response()->json($data);
     }
 

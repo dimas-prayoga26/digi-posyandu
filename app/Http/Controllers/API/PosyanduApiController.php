@@ -15,6 +15,11 @@ class PosyanduApiController extends Controller
         return response()->json($datas);
     }
 
+    public function show($id){
+	$data = Posyandu::find($id);
+	return response()->json($data);	
+    }
+
     public function create(Request $request){
         $data   = $request->only('nama_posyandu', 'id_desa', 'id_puskesmas');
         $create = Posyandu::create($data);

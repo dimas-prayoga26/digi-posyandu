@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-use DateTime;
 use App\Anak;
 use App\Gizi;
+use DateTime;
 use App\StatusGizi;
 use App\StandarWho;
 use App\Http\Controllers\Controller;
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 class GiziApiController extends Controller
 {
     public function getAll(){
-        $datas = Gizi::all();
+        $datas = Gizi::with('anak', 'status_gizi')->get();
         return response()->json($datas);
     }
 
@@ -30,7 +30,7 @@ class GiziApiController extends Controller
         $tgl_periksa  = $now->format('Y-m-d');
         $countId      = Gizi::where('tgl_periksa', $tgl_periksa)->count();
         $increment    = $countId + 1;
-        $id_gizi      = date('Ymd').'0000'.$increment;
+        $id_gizi      = 'G'.date('Ymd').'0000'.$increment;
         $bb           = $request->bb;
         $pb_tb        = $request->pb_tb;
 
@@ -83,11 +83,12 @@ class GiziApiController extends Controller
     }
 
     public function show($id){
-        $data = Gizi::where('no_pemeriksaan_gizi', $id)->get();
+        $data = Gizi::with('anak', 'status_gizi')
+                    ->where('no_pemeriksaan_gizi', $id)
+                    ->get();
         return response()->json($data);
     }
 
-    
     public function update(Request $request, $id)
     {
         $anak         = Anak::where('id_anak', $request->id_anak)->first();
@@ -158,6 +159,7 @@ class GiziApiController extends Controller
                     ->where('jk', $gender)
                     ->where('parameter', $age)
                     ->first();
+        //$div = $weight/$age;
         if($weight < $std->sd_min_dua){
             return $status = "SK";
         }elseif($weight < $std->sd_min_satu && $weight >= $std->sd_min_dua){
@@ -179,7 +181,6 @@ class GiziApiController extends Controller
         $status;
         //cara ukur
         $measure = $age<25 ? 1 : 2;
-
         if($measure == 1){
             $std = StandarWho::where('kategori', 'PB/U')
                 ->where('jk', $gender)
@@ -192,6 +193,8 @@ class GiziApiController extends Controller
                 ->first();
         }
 
+
+        //$div = $height/$age;
         if($height < $std->sd_min_tiga){
             return $status = "SP";
         }elseif($height <= $std->sd_min_dua && $height >= $std->sd_min_tiga){
@@ -226,7 +229,7 @@ class GiziApiController extends Controller
                 ->where('parameter', $height)
                 ->first();
         }
-        
+        //$div = $weight/$height;
         if($weight < $std->sd_min_dua){
             return $status = "SK";
         }elseif($weight < $std->sd_min_satu && $weight >= $std->sd_min_dua){

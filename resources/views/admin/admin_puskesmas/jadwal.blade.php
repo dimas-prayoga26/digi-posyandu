@@ -84,7 +84,7 @@
 
                 @foreach ($datas as $data)
                   <tr id="row_{{$data->id_jadwal}}">
-                    <th scope="row">{{$loop->iteration}}</th>
+                    <td scope="row" id="inc">{{++$i}}</th>
                     <td id="td_tgl">{{date('d-m-Y', strtotime($data->tanggal))}}</td>
                     <td>
                       <button type="button" class="btn btn-primary" 

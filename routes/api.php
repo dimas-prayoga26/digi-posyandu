@@ -27,7 +27,7 @@ Route::put('/edit-profile/{id}', 'API\KaderApiController@update');
 Route::get('/getAnak', 'API\AnakApiController@getAll');
 Route::post('/anak', 'API\AnakApiController@create');
 Route::get('/detail-anak/{id}', 'API\AnakApiController@show');
-Route::put('/edit-anak/{id}', 'API\AnakApiController@update');
+Route::post('/edit-anak/{id}', 'API\AnakApiController@update');
 
 // ------    Gizi    --------
 Route::get('/getGizi', 'API\GiziApiController@getAll');
@@ -37,15 +37,17 @@ Route::put('/edit-gizi/{id}', 'API\GiziApiController@update');
 
 // ------    Imunisasi dan Vaksinasi    --------
 Route::get('/getVaksinasi', 'API\VaksinasiApiController@getAll');
-Route::get('/getImun', 'API\ImunisasiApiController@getAll');
-Route::post('/add-imun', 'API\ImunisasiApiController@create');
+Route::get('/getImunisasi', 'API\ImunisasiApiController@getAll');
+Route::post('/add-imunisasi', 'API\ImunisasiApiController@create');
 Route::get('/detail-imunisasi/{id}', 'API\ImunisasiApiController@show');
-Route::put('/edit-imun/{id}', 'API\ImunisasiApiController@update');
+Route::put('/edit-imunisasi/{id}', 'API\ImunisasiApiController@update');
 
 // ------    Lainnya    --------
 Route::get('/getDesa', 'API\DesaApiController@getAll');
+Route::get('/getIdDesa/{id}', 'API\DesaApiController@getById');
 Route::get('/getKecamatan', 'API\KecamatanApiController@getAll');
 Route::get('/getPosyandu', 'API\PosyanduApiController@getAll');
+Route::get('getNamePosyandu/{id}', 'API\PosyanduAPIController@show');
 
 /* ------    Test    --------
     Route::get('/try/{weight}/{gender}/{age}', 'API\GiziApiController@countWeightAge');
