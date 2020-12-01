@@ -61,6 +61,7 @@ Route::put('editPosyandu/{id}','PosyanduController@update');
 Route::delete('deletePosyandu/{id}','PosyanduController@delete');
 Route::get('posyandu','PosyanduController@posyandu');
 Route::get('jadwal', 'JadwalController@index');
+Route::post('addJadwal', 'JadwalController@create');
 
 Route::get('login/bidan','LoginController@loginbidan');
 Route::post('login/bidanPost','LoginController@loginBidanPost');
@@ -69,6 +70,6 @@ Route::post('login/bidan', 'LoginController@logoutBidan');
 Route::get('login/admin','LoginController@loginadmin');
 Route::post('login/adminPost', 'LoginController@loginAdminPost');
 Route::post('login/admin', 'LoginController@logoutAdmin');
-Route::post('addJadwal', 'JadwalController@create');
+
 
 

@@ -2,6 +2,12 @@
 
 namespace App\Exports;
 
+use DB;
+use App\Gizi;
+use App\Desa;
+use App\Posyandu;
+use App\Kecamatan;
+use Illuminate\Contracts\View\View;
 use App\Puskesmas;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
