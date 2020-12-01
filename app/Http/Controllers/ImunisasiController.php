@@ -6,7 +6,7 @@ use App\Anak;
 use App\Imunisasi;
 use DB;
 use Illuminate\Http\Request;
-use App\Exports\GiziExport;
+use App\Exports\ImunisasiExport;
 use App\Exports\SuperAdminExportGizi;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -52,14 +52,14 @@ class ImunisasiController extends Controller
     }
 
 
-    public function export_gizi(){
+    public function export_imunisasi(){
         
         return Excel::download(new ImunisasiExport, 'imunisasi.xlsx');
     }
 
     public function export_imunisasi_superadmin(){
         
-        return Excel::download(new SuperAdminExportGizi, 'superadminimunisasi.xlsx');
+        return Excel::download(new ImunisasiExport, 'superadminimunisasi.xlsx');
     }
 
     /**

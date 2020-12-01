@@ -22,7 +22,7 @@
                 </div>
                 @if (session('level') == 'admin_puskesmas')
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
-                  <a href="{{ url('imunisasi/export_imunisasi')}}" class="btn btn-outline-success " >Export Laporan</a>
+                  <a href="{{ url('imunisasi/exportimunisasi')}}" class="btn btn-outline-success " >Export Laporan</a>
                 </div>
                 @else
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
@@ -49,11 +49,12 @@
                        <td>{{$data->nama_vaksinasi }}</td>
                        <!-- <td>{{date('d-m-Y', strtotime($data->tgl_imunisasi))}}</td> -->
                        <td>
-                        <button type="button" class="btn btn-primary btn-icon-split btn-sm" data-toggle="modal" data-target="#modal-anak-{{$data->no_pemeriksaan_imunisasi}}">
+                        <button type="button" class="btn btn-success btn-icon-split btn-sm" data-toggle="modal" data-target="#modal-anak-{{$data->no_pemeriksaan_imunisasi}}"
+                        id="#modalScroll">
                         <span class="icon text-white-50">
                           <i class="fas fa-info-circle"></i>
                         </span>
-                        <span class="text">Detail</span>  
+                        <span class="text">Detail Data Anak</span>  
                       </button> 
                       </tr>                      
                       @endforeach
