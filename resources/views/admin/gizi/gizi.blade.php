@@ -170,7 +170,7 @@
                                             <select class="select2-single-placeholder form-control" name="id_puskesmas"
                                                 id="id_puskesmas">
                                                 <option value="#">Pilih Puskesmas</option>
-                                                @foreach ($datas as $item)
+                                                @foreach ($puskesmas as $item)
                                                 <option value="{{$item->id_puskesmas}}">{{$item->nama_puskesmas}}
                                                 </option>
                                                 @endforeach
