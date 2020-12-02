@@ -35,13 +35,9 @@ class ImunisasiExport extends StringValueBinder implements WithCustomValueBinder
             ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
             ->select('imunisasi.*', 'anak.*', 'posyandu.*','puskesmas.*', 'keluarga.*', 
                     'vaksinasi.*', 'desa.*', 'kecamatan.*')
-            // ->where('posyandu.id_posyandu', session('puskesmas'))
+            ->where('posyandu.id_posyandu', session('puskesmas'))
             ->get();
-            
-        $desa       = Desa::where('desa.id_desa', session('puskesmas'))->count();
-        $kecamatan  = kecamatan::where('kecamatan.nama_kecamatan', session('puskesmas'))->get();
-        $puskesmas  = Puskesmas::where('puskesmas.nama_puskesmas', session('puskesmas'))->get();
-        $posyandu   = Posyandu::where('id_puskesmas', session('puskesmas'))->count();
+            dd($datas);
         $items      = DB::table('puskesmas')
                         ->join('posyandu', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
                         ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
@@ -52,10 +48,6 @@ class ImunisasiExport extends StringValueBinder implements WithCustomValueBinder
                         
         return view('admin.imunisasi.exportimunisasi', [
             'datas'     => $datas,
-            'desa'      => $desa,
-            'posyandu'  => $posyandu,
-            'kecamatan' => $kecamatan,
-            'puskesmas' => $puskesmas,
             'items'     => $items
         ]);
     }

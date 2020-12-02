@@ -11,10 +11,11 @@
             <td></td>
             <td></td>
         </tr>
-       @foreach($datas as $data)
+     
         <tr>
             <td>No.</td>
             <td>Desa</td>
+              @foreach($datas as $data)
             <td colspan="2">{{$data->nama_vaksinasi}}</td>
         </tr>
         <tr>
