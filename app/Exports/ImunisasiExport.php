@@ -23,7 +23,6 @@ class ImunisasiExport extends StringValueBinder implements WithCustomValueBinder
     public function view(): View
     {
         $datas = Imunisasi::all();
-
         return view('admin.imunisasi.exportimunisasi', [
             'datas'     => $datas
            
