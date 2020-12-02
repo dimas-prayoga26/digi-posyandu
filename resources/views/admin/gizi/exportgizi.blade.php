@@ -13,7 +13,7 @@
             <th></th>
             <th></th>
             <th></th>
-            <th>Cara Ukur</th>
+            <th></th>
             <th></th>
             <th></th>
             <th></th>
@@ -41,7 +41,7 @@
             <td></td>
             <td></td>
             <td></td>
-            <td>1 = Terlentang</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

@@ -14,9 +14,13 @@ use Illuminate\Support\Facades\Validator;
 
 class GiziApiController extends Controller
 {
-    public function getAll(){
-        $datas = Gizi::with('anak', 'status_gizi')->get();
-        return response()->json($datas);
+    public function getAll($id){
+        $id = 1;
+        $datas = Gizi::with('anak.posyandu', 'status_gizi')
+                    ->where('id_anak',$id)
+                    ->first();
+        //dd($datas->nama_anak);
+            return response()->json($datas);
     }
 
     public function create(Request $request){
