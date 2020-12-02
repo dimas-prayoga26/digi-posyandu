@@ -22,7 +22,7 @@
                 </div>
                 @if (session('level') == 'admin_puskesmas')
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
-                  <a href="{{ url('gizi/export_gizi')}}" class="btn btn-outline-success " >Export Laporan</a>
+                  <a href="{{ url('gizi/export_gizi')}}" class="btn btn-outline-success " > {{session('level')}} Export Laporan</a>
                 </div>
                 @else
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
@@ -43,39 +43,14 @@
                         <th>Data Anak</th>
                       </tr>
                     </thead>
-                    <tbody>
-                    @foreach($datas as $data)
-                      <tr>
-                       <td>{{$loop->iteration}}</td>
-                       <td>{{$data->nik }}</td>
-                       <td>{{$data->nama_anak }}</td>
-                       <td>{{date('d-m-Y', strtotime($data->tgl_periksa))}}</td>
-                       <td>{{$data->usia}}</td>
-                       <td>
-                        <button type="button" class="btn btn-primary btn-icon-split btn-sm" data-toggle="modal" data-target="#modal-detail-{{$data->no_pemeriksaan_gizi}}">
-                        <span class="icon text-white-50">
-                          <i class="fas fa-info-circle"></i>
-                        </span>
-                        <span class="text">Detail</span>  
-                      </button> 
-                       <td>
-                        <button type="button" class="btn btn-success btn-icon-split btn-sm" data-toggle="modal" data-target="#modal-anak-{{$data->no_pemeriksaan_gizi}}"
-                        id="#modalScroll">
-                        <span class="icon text-white-50">
-                          <i class="fas fa-info-circle"></i>
-                        </span>
-                        <span class="text">Detail Data Anak</span>  
-                      </button> 
-                      </td>
-                      </tr>
-                      
-                      @endforeach 
+                    <tbody id="show_data"> 
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
+
 @foreach($datas as $data)
     <!-- Modal Detail -->
       <div class="modal fade" id="modal-detail-{{$data->no_pemeriksaan_gizi}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -185,4 +160,49 @@
                             </div>
                         </div>
                     </div>
+@endsection
+
+@section('js')
+<script>
+  $(document).ready(function () {
+    fetchGizi();
+    var interval = setInterval(fetchGizi, 4000);
+    $('#dataTable').DataTable(); // ID From dataTable 
+    function fetchGizi() {
+      $.ajax({
+        type: 'GET',
+        url: '{{url('api/getGizi')}}',
+        dataType: 'json',
+        success: function(data) {
+          console.log(data);
+          var html = '';
+          var i;
+          var no = 1;
+          for (i=0; i<data.length; i++) {
+            html += '<tr>'+
+                    '<td>' + (i+1) + '</td>' +
+                    '<td>' + data[i].nik + '</td>' +
+                    '<td>' + data[i].nama_anak + '</td>' +
+                    '<td>' + data[i].tgl_periksa + '</td>' +
+                    '<td>' + data[i].usia + '</td>' +
+                    '<td>' +  '<button type="button" class="btn btn-primary btn-icon-split btn-sm"' +
+                              'data-toggle="modal" data-target="#modal-detail-'+data[i].no_pemeriksaan_gizi+'">' +
+                              '<span class="icon text-white-50"><i class="fas fa-info-circle"></i>' +
+                              '</span>' +
+                              '<span class="text">Detail</span>' +  
+                              '</button>' +'</td>' +
+                    '<td>' +  '<button type="button" class="btn btn-success btn-icon-split btn-sm"' +
+                              'data-toggle="modal" data-target="#modal-anak-'+data[i].no_pemeriksaan_gizi+'">' +
+                              '<span class="icon text-white-50"><i class="fas fa-info-circle"></i>' +
+                              '</span>' +
+                              '<span class="text">Detail Data Anak</span>' +  
+                              '</button>' +
+                    '</td>' 
+          }
+          $('#show_data').html(html);
+        }
+      });
+    }
+  });
+</script>
 @endsection

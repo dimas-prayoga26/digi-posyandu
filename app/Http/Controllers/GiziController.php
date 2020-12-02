@@ -29,8 +29,6 @@ class GiziController extends Controller
                     'puskesmas.*', 'keluarga.*', 'status_gizi.*', 'desa.nama_desa', 'kecamatan.nama_kecamatan')
                 ->where('puskesmas.id_puskesmas', session('puskesmas'))
                 ->get();
-            
-                return view('admin.gizi.gizi', compact('datas'));
         }elseif (session('level') == 'bidan') {
                 $datas = DB::table('gizi')
                 ->join('status_gizi', 'status_gizi.id_status_gizi', '=', 'gizi.id_status_gizi')
@@ -44,9 +42,7 @@ class GiziController extends Controller
                     'puskesmas.*', 'keluarga.*', 'status_gizi.*', 'desa.nama_desa', 'kecamatan.nama_kecamatan')
                 ->where('posyandu.id_posyandu', session('posyandu'))
                 ->get();
-            
-            return view('admin.gizi.gizi', compact('datas'));
-        }else{
+        }elseif (session('level') == 'super_admin'){
             $datas = DB::table('gizi')
             ->join('status_gizi', 'status_gizi.id_status_gizi', '=', 'gizi.id_status_gizi')
             ->join('anak', 'gizi.id_anak', '=', 'anak.id_anak')
@@ -56,8 +52,8 @@ class GiziController extends Controller
             ->select('gizi.*', 'anak.*', 'posyandu.nama_posyandu',
                  'puskesmas.*', 'keluarga.*', 'status_gizi.*')
             ->get();
-            return view('admin.gizi.gizi', compact('datas'));
         }    
+        return view('admin.gizi.gizi', compact('datas'));
     }
 
     public function export_gizi(){

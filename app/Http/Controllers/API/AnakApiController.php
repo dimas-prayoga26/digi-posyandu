@@ -11,8 +11,26 @@ use Illuminate\Support\Facades\Validator;
 
 class AnakApiController extends Controller
 {
-    public function getAll(){
-        $datas = Anak::with('keluarga.desa')->get();
+    public function getForAdmin(){
+        if(session('level') == 'super_admin'){
+            $datas = Anak::with('keluarga.desa')->get();
+        }elseif(session('level') == 'admin_puskesmas'){
+            $datas = Anak::with('keluarga.desa')
+                        ->with('posyandu', function($posyandu){
+                            $posyandu->where('id_puskesmas', session('puskesmas'));
+                        })
+                        ->get();
+                        //dd($datas);
+        }elseif(session('level') == 'bidan'){
+            //$datas = null;
+        }
+        return response()->json($datas);
+    }
+
+    public function getByPosyandu($id){
+        $datas = Anak::with('keluarga.desa')
+                    ->where('id_posyandu', $id)
+                    ->get();
         return response()->json($datas);
     }
 

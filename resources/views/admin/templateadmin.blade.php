@@ -218,14 +218,14 @@
  --}}<!-- Page level plugins -->
 <script src="{{url('vendor/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{url('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{url('vendor/chart.js/Chart.min.js')}}"></script>
+{{-- <script src="{{url('vendor/chart.js/Chart.min.js')}}"></script>
 <!-- Page level custom scripts -->
 <script src="{{url('js/demo/chart-area-demo.js')}}"></script>
 <script src="{{url('js/demo/chart-pie-demo.js')}}"></script>
-<script src="{{url('js/demo/chart-bar-demo.js')}}"></script>
+<script src="{{url('js/demo/chart-bar-demo.js')}}"></script> --}}
 
 
-<script>
+{{-- <script>
   $(document).ready(function () {
       var frmAddJadwal = $('#frmAddJadwal');
       var increments   = {{$i}}; 
@@ -250,20 +250,10 @@
           });
       });
   });
-</script>
+</script> --}}
 
 <!-- Page level custom scripts -->
-{{-- <script>
-  $(document).ready(function () {
-    $('#dataTable').DataTable(); // ID From dataTable 
-    $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-    // Select2 Single  with Placeholder
-   $('.select2-single-placeholder').select2({
-        placeholder: "Select a Province",
-        allowClear: true
-  });
-  });
-</script> --}}
+@yield('js')
 
 </body>
 </html>
