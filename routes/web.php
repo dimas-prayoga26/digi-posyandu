@@ -50,6 +50,7 @@ Route::get('imunisasi','ImunisasiController@index');
 Route::get('gizi','GiziController@index');
 Route::get('/gizi/export_gizi', 'GiziController@export_gizi');
 Route::get('/gizi/export_gizi_superadmin', 'GiziController@export_gizi_superadmin');
+Route::get('/imunisasi/exportimunisasi', 'ImunisasiController@export_imunisasi');
 
 //================================== Puskesmas=================================
 Route::get('puskesmas','PuskesmasController@index');
@@ -63,6 +64,7 @@ Route::put('editPosyandu/{id}','PosyanduController@update');
 Route::delete('deletePosyandu/{id}','PosyanduController@delete');
 Route::get('posyandu','PosyanduController@posyandu');
 Route::get('jadwal', 'JadwalController@index');
+Route::post('addJadwal', 'JadwalController@create');
 
 Route::get('login/bidan','LoginController@loginbidan');
 Route::post('login/bidanPost','LoginController@loginBidanPost');
@@ -71,6 +73,6 @@ Route::post('login/bidan', 'LoginController@logoutBidan');
 Route::get('login/admin','LoginController@loginadmin');
 Route::post('login/adminPost', 'LoginController@loginAdminPost');
 Route::post('login/admin', 'LoginController@logoutAdmin');
-Route::post('addJadwal', 'JadwalController@create');
+
 
 
