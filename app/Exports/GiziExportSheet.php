@@ -32,14 +32,14 @@ class GiziExportSheet implements WithMultipleSheets {
             return $sheets;
         }
 
-        elseif(session('level')=='super_admin') {
+        else if(session('level')=='super_admin') {
             //dd($this->puskesmas);
             $posyandu=Posyandu::where('id_puskesmas', $this->puskesmas)
                 ->select('posyandu.*')
                 ->get();
             $sheets=[];
             foreach($posyandu as $data) {
-                $sheets[] = new GiziExport($data->id_posyandu, $data->nama_posyandu);
+                $sheets[] = new SuperAdminExportGizi($data->id_posyandu, $data->nama_posyandu);
             }
 
             return $sheets;

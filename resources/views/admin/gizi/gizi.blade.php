@@ -22,7 +22,7 @@
                 </div>
                 @if (session('level') == 'admin_puskesmas')
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
-                  <a href="{{ url('gizi/export_gizi')}}" class="btn btn-outline-success " >Export Laporan</a>
+                  <a href="{{ url('/gizi/export_gizi')}}" class="btn btn-outline-success " >Export Laporan</a>
                 </div>
                 @else
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
@@ -139,7 +139,7 @@
                                     </button>
                                 </div>
   
-                                <form id="addExportGizi" action="{{ url('gizi/export_gizi_superadmin')}}" method="GET" role="form">
+                                <form id="addExportGizi" action="{{ url('/gizi/export_gizi_superadmin')}}" method="GET" role="form">
                                     @csrf
                                     <div class="form-group">
                                             <label for="id_puskesmas">Laporan Puskesmas</label>
