@@ -49,7 +49,7 @@ class DashboardController extends Controller
     }
 
 
-    public function chart()
+    public function chartGizi()
     {
         $stuntingTinggiBadan = DB::table('gizi')
         ->join('status_gizi', 'gizi.id_status_gizi', '=', 'status_gizi.id_status_gizi')
@@ -61,18 +61,28 @@ class DashboardController extends Controller
         return response()->json($stuntingTinggiBadan,200);
         /* $giziChart = DB::table('gizi')
         ->join('status_gizi', 'gizi.id_status_gizi', '=', 'status_gizi.id_status_gizi')
-  
         ->select(DB::raw('count(*) as `count`'),DB::raw('YEAR(tgl_periksa) year, MONTH(tgl_periksa) month'))
         ->groupby('year','month')
         ->pluck('count','month');
         return response()->json($giziChart,200); */
-       $imunisasiChart = DB::table('imunisasi')
-                ->join('vaksinasi', 'imunisasi.id_vaksin', '=', 'vaksinasi.id_vaksin')
-                ->select('id_vaksin',DB::raw('count(*) as total'))
-                ->where()
-                ->grupBy('id_vaksinasi')
-                ->pluck('total');
-
-                return view('admin.dashboard', compact('puskes','posyandu','anak','bidan','kader','posBidan','anakBidan','posPuskes','bidanPuskes','anakAdmin'));
+    }
+    public function chartImunisasi()
+    {
+        $imunisasiChart =  DB::table('imunisasi')
+        ->join('vaksinasi', 'imunisasi.id_vaksinasi', '=', 'vaksinasi.id_vaksinasi')
+        ->select(DB::raw('count(*) as `count`'),'vaksinasi.nama_vaksinasi as nama')
+        ->groupby('nama')
+        ->get();
+        //->select(DB::raw('count(*) as `count`'))
+        //->groupby('count')
+        /* ->select(DB::raw('count(*) as `count`'), 'vaksinasi.nama_vaksinasi as nama')
+        ->orderBy('tgl_imunisasi', 'ASC') 
+        ->groupby('nama','count') */
+        /* for ($i=0; $i<=count($imunisasiChart); $i++) {
+            $colours[] = '#' . substr(str_shuffle('ABCDEF0123456789'), 0, 6);
+        }
+        return response()->json([$imunisasiChart,$colours],200);
+        //dd($imunisasiChart); */
+        return response()->json($imunisasiChart,200);
     }
 }

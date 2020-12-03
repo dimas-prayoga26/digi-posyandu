@@ -22,7 +22,7 @@
                 </div>
                 @if (session('level') == 'admin_puskesmas')
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
-                  <a href="{{ url('gizi/export_gizi')}}" class="btn btn-outline-success " >Export Laporan</a>
+                  <a href="{{ url('/gizi/export_gizi')}}" class="btn btn-outline-success " >Export Laporan</a>
                 </div>
                 @else
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
@@ -126,7 +126,7 @@
        </div>
      </div>
      @endforeach 
-     @if (session('level') == 'admin_puskesmas')
+     
      {{-- Modal Tambah --}}
                     <div class="modal fade" id="modalexport" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -138,8 +138,8 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-    @endif
-                                <form id="addExportGizi" action="{{ url('gizi/export_gizi_superadmin')}}" method="GET" role="form">
+  
+                                <form id="addExportGizi" action="{{ url('/gizi/export_gizi_superadmin')}}" method="GET" role="form">
                                     @csrf
                                     <div class="form-group">
                                             <label for="id_puskesmas">Laporan Puskesmas</label>
@@ -168,11 +168,11 @@
   $(document).ready(function () {
     fetchGizi();
     var apiUrl = '';
-    var level = {{session('level')}};
+    var level = "{{session('level')}}";
     if(level == 'admin_puskesmas'){ 
-          var puskesmas = {{session('puskesmas')}};
-          apiUrl = 'api/getGiziPuskes/'+puskesmas; 
-    }elseif(level == 'super_admin'){
+          var puskesmas = "{{session('puskesmas')}}";
+          apiUrl = 'api/getGiziPuskes/'+ puskesmas; 
+    }else if(level == 'super_admin'){
           apiUrl = 'api/getGizi';
     }
     var interval = setInterval(fetchGizi, 4000);

@@ -163,7 +163,7 @@
             <div class="col-lg-8">
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Diagram Gizi  Data Anak Stunting Berdasarkan Tinggi Badan (PB-TB/U)</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Diagram Gizi Data Anak Stunting Berdasarkan Tinggi Badan (PB-TB/U)</h6>
                 </div>
                 <div class="card-body">
                   <div class="chart-bar">
@@ -171,7 +171,20 @@
                   </div>                 
                 </div>
               </div>
-            </div>              
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Diagram Imunisasi Berdasarkan Jenis Vaksinasi</h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-bar">
+                    <canvas id="imunisasiChart"></canvas>
+                  </div>                 
+                </div>
+              </div>
+            </div>
+           
+
+              
           @endif
             
 
