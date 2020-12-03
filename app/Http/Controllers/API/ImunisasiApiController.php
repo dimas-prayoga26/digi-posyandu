@@ -8,7 +8,7 @@ use DateTime;
 use App\Vaksinasi;
 use App\Imunisasi;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -36,11 +36,10 @@ class ImunisasiApiController extends Controller
     }
 
     public function getByPosyandu($id){
-        $datas = Imunisasi::with('anak', function($anak){
-                        $anak->where('id_posyandu', $id);
-                    })
-                    ->with('vaksinasi')
-                    ->get();
+        $datas = Imunisasi::with('anak', 'vaksinasi')
+                    ->whereHas('anak', function (Builder $query) use($id){
+                        $query->where('id_posyandu', $id);
+                    })->get();
         return response()->json($datas);
     }
 
