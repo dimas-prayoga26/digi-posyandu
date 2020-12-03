@@ -126,7 +126,7 @@
        </div>
      </div>
      @endforeach 
-     @if (session('level') == 'admin_puskesmas')
+     @if (session('level') == 'super_admin')
      {{-- Modal Tambah --}}
                     <div class="modal fade" id="modalexport" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
