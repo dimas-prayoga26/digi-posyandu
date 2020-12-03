@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('dashboard/chart','DashboardController@chart');
 Route::get('dashboard','DashboardController@index');
 Route::get('profil','PageController@profil');
 
@@ -44,6 +45,8 @@ Route::post('addVaksinasi', 'VaksinasiController@create');
 Route::put('editVaksinasi/{id}','VaksinasiController@update');
 Route::delete('deleteVaksinasi/{id}','VaksinasiController@delete');
 Route::get('imunisasi','ImunisasiController@index');
+
+
 Route::get('gizi','GiziController@index');
 Route::get('/gizi/export_gizi', 'GiziController@export_gizi');
 Route::get('/gizi/export_gizi_superadmin', 'GiziController@export_gizi_superadmin');

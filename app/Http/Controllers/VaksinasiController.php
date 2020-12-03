@@ -91,6 +91,14 @@ class VaksinasiController extends Controller
      */
     public function update(Request $request, $id)
      {
+        $request->validate([
+            'nama_vaksinasi' => 'required|unique:vaksinasi|string|max:100', 
+        ],
+        [
+            'nama_vaksinasi.required'    => 'Nama Vaksinasi harus diisi',
+            'nama_vaksinasi.unique'      => 'Nama Vaksinasi sudah ada', 
+            'nama_vaksinasi.max'         => 'Nama Vaksinasi panjang karakter maksima 100',
+        ]);
         $data = $request->only('nama_vaksinasi');
         Vaksinasi::whereIdVaksinasi($id)->update($data);
         return redirect()->back()->with('success', 'Data berhasil  diubah');

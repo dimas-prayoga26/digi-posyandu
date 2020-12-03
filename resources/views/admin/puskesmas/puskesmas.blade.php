@@ -13,6 +13,29 @@
         </ol>
     </div>
 
+    <div class="card-header">
+        @if (session('success'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h6><i class="fas fa-check"></i><b> Berhasil!</b></h6>
+            {{ session('success') }}
+        </div>
+        @endif
+    </div>
+    @if($errors->any())
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{$error}}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="row">
         <!-- Datatables -->
         <div class="col-lg-12">
@@ -20,29 +43,6 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Data Puskesmas</h6>
                 </div>
-
-                <div class="card-header">
-                    @if (session('success'))
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h6><i class="fas fa-check"></i><b> Berhasil!</b></h6>
-                        {{ session('success') }}
-                    </div>
-                    @endif
-
-                    @if (session('error'))
-                    <div class="alert alert-danger alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h6><i class="fas fa-ban"></i><b> Gagal!</b></h6>
-                        {{ session('error') }}
-                    </div>
-                    @endif
-                </div>
-
                 {{-- Modal Tambah --}}
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <button type="button" class="btn btn-success btn-icon-split btn-sm" data-toggle="modal"
@@ -66,26 +66,19 @@
                                 <div class="modal-body">
                                     <form action="{{url('addPuskesmas')}}" method="POST">
                                         @csrf
+                                        <div class="modal-body">
                                         <div class="form-group">
                                             <label for="nama_puskesmas">Nama Puskesmas</label>
-                                            <input type="text"
-                                                class="form-control @error('nama_puskesmas') is-invalid @enderror"
-                                                value="{{ old('nama_puskesmas') }}" id="nama_puskesmas"
-                                                name="nama_puskesmas" placeholder="Masukan nama puskesmas">
-                                            @error('nama_puskesmas')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
+                                            <input type="text" class="form-control" name="nama_puskesmas"
+                                                placeholder="Masukan Nama Puskesmas">
                                         </div>
+                                    
                                         <div class="form-group">
                                             <label for="alamat">Alamat</label>
-                                            <input type="text"
-                                                class="form-control @error('alamat') is-invalid @enderror"
-                                                value="{{ old('alamat') }}" id="alamat" name="alamat"
-                                                placeholder="Masukan nama puskesmas">
-                                            @error('alamat')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
+                                            <input type="text" class="form-control" name="alamat"
+                                                placeholder="Masukan Alamat">
                                         </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-danger"
@@ -152,22 +145,18 @@
                         <form action="{{url('editPuskesmas', $data->id_puskesmas)}}" method="post">
                             @csrf
                             @method('PUT')
-                            <div class="form-group">
-                                <label for="nama_puskesmas">Nama Puskesmas</label>
-                                <input type="text" class="form-control @error('nama_puskesmas') is-invalid @enderror"
-                                    value="{{ $data->nama_puskesmas }}" id="nama_puskesmas" name="nama_puskesmas"
-                                    placeholder="Masukan alamat">
-                                @error('nama_puskesmas')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="alamat">Alamat</label>
-                                <input type="text" class="form-control @error('alamat') is-invalid @enderror"
-                                    value="{{ $data->alamat }}" id="alamat" name="alamat" placeholder="Masukan alamat">
-                                @error('alamat')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                             <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="nama_puskesmas">Nama Puskesmas</label>
+                                            <input type="text" class="form-control" name="nama_puskesmas"
+                                                placeholder="Masukan Nama Puskesmas" value="{{$data->nama_puskesmas}}">
+                                        </div>
+                                    
+                                        <div class="form-group">
+                                            <label for="alamat">Alamat</label>
+                                            <input type="text" class="form-control" name="alamat"
+                                                placeholder="Masukan Alamat" value="{{$data->alamat}}">
+                                        </div>
                             </div>
                     </div>
                     <div class="modal-footer">

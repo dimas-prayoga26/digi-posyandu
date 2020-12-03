@@ -16,4 +16,8 @@ class StatusGizi extends Model
 		'pb_tb_u',
 		'bb_pb_tb'
 	];
+	public function gizi()
+	{
+	 return $this->hasOne('App\Gizi', 'id_status_gizi');
+	}
 }

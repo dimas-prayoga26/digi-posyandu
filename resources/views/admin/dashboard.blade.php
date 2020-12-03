@@ -163,16 +163,15 @@
             <div class="col-lg-8">
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Diagaram Gizi</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Diagram Gizi  Data Anak Stunting Berdasarkan Tinggi Badan (PB-TB/U)</h6>
                 </div>
                 <div class="card-body">
                   <div class="chart-bar">
                     <canvas id="giziChart"></canvas>
-                  </div>
-                  <hr>
-                  Data Anak Yang Melakukan Pemeriksaan Gizi
+                  </div>                 
                 </div>
-              </div>    
+              </div>
+            </div>              
           @endif
             
 

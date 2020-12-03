@@ -139,9 +139,6 @@
                             <label for="nama_vaksinasi">Nama Vaksinasi</label>
                             <input type="text" class="form-control @error('nama_vaksinasi') is-invalid @enderror"
                                 value="{{$data->nama_vaksinasi}}" id="nama_vaksinasi" name="nama_vaksinasi">
-                            @error('nama_vaksinasi')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
                         </div>
                     </div>
                     <div class="modal-footer">

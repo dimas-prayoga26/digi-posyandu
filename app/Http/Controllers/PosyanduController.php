@@ -26,16 +26,17 @@ class PosyanduController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'nama_posyandu' => 'required|string',
+            'nama_posyandu' => 'required|string|min:3',
             'id_desa' => 'required',
             'id_puskesmas' => 'required',
 
         ],
         [
             'nama_posyandu.required'    => 'Nama Posyandu harus diisi',
+            'nama_posyandu.min'         => 'Nama Posyandu minimal 3',
             'id_desa.required'          => 'Desa harus diisi',
             'id_puskesmas.required'     => 'Puskesmas harus diisi',
-            'max'                       => 'panjang karakter maksima 100',
+            'max'                       => 'panjang karakter maksimal 100',
         ]);
         $data = $request->only('nama_posyandu','id_desa','id_puskesmas');
         Posyandu::create($data);
@@ -49,6 +50,20 @@ class PosyanduController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'nama_posyandu' => 'required|min:3|string',
+            'id_desa' => 'required',
+            'id_puskesmas' => 'required',
+
+        ],
+        [
+            'nama_posyandu.required'    => 'Nama Posyandu harus diisi',
+            'nama_posyandu.min'         => 'Nama Posyandu minimal 3',
+            'id_desa.required'          => 'Desa harus diisi',
+            'id_puskesmas.required'     => 'Puskesmas harus diisi',
+            'max'                       => 'panjang karakter maksimal 100',
+        ]);
+
         $data = $request->only('nama_posyandu','id_desa','id_puskesmas');
         Posyandu::whereIdPosyandu($id)->update($data);
         return redirect()->back()->with('success', 'Data Berhasil Diubah');

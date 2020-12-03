@@ -27,8 +27,20 @@ class PuskesmasController extends Controller
 
     public function create(Request $request)
     {
-        Puskesmas::create($request->only('nama_puskesmas', 'alamat'));
-        return redirect()->back()->with('success', 'Data berhasil disimpan');
+         $request->validate([
+            'nama_puskesmas' => 'required|unique:puskesmas|string',
+            'alamat' => 'required'
+
+        ],
+        [
+            'nama_puskesmas.required'    => 'Nama puskesmas harus diisi',
+            'nama_puskesmas.unique'     => 'Nama Puskesmas sudah ada',
+            'alamat.required'          => 'Alamat harus diisi',
+            'max'                       => 'panjang karakter maksimal 100',
+        ]);
+       $data = $request->only('nama_puskesmas', 'alamat');
+        Puskesmas::create($data);
+        return redirect()->back()->with('success', 'Data berhasil ditambah');
     }
 
     public function show($id)
@@ -38,6 +50,16 @@ class PuskesmasController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'nama_puskesmas' => 'required|string',
+            'alamat' => 'required'
+
+        ],
+        [
+            'nama_puskesmas.required'   => 'Nama puskesmas harus diisi',
+            'alamat.required'           => 'Alamat harus diisi',
+            'max'                       => 'panjang karakter maksimal 100',
+        ]);
 
         $data = $request->only('nama_puskesmas','alamat');
         Puskesmas::whereIdPuskesmas($id)->update($data);
