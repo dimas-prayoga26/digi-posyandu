@@ -48,7 +48,7 @@
             <td></td>
             <td></td>
         </tr>
-        @foreach($datas as $data)
+        @foreach($items as $data)
         <tr>
        
             <td colspan="3">KECAMATAN</td>
