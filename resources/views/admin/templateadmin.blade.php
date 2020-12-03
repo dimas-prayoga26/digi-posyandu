@@ -218,51 +218,14 @@
  --}}<!-- Page level plugins -->
 <script src="{{url('vendor/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{url('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{url('vendor/chart.js/Chart.min.js')}}"></script>
+{{-- <script src="{{url('vendor/chart.js/Chart.min.js')}}"></script>
 <!-- Page level custom scripts -->
 <script src="{{url('js/demo/chart-area-demo.js')}}"></script>
 <script src="{{url('js/demo/chart-pie-demo.js')}}"></script>
-<script src="{{url('js/demo/chart-bar-demo.js')}}"></script>
-
-
- <!-- <script>
-  $(document).ready(function () {
-      var frmAddJadwal = $('#frmAddJadwal');
-      console.log(increments);
-      frmAddJadwal.submit(function (event) {
-          event.preventDefault(); 
-          $.ajax({
-              url: frmAddJadwal.attr('action'),
-              type: "POST",
-              data: frmAddJadwal.serialize(),
-              dataType: "json",
-              success: function( response ){
-                  console.log(response);
-                  if( response.error == 0 ){      
-                      var jadwal = '<tr id="row_ ' + response.data.id_jadwal + '">'+ '<td scope="row" id="inc">' + '</td>' +'<td>' + response.data.tanggal + '</td>';
-                      jadwal += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-data"><i class="fas fa-user-edit"></i></button>';
-                      jadwal += '<button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button></td></tr>';
-                      $('table tbody').append(jadwal);
-                  }
-                  $('#exampleModal').modal('hide');
-              }   
-          });
-      });
-  });
-</script> --}} -->
+<script src="{{url('js/demo/chart-bar-demo.js')}}"></script> --}}
 
 <!-- Page level custom scripts -->
-{{-- <script>
-  $(document).ready(function () {
-    $('#dataTable').DataTable(); // ID From dataTable 
-    $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-    // Select2 Single  with Placeholder
-   $('.select2-single-placeholder').select2({
-        placeholder: "Select a Province",
-        allowClear: true
-  });
-  });
-</script> --}}
+@yield('js')
 
 </body>
 </html>

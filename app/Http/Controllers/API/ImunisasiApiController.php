@@ -15,15 +15,40 @@ use Illuminate\Support\Facades\Validator;
 class ImunisasiApiController extends Controller
 {
     public function getAll(){
-        $datas = Imunisasi::with('vaksinasi', 'anak')->get();
+        $datas = Imunisasi::with('anak', 'vaksinasi')->get();
+        return response()->json($datas);
+    }
+
+    public function getByPuskes($id){
+        $datas = DB::table('imunisasi')
+                    ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
+                    ->join('anak', 'anak.id_anak', '=', 'imunisasi.id_anak')
+                    ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                    ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
+                    ->join('keluarga', 'keluarga.no_kk', 'anak.no_kk')
+                    ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
+                    ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
+                    ->select('imunisasi.*', 'vaksinasi.*', 'anak.*', 'posyandu.*','kecamatan.*',
+                        'puskesmas.*', 'keluarga.*')
+                     ->where('puskesmas.id_puskesmas', $id)
+                    ->get();
+        return response()->json($datas);
+    }
+
+    public function getByPosyandu($id){
+        $datas = Imunisasi::with('anak', function($anak){
+                        $anak->where('id_posyandu', $id);
+                    })
+                    ->with('vaksinasi')
+                    ->get();
         return response()->json($datas);
     }
 
     public function create(Request $request){
         $now          = date('Y-m-d');
         $countId      = Imunisasi::where('tgl_imunisasi', $now)->count();
-        $increment    = $countId + 1;
-        $id_imunisasi = 'I'.date('Ymd').'0000'.$increment;
+        $increment    = ($countId + 1);
+        $id_imunisasi = 'I'.date('Ymd').str_pad($increment, 5, '0', STR_PAD_LEFT);
 
         $data = [
             'no_pemeriksaan_imunisasi' => $id_imunisasi,

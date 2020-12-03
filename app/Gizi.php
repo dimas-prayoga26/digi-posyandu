@@ -9,7 +9,9 @@ class Gizi extends Model
 	protected $table = 'gizi';
 	
 	protected $primaryKey = 'no_pemeriksaan_gizi';
-
+	
+	public $incrementing = false;
+	
 	protected $keyType = 'string'; 
 
     protected $fillable = [   

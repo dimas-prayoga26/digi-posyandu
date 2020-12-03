@@ -17,7 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('dashboard/chart','DashboardController@chart');
+Route::get('dashboard/chart/gizi','DashboardController@chartGizi');
+Route::get('dashboard/chart/imunisasi','DashboardController@chartImunisasi');
 Route::get('dashboard','DashboardController@index');
 Route::get('profil','PageController@profil');
 
