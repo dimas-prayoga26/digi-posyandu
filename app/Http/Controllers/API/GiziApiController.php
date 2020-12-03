@@ -9,7 +9,7 @@ use DateTime;
 use App\StatusGizi;
 use App\StandarWho;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -49,11 +49,10 @@ class GiziApiController extends Controller
     }
 
     public function getByPosyandu($id){
-        $datas = Gizi::with('anak', function($anak){
-                        $anak->where('id_posyandu', $id);
-                    })
-                    ->with('status_gizi')
-                    ->get();
+        $datas = Gizi::with('anak', 'status_gizi')
+                    ->whereHas('anak', function (Builder $query) use($id){
+                        $query->where('id_posyandu', $id);
+                    })->get();
         return response()->json($datas);
     }
 
