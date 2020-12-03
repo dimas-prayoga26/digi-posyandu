@@ -3,7 +3,7 @@ Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,Bli
 Chart.defaults.global.defaultFontColor = '#858796';
 
 // Pie Chart Example
-/* $.get('http://127.0.0.1:8000/dashboard/chart/imunisasi',(imunisasiChart,colours) =>{
+$.get('http://127.0.0.1:8000/dashboard/chart/imunisasi',(imunisasiChart,colours) =>{
   var ctx = document.getElementById("imunisasiChart");
 
   var data = imunisasiChart.map(function(e) {
@@ -19,7 +19,7 @@ Chart.defaults.global.defaultFontColor = '#858796';
       labels: nama,
       datasets: [{
         data: data,
-        backgroundColor: colours,
+        backgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
         //hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
         hoverBorderColor: "rgba(234, 236, 244, 1)",
       }],
@@ -42,4 +42,4 @@ Chart.defaults.global.defaultFontColor = '#858796';
       cutoutPercentage: 80,
     },
   });
-}); */
+});

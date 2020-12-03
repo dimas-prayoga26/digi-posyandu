@@ -27,7 +27,8 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
-// Bar Chart Example
+var interval = setInterval(chartGizi, 4000);
+function chartGizi() {
 $.get('http://127.0.0.1:8000/dashboard/chart/gizi',(stuntingTinggiBadan) =>{
   var ctx = document.getElementById("giziChart");
   var data = stuntingTinggiBadan.map(function(e) {
@@ -118,8 +119,10 @@ $.get('http://127.0.0.1:8000/dashboard/chart/gizi',(stuntingTinggiBadan) =>{
     }
   });
 });
+  
+}
 
-$.get('http://127.0.0.1:8000/dashboard/chart/imunisasi',(imunisasiChart) =>{
+/* $.get('http://127.0.0.1:8000/dashboard/chart/imunisasi',(imunisasiChart) =>{
   var ctx = document.getElementById("imunisasiChart");
   var data = imunisasiChart.map(function(e) {
     return e.count;
@@ -208,4 +211,4 @@ $.get('http://127.0.0.1:8000/dashboard/chart/imunisasi',(imunisasiChart) =>{
       },
     }
   });
-});
+}); */
