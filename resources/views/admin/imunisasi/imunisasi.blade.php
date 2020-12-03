@@ -22,7 +22,7 @@
                 </div>
                 @if (session('level') == 'admin_puskesmas')
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
-                  <a href="{{ url('imunisasi/export_imunisasi')}}" class="btn btn-outline-success " >Export Laporan</a>
+                  <a href="{{ url('imunisasi/exportimunisasi')}}" class="btn btn-outline-success " >Export Laporan</a>
                 </div>
                 @else
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
@@ -40,23 +40,7 @@
                         <th>Data Anak</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      @foreach($datas as $data)
-                      <tr>
-                       <td>{{$loop->iteration}}</td>
-                       <td>{{$data->tgl_imunisasi  }}</td>
-                       <td>{{$data->nama_anak }}</td>
-                       <td>{{$data->nama_vaksinasi }}</td>
-                       <!-- <td>{{date('d-m-Y', strtotime($data->tgl_imunisasi))}}</td> -->
-                       <td>
-                        <button type="button" class="btn btn-primary btn-icon-split btn-sm" data-toggle="modal" data-target="#modal-anak-{{$data->no_pemeriksaan_imunisasi}}">
-                        <span class="icon text-white-50">
-                          <i class="fas fa-info-circle"></i>
-                        </span>
-                        <span class="text">Detail</span>  
-                      </button> 
-                      </tr>                      
-                      @endforeach
+                    <tbody id="show_data">
                     </tbody>
                   </table>
                 </div>
@@ -104,4 +88,46 @@
        </div>
      </div>
      @endforeach
+@endsection
+@section('js')
+    <script>
+      $(document).ready(function () {
+        var apiUrl = '';
+        var level = {{session('level')}};
+        if(level == 'admin_puskesmas'){ 
+          var puskesmas = {{session('puskesmas')}};
+          apiUrl = 'api/getImunisasi/'+puskesmas; 
+        }elseif(level == 'super_admin'){
+          apiUrl = 'api/getImunisasi';
+        }
+        fetchImunisasi();
+        var interval = setInterval(fetchImunisasi, 4000);
+        $('#dataTable').DataTable(); // ID From dataTable 
+        function fetchImunisasi() {
+          $.ajax({
+            type: 'GET',
+            url: apiUrl,
+            dataType: 'json',
+            success: function(data) {
+              var html = '';
+              for (var i=0; i<data.length; i++) {
+                html += '<tr>'+
+                        '<td>' + (i+1) + '</td>' +
+                        '<td>' + data[i].tgl_imunisasi + '</td>' +
+                        '<td>' + data[i].nama_anak + '</td>' +
+                        '<td>' + data[i].nama_vaksinasi + '</td>' +
+                        '<td>' +  '<button type="button" class="btn btn-success btn-icon-split btn-sm"' +
+                                  'data-toggle="modal" data-target="#modal-anak-'+data[i].no_pemeriksaan_imunisasi+'">' +
+                                  '<span class="icon text-white-50"><i class="fas fa-info-circle"></i>' +
+                                  '</span>' +
+                                  '<span class="text">Detail Data Anak</span>' +  
+                                  '</button>' +
+                        '</td></tr>' 
+              }
+              $('#show_data').html(html);
+            }
+          });
+        }
+      });
+    </script>
 @endsection

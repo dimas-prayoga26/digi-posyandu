@@ -76,6 +76,11 @@ class AnakApiController extends Controller
         $data = Anak::with('keluarga.desa')->where('id_anak', $id)->get();
         return response()->json($data);
     }
+    public function showByPosyandu($id)
+    {
+        $data = Anak::with('keluarga.desa')->where('id_posyandu', $id)->get();
+        return response()->json($data);
+    }
 
     public function update(Request $request, $id){
         $data_anak = [ 

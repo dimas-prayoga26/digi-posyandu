@@ -2,7 +2,13 @@
 
 namespace App\Exports;
 
+use DB;
+use App\Gizi;
+use App\Desa;
+use App\Posyandu;
+use App\Kecamatan;
 use App\Puskesmas;
+use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithTitle;
@@ -27,7 +33,7 @@ implements WithCustomValueBinder, FromView, ShouldAutoSize, WithTitle
     }
     public function view(): View
     {
-        //dd($this->puskesmas);
+
         $datas = DB::table('gizi')
             ->join('status_gizi', 'status_gizi.id_status_gizi', '=', 'gizi.id_status_gizi')
             ->join('anak', 'gizi.id_anak', '=', 'anak.id_anak')
@@ -38,11 +44,8 @@ implements WithCustomValueBinder, FromView, ShouldAutoSize, WithTitle
             ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
             ->select('gizi.*', 'anak.*', 'posyandu.*','puskesmas.*', 'keluarga.*', 
                     'status_gizi.*', 'desa.*', 'kecamatan.*')
-            //->where('puskesmas.id_puskesmas', session('puskesmas'))
             ->where('posyandu.id_posyandu', $this->puskesmas)
-            //->where('posyandu.nama_posyandu.', '=', 'Posyandu Melati')
             ->get();
-        //dd($datas);
         $desa       = Desa::where('desa.id_desa', session('puskesmas'))->count();
         $kecamatan  = kecamatan::where('kecamatan.nama_kecamatan', session('puskesmas'))->get();
         $puskesmas  = Puskesmas::where('puskesmas.nama_puskesmas', session('puskesmas'))->get();
@@ -54,7 +57,7 @@ implements WithCustomValueBinder, FromView, ShouldAutoSize, WithTitle
                         ->select('kecamatan.nama_kecamatan', 'puskesmas.nama_puskesmas', 'desa.rt', 'desa.rw')
                         ->where('puskesmas.id_puskesmas', session('puskesmas'))
                         ->first();
-        //dd($datas);
+
         return view('admin.gizi.exportgizi', [
             'datas'     => $datas,
             'desa'      => $desa,

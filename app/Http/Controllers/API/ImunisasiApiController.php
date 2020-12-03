@@ -15,25 +15,23 @@ use Illuminate\Support\Facades\Validator;
 class ImunisasiApiController extends Controller
 {
     public function getAll(){
-        if(session('level') == 'super_admin'){
-            $datas = Imunisasi::with('anak', 'vaksinasi')->get();
-        }elseif(session('level') == 'admin_pusksemas'){
-            /* $datas = DB::table('gizi')
-                    ->join('status_gizi', 'status_gizi.id_status_gizi', '=', 'gizi.id_status_gizi')
-                    ->join('anak', 'gizi.id_anak', '=', 'anak.id_anak')
-                    ->join('keluarga', 'keluarga.no_kk', 'anak.no_kk')
+        $datas = Imunisasi::with('anak', 'vaksinasi')->get();
+        return response()->json($datas);
+    }
+
+    public function getByPuskes($id){
+        $datas = DB::table('imunisasi')
+                    ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
+                    ->join('anak', 'anak.id_anak', '=', 'imunisasi.id_anak')
                     ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
                     ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
+                    ->join('keluarga', 'keluarga.no_kk', 'anak.no_kk')
                     ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
                     ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
-                    ->select('gizi.*', 'anak.*', 'posyandu.nama_posyandu',
-                        'puskesmas.*', 'keluarga.*', 'status_gizi.*', 
-                        'desa.nama_desa', 'kecamatan.nama_kecamatan')
-                    ->where('puskesmas.id_puskesmas', session('puskesmas'))
-                    ->get(); */
-        }elseif(session('level') == 'bidan'){
-            //
-        }
+                    ->select('imunisasi.*', 'vaksinasi.*', 'anak.*', 'posyandu.*','kecamatan.*',
+                        'puskesmas.*', 'keluarga.*')
+                     ->where('puskesmas.id_puskesmas', $id)
+                    ->get();
         return response()->json($datas);
     }
 
@@ -49,8 +47,8 @@ class ImunisasiApiController extends Controller
     public function create(Request $request){
         $now          = date('Y-m-d');
         $countId      = Imunisasi::where('tgl_imunisasi', $now)->count();
-        $increment    = $countId + 1;
-        $id_imunisasi = 'I'.date('Ymd').'0000'.$increment;
+        $increment    = ($countId + 1);
+        $id_imunisasi = 'I'.date('Ymd').str_pad($increment, 5, '0', STR_PAD_LEFT);
 
         $data = [
             'no_pemeriksaan_imunisasi' => $id_imunisasi,

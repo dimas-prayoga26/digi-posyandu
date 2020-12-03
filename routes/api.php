@@ -24,22 +24,24 @@ Route::get('/profile/{id}', 'API\KaderApiController@show');
 Route::put('/edit-profile/{id}', 'API\KaderApiController@update');
 
 // ------    Anak    --------
-Route::get('/getAnak', 'API\AnakApiController@getForAdmin');
-Route::get('/getAnakByPosyandu', 'API\AnakApiController@getByPosyandu');
+Route::get('/getAnak', 'API\AnakApiController@getAll');
+Route::get('/showByPosyandu/{id}', 'API\AnakApiController@showByPosyandu');
 Route::post('/anak', 'API\AnakApiController@create');
 Route::get('/detail-anak/{id}', 'API\AnakApiController@show');
 Route::post('/edit-anak/{id}', 'API\AnakApiController@update');
 
 // ------    Gizi    --------
-Route::get('/getGizi', 'API\GiziApiController@getForAdmin');
-Route::get('/getGiziByPosyandu/{id}', 'API\GiziApiController@getByPosyandu');
+Route::get('/getGizi', 'API\GiziApiController@getAll');
+Route::get('/getGiziPuskes/{id}', 'API\GiziApiController@getByPuskes');
+Route::get('/getGizi/{id}', 'API\GiziApiController@getByPosyandu');
 Route::post('/add-gizi', 'API\GiziApiController@create');
 Route::get('/detail-gizi/{id}', 'API\GiziApiController@show');
 Route::put('/edit-gizi/{id}', 'API\GiziApiController@update');
 
 // ------    Imunisasi dan Vaksinasi    --------
 Route::get('/getVaksinasi', 'API\VaksinasiApiController@getAll');
-Route::get('/getImunisasi', 'API\ImunisasiApiController@getForAdmin');
+Route::get('/getImunisasi', 'API\ImunisasiApiController@getAll');
+Route::get('/getImunisasi/{id}', 'API\ImunisasiApiController@getByPuskes');
 Route::get('/getImunisasiByPosyandu/{id}', 'API\ImunisasiApiController@getByPosyandu');
 Route::post('/add-imunisasi', 'API\ImunisasiApiController@create');
 Route::get('/detail-imunisasi/{id}', 'API\ImunisasiApiController@show');

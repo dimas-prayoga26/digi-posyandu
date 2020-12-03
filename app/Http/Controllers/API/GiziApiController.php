@@ -15,12 +15,13 @@ use Illuminate\Support\Facades\Validator;
 
 class GiziApiController extends Controller
 {
-    public function getForAdmin(){
-        if (session('level') == 'super_admin'){
-            $datas = Gizi::with('anak', 'status_gizi')->get();
-            return response()->json($datas);
-        }elseif (session('level') == 'admin_puskesmas'){
-            $datas = DB::table('gizi')
+    public function getAll(){
+        $datas = Gizi::with('anak', 'status_gizi')->get();
+        return response()->json($datas);
+    }
+
+    public function getByPuskes($id){
+        $datas = DB::table('gizi')
                     ->join('status_gizi', 'status_gizi.id_status_gizi', '=', 'gizi.id_status_gizi')
                     ->join('anak', 'gizi.id_anak', '=', 'anak.id_anak')
                     ->join('keluarga', 'keluarga.no_kk', 'anak.no_kk')
@@ -31,14 +32,9 @@ class GiziApiController extends Controller
                     ->select('gizi.*', 'anak.*', 'posyandu.nama_posyandu',
                         'puskesmas.*', 'keluarga.*', 'status_gizi.*', 
                         'desa.nama_desa', 'kecamatan.nama_kecamatan')
-                    ->where('puskesmas.id_puskesmas', session('puskesmas'))
+                    ->where('puskesmas.id_puskesmas', $id)
                     ->get();
-            dd($datas);
-            return response()->json($datas);
-        }else{
-            //$datas = Gizi::all();
-            //return response()->json($datas);
-        }
+        return response()->json($datas);
     }
 
     public function getByPosyandu($id){
@@ -60,8 +56,8 @@ class GiziApiController extends Controller
         $ukur         = $request->usia<25 ? 1 : 2;
         $tgl_periksa  = $now->format('Y-m-d');
         $countId      = Gizi::where('tgl_periksa', $tgl_periksa)->count();
-        $increment    = $countId + 1;
-        $id_gizi      = 'G'.date('Ymd').'0000'.$increment;
+        $increment    = ($countId + 1);
+        $id_gizi      = 'G'.date('Ymd').str_pad($increment, 5, '0', STR_PAD_LEFT);
         $bb           = $request->bb;
         $pb_tb        = $request->pb_tb;
 

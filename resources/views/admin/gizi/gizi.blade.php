@@ -22,7 +22,7 @@
                 </div>
                 @if (session('level') == 'admin_puskesmas')
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
-                  <a href="{{ url('gizi/export_gizi')}}" class="btn btn-outline-success " > {{session('level')}} Export Laporan</a>
+                  <a href="{{ url('gizi/export_gizi')}}" class="btn btn-outline-success " >Export Laporan</a>
                 </div>
                 @else
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
@@ -126,7 +126,7 @@
        </div>
      </div>
      @endforeach 
-
+     @if (session('level') == 'admin_puskesmas')
      {{-- Modal Tambah --}}
                     <div class="modal fade" id="modalexport" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -138,6 +138,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
+    @endif
                                 <form id="addExportGizi" action="{{ url('gizi/export_gizi_superadmin')}}" method="GET" role="form">
                                     @csrf
                                     <div class="form-group">
@@ -145,7 +146,7 @@
                                             <select class="select2-single-placeholder form-control" name="id_puskesmas"
                                                 id="id_puskesmas">
                                                 <option value="#">Pilih Puskesmas</option>
-                                                @foreach ($datas as $item)
+                                                @foreach ($puskesmas as $item)
                                                 <option value="{{$item->id_puskesmas}}">{{$item->nama_puskesmas}}
                                                 </option>
                                                 @endforeach
@@ -166,19 +167,24 @@
 <script>
   $(document).ready(function () {
     fetchGizi();
+    var apiUrl = '';
+    var level = {{session('level')}};
+    if(level == 'admin_puskesmas'){ 
+          var puskesmas = {{session('puskesmas')}};
+          apiUrl = 'api/getGiziPuskes/'+puskesmas; 
+    }elseif(level == 'super_admin'){
+          apiUrl = 'api/getGizi';
+    }
     var interval = setInterval(fetchGizi, 4000);
     $('#dataTable').DataTable(); // ID From dataTable 
     function fetchGizi() {
       $.ajax({
         type: 'GET',
-        url: '{{url('api/getGizi')}}',
+        url: apiUrl,
         dataType: 'json',
         success: function(data) {
-          console.log(data);
           var html = '';
-          var i;
-          var no = 1;
-          for (i=0; i<data.length; i++) {
+          for (var i=0; i<data.length; i++) {
             html += '<tr>'+
                     '<td>' + (i+1) + '</td>' +
                     '<td>' + data[i].nik + '</td>' +
@@ -197,7 +203,7 @@
                               '</span>' +
                               '<span class="text">Detail Data Anak</span>' +  
                               '</button>' +
-                    '</td>' 
+                    '</td></tr>' 
           }
           $('#show_data').html(html);
         }
