@@ -40,21 +40,24 @@ class SuperAdminExportGizi extends StringValueBinder implements WithCustomValueB
             ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
             ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
             ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
-            ->select('gizi.*', 'anak.*', 'posyandu.nama_posyandu','puskesmas.*', 'keluarga.*', 
+            ->select('gizi.*', 'anak.*', 'posyandu.*','puskesmas.*', 'keluarga.*', 
                     'status_gizi.*', 'desa.*', 'kecamatan.*')
-            ->where('puskesmas.id_puskesmas', $this->puskesmas)
+            ->where('posyandu.id_posyandu', $this->puskesmas)
             ->get();
-        $items      = DB::table('puskesmas')
-                        ->join('posyandu', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
-                        ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
-                        ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
-                        ->select('kecamatan.nama_kecamatan', 'puskesmas.nama_puskesmas', 'desa.rt', 'desa.rw')
-                        ->where('puskesmas.id_puskesmas', $this->puskesmas)
-                        ->first();
-        return view('admin.gizi.exportgizi', [
-            'datas'     => $datas,
-            'items'     => $items
-        ]);
+
+        $items = DB::table('gizi')
+                ->join('status_gizi', 'status_gizi.id_status_gizi', '=', 'gizi.id_status_gizi')
+                ->join('anak', 'gizi.id_anak', '=', 'anak.id_anak')
+                ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
+                ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
+                ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
+                ->select('posyandu.*','puskesmas.*', 'desa.*', 'kecamatan.*')
+                ->where('posyandu.id_posyandu', $this->puskesmas)
+                ->first();
+
+       
+        return view('admin.gizi.exportgizi', compact('datas', 'items'));
     }
 
     public function title(): string 
