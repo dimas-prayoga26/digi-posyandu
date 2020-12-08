@@ -12,34 +12,35 @@
               <li class="breadcrumb-item active" aria-current="page">Posyandu</li>
             </ol>
           </div>
-
+          <div class="card-header">
+        @if (session('success'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h6><i class="fas fa-check"></i><b> Berhasil!</b></h6>
+            {{ session('success') }}
+        </div>
+        @endif
+    </div>
+    @if($errors->any())
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{$error}}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
           <div class="row">
             <!-- Datatables -->
             <div class="col-lg-12">
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Data Posyandu</h6>
-                </div>
-                <div class="card-header">
-                  @if (session('success'))
-                  <div class="alert alert-success alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h6><i class="fas fa-check"></i><b> Berhasil!</b></h6>
-                    {{ session('success') }}
-                  </div>
-                  @endif
-
-                  @if (session('error'))
-                  <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h6><i class="fas fa-ban"></i><b> Gagal!</b></h6>
-                    {{ session('error') }}
-                  </div>
-                  @endif
                 </div>
 
                 {{-- Modal Tambah --}}
@@ -67,12 +68,8 @@
                           @csrf
                           <div class="form-group">
                             <label for="nama_posyandu">Nama Posyandu</label>
-                            <input type="text" class="form-control @error('nama_posyandu') is-invalid @enderror" 
-                              value="{{ old('nama_posyandu') }}" id="nama_posyandu" name="nama_posyandu" 
+                            <input type="text" class="form-control" id="nama_posyandu" name="nama_posyandu" 
                               placeholder="Masukan nama posyandu">
-                            @error('nama_posyandu')
-                              <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
                           </div>
 
                           <div class="form-group">
@@ -165,7 +162,7 @@
                             @method('PUT')
                             <div class="form-group">
                               <label for="nama_posyandu">Nama Posyandu</label>
-                              <input type="text" class="form-control @error('nama_posyandu') is-invalid @enderror" 
+                              <input type="text" class="form-control" 
                                 value="{{ $data->nama_posyandu }}" id="nama_posyandu" name="nama_posyandu" 
                                 placeholder="Masukan nama posyandu">
                               @error('nama_posyandu')

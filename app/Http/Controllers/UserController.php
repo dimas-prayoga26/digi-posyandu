@@ -35,7 +35,7 @@ class UserController extends Controller
     public function createBidan(Request $request)
     {
         $request->validate([
-            'username' => 'required|unique:users|string|max:100', 
+            'username' => 'required|unique:users|min:3|max:100', 
             'password' => 'required|string|min:5',
             'name' => 'required|string',
             'alamat' => 'required|string',
@@ -44,6 +44,7 @@ class UserController extends Controller
         ],
         [
             'username.unique'           => 'Username sudah ada yang pakai',
+            'username.min'              => 'Username minimal 3',
             'username.required'         => 'Username harus diisi',
             'name.required'             => 'Nama harus diisi',
             'alamat.required'           => 'Alamat harus diisi',
@@ -67,19 +68,19 @@ class UserController extends Controller
     public function createKader(Request $request)
     {
          $request->validate([
-            'username' => 'required|unique:users|string|max:100', 
+            'username' => 'required|unique:users|min:3|max:100', 
             'password' => 'required|string|min:5',
             'name' => 'required|string',
             'alamat' => 'required|string',
-            'jk' => 'required|string'  
+            'jk' => 'required|string' ,
+ 
         ],
         [
-            'username.unique'           => 'Username sudah ada yang pakai',
+            'username.min'              => 'Username minimal 3',
             'username.required'         => 'Username harus diisi',
             'name.required'             => 'Nama harus diisi',
             'alamat.required'           => 'Alamat harus diisi',
             'password.required'         => 'Password harus diisi', 
-            'id_posyandu.required'      => 'Posyandu harus diisi',
             'jk.required'               => 'Jenis Kelamin harus diisi',
             'max'                       => 'panjang karakter maksima 100',
         ]);

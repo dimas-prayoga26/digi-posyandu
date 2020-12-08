@@ -32,7 +32,7 @@ class AdminController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'username'      => 'required|unique:admins|string|max:100', 
+            'username'      => 'required|unique:admins|min:3|string|max:100', 
             'password'      => 'required|string|min:5',
             'nama'          => 'required|string',
             'alamat'        => 'required|string',
@@ -40,6 +40,7 @@ class AdminController extends Controller
         ],
         [
             'username.unique'           => 'Username sudah ada yang pakai',
+            'username.min'              => 'Username minimal 3',
             'username.required'         => 'Username harus diisi',
             'nama.required'             => 'Nama harus diisi',
             'alamat.required'           => 'Alamat harus diisi',
@@ -103,6 +104,22 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'username'      => 'required|min:3|string|max:100', 
+            'password'      => 'required|string|min:5',
+            'nama'          => 'required|string',
+            'alamat'        => 'required|string',
+            'jk'            => 'required'
+        ],
+        [
+            'username.required'         => 'Username harus diisi',
+            'username.min'              => 'Username minimal 3',
+            'nama.required'             => 'Nama harus diisi',
+            'alamat.required'           => 'Alamat harus diisi',
+            'password.required'         => 'Password harus diisi', 
+            'jk.required'               => 'Jenis Kelamin harus diisi',
+            'max'                       => 'panjang karakter maksima 100',
+        ]);
         $data = $request->only('nama','jk','alamat','id_puskesmas');
         Admin::whereIdAdmin($id)->update($data);
         return redirect()->back()->with('success', 'Data berhasil diubah');
