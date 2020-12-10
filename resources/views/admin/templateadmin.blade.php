@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link href="img/logo/logo.png" rel="icon">
+  <link href="img/logo/INPOS.png" rel="icon">
   <title>@yield('title')</title>
   <link href="{{url('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{url('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
@@ -22,7 +22,7 @@
     <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('dashboard')}}">
         {{-- <div class="sidebar-brand-icon">
-        <!--<img src="img/logo/logo2.png">-->
+        <!--<img src="img/logo/INPOS.png">-->
         </div> --}}
         <div class="sidebar-brand-text mx-3">Integrasi Posyandu</div>
       </a>
