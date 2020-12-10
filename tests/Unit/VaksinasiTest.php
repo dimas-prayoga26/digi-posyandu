@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 use App\Vaksinasi;
 class VaksinasiTest extends TestCase
 {
@@ -11,8 +11,14 @@ class VaksinasiTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
+    public function testCreate()
     {
-        $this->assertTrue(true);
+        $vaksinasi =Vaksinasi::create([
+            'nama_vaksinasi' => 'HBO 0-24 Jam'
+        ]);
+        
+        $this->assertDatabaseHas('vaksinasi', [
+            'nama_vaksinasi' => 'HBO 0-24 Jam'
+    ]);	
     }
 }

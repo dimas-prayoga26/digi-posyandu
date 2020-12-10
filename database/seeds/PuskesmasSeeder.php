@@ -13,8 +13,8 @@ class PuskesmasSeeder extends Seeder
     {
         \App\Puskesmas::create([
             'id_puskesmas' => 1,
-            'nama_puskesmas' => 'wds',
-            'alamat' => 'null'
+            'nama_puskesmas' => 'Widasari',
+            'alamat' => 'Widasari'
         ]);
     }
 }
