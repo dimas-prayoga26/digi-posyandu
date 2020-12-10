@@ -9,7 +9,7 @@ class PageController extends Controller
 {
    public function profil()
    {
-    $datas = Admin::get();
+    $datas = Admin::where('id_admin', session('id_admin'))->get();
     // dd($datas);
     return view('admin.profil', compact('datas'));
    }

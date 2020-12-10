@@ -44,6 +44,7 @@ class LoginController extends Controller
             if($auth->attempt($credentials)){
                 $admin = Admin::where('username', $request->username)->first();
                 session()->put('admin', $admin->username);
+                session()->put('id_admin', $admin->id_admin);
                 session()->put('nama_admin', $admin->nama);
                 session()->put('level', $admin->level);
                 session()->put('puskesmas', $admin->id_puskesmas);
