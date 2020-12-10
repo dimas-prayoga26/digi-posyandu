@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Desa;
 use App\Puskesmas;
 use App\Posyandu;
+use DB;
 use Illuminate\Http\Request;
 
 class PosyanduController extends Controller
@@ -12,16 +13,20 @@ class PosyanduController extends Controller
     public function posyandu()
     {
         if (session('level') == 'admin_puskesmas'){
-        $datas     = Posyandu::where('id_posyandu', session('puskesmas'))->get();
-        $puskesmas = Puskesmas::all();
-        $desa      = Desa::all();
-        return view('admin.posyandu.posyandu', compact('datas', 'puskesmas', 'desa'))->with('i');
+        $datas = DB::table('posyandu')
+                ->join('puskesmas', 'puskesmas.id_puskesmas', '=', 'posyandu.id_puskesmas')
+                ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
+                ->select('desa.*', 'puskesmas.*', 'posyandu.*')
+                ->where('puskesmas.id_puskesmas', session('puskesmas'))
+                ->get();
+         return view('admin.posyandu.posyandu', compact('datas'))->with('i');
        }else{
        $datas     = Posyandu::all();
        $puskesmas = Puskesmas::all();
        $desa      = Desa::all();
-       return view('admin.posyandu.posyandu', compact('datas', 'puskesmas', 'desa'))->with('i');
+        return view('admin.posyandu.posyandusuperadmin', compact('datas', 'puskesmas', 'desa'))->with('i');
        }
+      
     }
     public function create(Request $request)
     {

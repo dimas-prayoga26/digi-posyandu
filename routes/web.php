@@ -21,6 +21,7 @@ Route::get('dashboard/chart/gizi','DashboardController@chartGizi');
 Route::get('dashboard/chart/imunisasi','DashboardController@chartImunisasi');
 Route::get('dashboard','DashboardController@index');
 Route::get('profil','PageController@profil');
+Route::put('profil/{id}','PageController@update');
 
 // Route Kader Penanggung Jawab
 Route::get('kader','UserController@kader');

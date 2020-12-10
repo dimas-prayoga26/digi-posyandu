@@ -76,7 +76,7 @@
                             <label for="puskesmas">Puskesmas</label>
                             <select class="select2-single-placeholder form-control" 
                               name="id_puskesmas" id="puskesmas">
-                              @foreach ($datas as $item)
+                              @foreach ($puskesmas as $item)
                                 <option value="{{$item->id_puskesmas}}">
                                   {{$item->nama_puskesmas}}
                                 </option>
@@ -88,7 +88,7 @@
                             <label for="puskesmas">Desa</label>
                             <select class="select2-single-placeholder form-control" 
                               name="id_desa" id="puskesmas">
-                              @foreach ($datas as $item)
+                              @foreach ($desa as $item)
                                 <option value="{{$item->id_desa}}">
                                   {{$item->nama_desa}}
                                 </option>
@@ -123,8 +123,8 @@
                       <tr>
                       <td>{{++$i}}</td>
                       <td>{{$data->nama_posyandu}}</td>
-                      <td>{{$data->nama_puskesmas}}</td>
-                      <td>{{$data->nama_desa}}</td>
+                      <td>{{$data->puskesmas->nama_puskesmas}}</td>
+                      <td>{{$data->desa->nama_desa}}</td>
                         <td>
                        <button type="button" class="btn btn-primary" data-toggle="modal" 
                         data-target="#edit-data-{{$data->id_posyandu}}">
@@ -174,7 +174,7 @@
                               <label for="puskesmas">Puskesmas</label>
                               <select class="select2-single-placeholder form-control" 
                                 name="id_puskesmas" id="puskesmas">
-                                @foreach ($datas as $item)
+                                @foreach ($puskesmas as $item)
                                   <option value="{{$item->id_puskesmas}}">
                                     {{$item->nama_puskesmas}}
                                   </option>
@@ -186,7 +186,7 @@
                               <label for="desa">Desa</label>
                               <select class="select2-single-placeholder form-control" 
                                 name="id_desa" id="desa">
-                                @foreach ($datas as $item)
+                                @foreach ($desa as $item)
                                   <option value="{{$item->id_desa}}">
                                     {{$item->nama_desa}}
                                   </option>

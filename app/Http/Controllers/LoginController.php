@@ -52,7 +52,7 @@ class LoginController extends Controller
                 return redirect()
                     ->back()
                     ->withErrors(
-                        ['password' => 'password anda salah']
+                        ['username atau password anda salah']
                     );
             }
         //}
@@ -88,7 +88,7 @@ class LoginController extends Controller
                 return redirect()
                     ->back()
                     ->withErrors(
-                        ['password' => 'password anda salah']
+                        ['password' => 'username atau password anda salah']
                     );
             }
     }
