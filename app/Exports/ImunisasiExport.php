@@ -49,6 +49,22 @@ class ImunisasiExport extends StringValueBinder implements WithCustomValueBinder
                         ->select('kecamatan.nama_kecamatan', 'puskesmas.nama_puskesmas', 'desa.rt', 'desa.rw')
                         // ->where('puskesmas.id_puskesmas', session('puskesmas'))
                         ->first();
+
+        // $datas = DB::table('imunisasi')
+        //     ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
+        //     ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
+        //     ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+        //     ->join('puskesmas', 'puskesmas.id_puskesmas', '=', 'posyandu.id_puskesmas')
+        //     ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
+        //     ->select('vaksinasi.*', 'desa.nama_desa', 'anak.id_anak',
+        //         DB::raw("SUM(CASE WHEN anak.jk = 'laki-laki' THEN 1 ELSE 0 END) AS l"), 
+        //         DB::raw("SUM(CASE WHEN anak.jk = 'perempuan' THEN 1 ELSE 0 END) AS p"))
+        //     ->where('puskesmas.id_puskesmas', session('puskesmas'))
+        //     ->orderBy('desa.nama_desa')
+        //     ->orderBy('vaksinasi.nama_vaksinasi')
+        //     ->groupBy('desa.nama_desa')
+        //     ->get();
+        // dd($datas);
                         
         return view('admin.imunisasi.exportimunisasi', [
             'datas'     => $datas,
