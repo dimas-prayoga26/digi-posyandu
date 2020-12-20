@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
         \App\User::create([
             'name' => 'kader',
             'username' => 'kader123',
-            'password' => bcrypt('kader123'),
+            'password' => bcrypt('password'),
             'jk' => 'laki-laki',
             'alamat' => 'indramayu',
             'level' => 'kader',

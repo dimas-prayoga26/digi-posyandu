@@ -35,16 +35,7 @@ class DashboardController extends Controller
         ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
         ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
         ->where('posyandu.id_puskesmas', session('puskesmas'))
-        ->count();  
-
-        $stunting = DB::table('gizi')
-        ->join('status_gizi', 'gizi.id_status_gizi', '=', 'status_gizi.id_status_gizi')
-        ->whereIn('status_gizi.pb_tb_u',['SP','P'])
-        ->select(DB::raw('count(*) as `count`'),DB::raw('YEAR(tgl_periksa) year, MONTH(tgl_periksa) month'))
-        ->groupby('year','month')
-        ->get();
-       
-       
+        ->count();         
          return view('admin.dashboard', compact('puskes','posyandu','anak','bidan','kader','posBidan','anakBidan','posPuskes','bidanPuskes','anakAdmin'));
     }
 
