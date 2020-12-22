@@ -20,9 +20,9 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Data Imunisasi</h6>
                 </div>
-                @if (session('level') == 'admin_puskesmas')
+               @if (session('level') == 'admin_puskesmas')
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
-                  <a href="{{ url('imunisasi/exportimunisasi')}}" class="btn btn-outline-success " >Export Laporan</a>
+                  <a href="{{ url('/imunisasi/exportimunisasi')}}" class="btn btn-outline-success " >Export Laporan</a>
                 </div>
                 @else
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
@@ -88,16 +88,50 @@
        </div>
      </div>
      @endforeach
+      {{-- Modal Export --}}
+                    <div class="modal fade" id="modalexport" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Export Laporan Gizi</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+  
+                                <form id="addExportGizi" action="{{ url('/imunisasi/export_imunisasi_superadmin')}}" method="GET" role="form">
+                                    @csrf
+                                    <div class="form-group">
+                                            <label for="id_puskesmas">Laporan Puskesmas</label>
+                                            <select class="select2-single-placeholder form-control" name="id_puskesmas"
+                                                id="id_puskesmas">
+                                                <option value="#">Pilih Puskesmas</option>
+                                                @foreach ($puskesmas as $item)
+                                                <option value="{{$item->id_puskesmas}}">{{$item->nama_puskesmas}}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-danger"
+                                            data-dismiss="modal">Tutup</button>
+                                        <button type="submit" class="btn btn-success">Export</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 @endsection
 @section('js')
     <script>
       $(document).ready(function () {
         var apiUrl = '';
-        var level = {{session('level')}};
+        var level = "{{session('level')}}";
         if(level == 'admin_puskesmas'){ 
-          var puskesmas = {{session('puskesmas')}};
+          var puskesmas = "{{session('puskesmas')}}";
           apiUrl = 'api/getImunisasi/'+puskesmas; 
-        }elseif(level == 'super_admin'){
+        }else if(level == 'super_admin'){
           apiUrl = 'api/getImunisasi';
         }
         fetchImunisasi();
@@ -110,20 +144,20 @@
             dataType: 'json',
             success: function(data) {
               var html = '';
-              for (var i=0; i<data.length; i++) {
+              data.forEach((item, i) => {
                 html += '<tr>'+
                         '<td>' + (i+1) + '</td>' +
-                        '<td>' + data[i].tgl_imunisasi + '</td>' +
-                        '<td>' + data[i].nama_anak + '</td>' +
-                        '<td>' + data[i].nama_vaksinasi + '</td>' +
+                        '<td>' + item.tgl_imunisasi + '</td>' +
+                        '<td>' + item.anak.nama_anak + '</td>' +
+                        '<td>' + item.vaksinasi.nama_vaksinasi + '</td>' +
                         '<td>' +  '<button type="button" class="btn btn-success btn-icon-split btn-sm"' +
-                                  'data-toggle="modal" data-target="#modal-anak-'+data[i].no_pemeriksaan_imunisasi+'">' +
+                                  'data-toggle="modal" data-target="#modal-anak-'+item.no_pemeriksaan_imunisasi+'">' +
                                   '<span class="icon text-white-50"><i class="fas fa-info-circle"></i>' +
                                   '</span>' +
                                   '<span class="text">Detail Data Anak</span>' +  
                                   '</button>' +
                         '</td></tr>' 
-              }
+              });
               $('#show_data').html(html);
             }
           });

@@ -30,11 +30,11 @@
 </head>
 
 <body>
-    <div class="limiter">
+    <div >
 
-        <div class="container-login100">
+        <div >
 
-            <div class="wrap-login100">
+            <div align="center">
 
                 <form class="login100-form validate-form" method="POST" action="{{url('login/adminPost')}}">
                     @csrf
@@ -71,11 +71,7 @@
 
                 </form>
 
-<<<<<<< HEAD
-                <div class="login100-more" style="background-image: url('images/bg-01.jpg');"></div>
-=======
                 <div class="login100-more" style="background-image: url('img/logo/ilustrasi.png');"></div>
->>>>>>> 0384a8e323edf004ff23b79b010d1d6df09fa295
             </div>
         </div>
     </div>

@@ -49,7 +49,7 @@
             <td></td>
         </tr>
         <tr>
-       
+
             <td colspan="3">KECAMATAN</td>
             <td>{{$items->nama_kecamatan}}</td>
             <td></td>
@@ -124,7 +124,7 @@
             <td></td>
             <td></td>
         </tr>
-        
+
         <tr>
             <td colspan="3">POSYANDU</td>
             <td>{{$items->nama_posyandu }}</td>
@@ -149,7 +149,7 @@
             <td></td>
             <td></td>
         </tr>
- 
+
         <tr>
             <td></td>
             <td></td>

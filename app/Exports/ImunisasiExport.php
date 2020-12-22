@@ -8,6 +8,7 @@ use App\Desa;
 use App\Posyandu;
 use App\Kecamatan;
 use App\Puskesmas;
+use App\Vaksinasi;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -17,58 +18,53 @@ use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use PhpOffice\PhpSpreadsheet\Cell\StringValueBinder;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
-class ImunisasiExport extends StringValueBinder implements WithCustomValueBinder, FromView,
- ShouldAutoSize
+ 
+class ImunisasiExport extends StringValueBinder implements WithCustomValueBinder, FromView, WithTitle
 {
     use Exportable;
-    
-    public function view(): View 
-    {
-        $datas = DB::table('imunisasi')
-            ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
-            ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
-            ->join('keluarga', 'keluarga.no_kk', 'anak.no_kk')
-            ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
-            ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
-            ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
-            ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
-            ->select('imunisasi.*', 'anak.*', 'posyandu.*','puskesmas.*', 'keluarga.*', 
-                    'vaksinasi.*', 'desa.*', 'kecamatan.*')
-            // ->where('posyandu.id_posyandu', session('puskesmas'))
-            ->get();
-            
-        $desa       = Desa::where('desa.id_desa', session('puskesmas'))->count();
-        $kecamatan  = kecamatan::where('kecamatan.nama_kecamatan', session('puskesmas'))->get();
-        $puskesmas  = Puskesmas::where('puskesmas.nama_puskesmas', session('puskesmas'))->get();
-        $posyandu   = Posyandu::where('id_puskesmas', session('puskesmas'))->count();
-        $items      = DB::table('puskesmas')
-                        ->join('posyandu', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
-                        ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
-                        ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
-                        ->select('kecamatan.nama_kecamatan', 'puskesmas.nama_puskesmas', 'desa.rt', 'desa.rw')
-                        // ->where('puskesmas.id_puskesmas', session('puskesmas'))
-                        ->first();
 
-        // $datas = DB::table('imunisasi')
-        //     ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
-        //     ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
-        //     ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
-        //     ->join('puskesmas', 'puskesmas.id_puskesmas', '=', 'posyandu.id_puskesmas')
-        //     ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
-        //     ->select('vaksinasi.*', 'desa.nama_desa', 'anak.id_anak',
-        //         DB::raw("SUM(CASE WHEN anak.jk = 'laki-laki' THEN 1 ELSE 0 END) AS l"), 
-        //         DB::raw("SUM(CASE WHEN anak.jk = 'perempuan' THEN 1 ELSE 0 END) AS p"))
-        //     ->where('puskesmas.id_puskesmas', session('puskesmas'))
-        //     ->orderBy('desa.nama_desa')
-        //     ->orderBy('vaksinasi.nama_vaksinasi')
-        //     ->groupBy('desa.nama_desa')
-        //     ->get();
-        // dd($datas);
-                        
-        return view('admin.imunisasi.exportimunisasi', [
-            'datas'     => $datas,
-            'items'		=> $items
-        ]);
+    private $puskesmas;
+    private $name;
+
+    public function __construct($puskesmas, $name)
+    {
+        $this->puskesmas = $puskesmas;
+        $this->name = $name;
+    }
+    public function view(): View
+    {
+  
+        $items = DB::table('imunisasi')
+                ->join('vaksinasi', 'imunisasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
+                ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
+                ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
+                ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
+                ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
+                ->select('vaksinasi.*','posyandu.*','puskesmas.*', 'desa.*', 'kecamatan.*')
+                ->where('posyandu.id_posyandu', $this->puskesmas)
+                ->first();
+
+        $coba = DB::table('imunisasi')
+                ->join('vaksinasi', 'imunisasi.id_vaksinasi', '=', 'vaksinasi.id_vaksinasi')
+                ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
+                ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
+                ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
+                ->select('vaksinasi.*','posyandu.*', 'desa.*', 'kecamatan.*',
+                    DB::raw("SUM(CASE WHEN anak.jk = 'laki-laki' THEN 1 ELSE 0 END) AS l"), 
+                    DB::raw("SUM(CASE WHEN anak.jk = 'perempuan' THEN 1 ELSE 0 END) AS p"))
+                ->where('posyandu.id_posyandu', $this->puskesmas)
+                ->groupBy('vaksinasi.nama_vaksinasi')
+                ->get();
+
+        $datas = Vaksinasi::all();
+       
+        return view('admin.imunisasi.exportimunisasi', compact('items','datas','coba'));
+    }
+
+    public function title(): string 
+    {
+        return ''.$this->name;
     }
 }

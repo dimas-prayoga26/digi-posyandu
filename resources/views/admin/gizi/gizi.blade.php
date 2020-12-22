@@ -184,27 +184,27 @@
         dataType: 'json',
         success: function(data) {
           var html = '';
-          for (var i=0; i<data.length; i++) {
+          data.forEach((item, i) => {
             html += '<tr>'+
                     '<td>' + (i+1) + '</td>' +
-                    '<td>' + data[i].nik + '</td>' +
-                    '<td>' + data[i].nama_anak + '</td>' +
-                    '<td>' + data[i].tgl_periksa + '</td>' +
-                    '<td>' + data[i].usia + '</td>' +
+                    '<td>' + item.anak.nik + '</td>' +
+                    '<td>' + item.anak.nama_anak + '</td>' +
+                    '<td>' + item.tgl_periksa + '</td>' +
+                    '<td>' + item.usia + '</td>' +
                     '<td>' +  '<button type="button" class="btn btn-primary btn-icon-split btn-sm"' +
-                              'data-toggle="modal" data-target="#modal-detail-'+data[i].no_pemeriksaan_gizi+'">' +
+                              'data-toggle="modal" data-target="#modal-detail-'+item.no_pemeriksaan_gizi+'">' +
                               '<span class="icon text-white-50"><i class="fas fa-info-circle"></i>' +
                               '</span>' +
                               '<span class="text">Detail</span>' +  
                               '</button>' +'</td>' +
                     '<td>' +  '<button type="button" class="btn btn-success btn-icon-split btn-sm"' +
-                              'data-toggle="modal" data-target="#modal-anak-'+data[i].no_pemeriksaan_gizi+'">' +
+                              'data-toggle="modal" data-target="#modal-anak-'+item.no_pemeriksaan_gizi+'">' +
                               '<span class="icon text-white-50"><i class="fas fa-info-circle"></i>' +
                               '</span>' +
                               '<span class="text">Detail Data Anak</span>' +  
                               '</button>' +
                     '</td></tr>' 
-          }
+          });
           $('#show_data').html(html);
         }
       });

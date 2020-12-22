@@ -53,6 +53,7 @@ Route::get('gizi','GiziController@index');
 Route::get('/gizi/export_gizi', 'GiziController@export_gizi');
 Route::get('/gizi/export_gizi_superadmin', 'GiziController@export_gizi_superadmin');
 Route::get('/imunisasi/exportimunisasi', 'ImunisasiController@export_imunisasi');
+Route::get('/imunisasi/export_imunisasi_superadmin', 'ImunisasiController@export_imunisasi_superadmin');
 
 //================================== Puskesmas=================================
 Route::get('puskesmas','PuskesmasController@index');

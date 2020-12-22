@@ -1,4 +1,5 @@
-<?php namespace App\Exports;
+<?php 
+namespace App\Exports;
 
 use DB;
 use App\Posyandu;
@@ -18,7 +19,6 @@ class GiziExportSheet implements WithMultipleSheets {
     }
 
     public function sheets(): array {
-        //dd($this->puskesmas);
         if (session('level')=='admin_puskesmas') {
             $posyandu = Posyandu::where('id_puskesmas', session('puskesmas'))
                             ->select('posyandu.*')

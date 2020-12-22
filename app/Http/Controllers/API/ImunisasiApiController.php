@@ -20,18 +20,10 @@ class ImunisasiApiController extends Controller
     }
 
     public function getByPuskes($id){
-        $datas = DB::table('imunisasi')
-                    ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
-                    ->join('anak', 'anak.id_anak', '=', 'imunisasi.id_anak')
-                    ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
-                    ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
-                    ->join('keluarga', 'keluarga.no_kk', 'anak.no_kk')
-                    ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
-                    ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
-                    ->select('imunisasi.*', 'vaksinasi.*', 'anak.*', 'posyandu.*','kecamatan.*',
-                        'puskesmas.*', 'keluarga.*')
-                     ->where('puskesmas.id_puskesmas', $id)
-                    ->get();
+         $datas = Imunisasi::with('anak', 'vaksinasi')
+                    ->whereHas('anak.posyandu', function (Builder $query) use($id){
+                        $query->where('id_puskesmas', $id);
+                    })->get();
         return response()->json($datas);
     }
 

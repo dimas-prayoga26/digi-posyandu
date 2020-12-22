@@ -1,56 +1,122 @@
 <table>
-    <thead>
-        <tr>
-            <th colspan="4">Data Imunisasi Kumulatif</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>  
-        <tr>
-            <td>No.</td>
-            <td>Desa</td>
-        @foreach($datas as $data)
-            <td colspan="2">{{$data->nama_vaksinasi}}</td>
+<thead>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th>DATA VAKSINASI</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+   <tr>
+    <td colspan="3">KECAMATAN</td>
+    <td>{{$items->nama_kecamatan}}</td>
+    <td></td>
+    <td></td>
+    <td>RT/RW</td>
+    <td>{{$items->rt}} / {{$items->rw}}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="3">PUSKESMAS</td>
+    <td>{{$items->nama_puskesmas}}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="3">DESA</td>
+    <td>{{$items->nama_desa}}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="3">POSYANDU</td>
+    <td>{{$items->nama_posyandu }}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td rowspan="2">Jenis Vaksinasi</td>
+    @foreach($coba as $data)
+        <td colspan="2">{{$data->nama_vaksinasi}}</td>
+    @endforeach
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    @foreach($coba as $data)
+        <td>L</td>
+        <td>P</td>
+    @endforeach
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+ 
+      <tr>
+        <td></td>
+        @foreach($coba as $value)
+            <td>{{$value->l}}</td>
+            <td>{{$value->p}}</td>
         @endforeach
-            <td></td>
-            <td></td>
-            <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+  
 
-        </tr>     
-
-        <tr>
-            <td></td>
-            <td></td>
-            <td>L</td>
-            <td>P</td>
-
-        </tr>
-
-        <tr>
-            <td colspan="2">Puskesmas : {{$items->nama_puskesmas}}</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>nama desa</td>
-            <td>28</td>
-            <td>39</td>
-            <td>218</td>
-            <td>339</td>
-
-
-        </tr>
-        <tr>
-            <td></td>
-            <td>Puskesmas</td>
-            <td>total L</td>
-            <td>total P</td>
-        </tr>
-    </tbody>
+</tbody>
 </table>
