@@ -18,8 +18,13 @@ class ImunisasiExportSheet implements WithMultipleSheets
     */
     use Exportable;
     private $puskesmas;
+    private $posyandu;
+
      public function setPuskesmas(int $puskesmas){
         $this->puskesmas = $puskesmas;
+    }
+    public function setPosyandu(int $posyandu){
+        $this->posyandu = $posyandu;
     }
 
     public function sheets(): array {
@@ -50,6 +55,17 @@ class ImunisasiExportSheet implements WithMultipleSheets
                 $sheets[] = new SuperAdminExportImunisasi($data->id_posyandu, $data->nama_posyandu);
             }
 
+            return $sheets;
+        }
+         else if(session('level')=='bidan') {
+            $pos=Posyandu::with('desa')
+                ->where('id_posyandu', $this->posyandu)
+                ->select('posyandu.*')
+                ->get();
+            $sheets=[];
+            foreach($pos as $data) {
+                $sheets[] = new BidanImunisasiExport($data->id_posyandu, $data->nama_desa);
+            }
             return $sheets;
         }
     }

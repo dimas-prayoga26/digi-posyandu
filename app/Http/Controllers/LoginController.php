@@ -6,6 +6,7 @@ use DB;
 use App\User;
 use App\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
@@ -96,11 +97,13 @@ class LoginController extends Controller
 
     public function logoutAdmin(){
         session()->forget('admin');
+        Session::flush();
         return redirect('/login/admin');
     }
    
-    public function logoutBidan(){
-        session()->forget('bidan');
+    public function logoutBidan(Request $request){
+        $request->session()->forget('bidan');
+        Session::flush();
         return redirect('/login/bidan');
     }
 }

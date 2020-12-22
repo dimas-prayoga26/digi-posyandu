@@ -24,6 +24,10 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
                   <a href="{{ url('/imunisasi/exportimunisasi')}}" class="btn btn-outline-success " >Export Laporan</a>
                 </div>
+                @elseif(session('level') == 'bidan')
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
+                  <a href="{{ url('/imunisasi/export_imunisasi_bidan')}}" class="btn btn-outline-success " >Export Laporan</a>
+                </div>
                 @else
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
                   <button type="button" data-toggle="modal"  data-target="#modalexport" id="#myBtn" class="btn btn-outline-success " >Export Laporan</a>
@@ -133,6 +137,9 @@
           apiUrl = 'api/getImunisasi/'+puskesmas; 
         }else if(level == 'super_admin'){
           apiUrl = 'api/getImunisasi';
+        }else if(level == 'bidan'){
+           var posyandu = "{{session('posyandu')}}";
+          apiUrl = 'api/getImunisasiByPosyandu/'+posyandu; 
         }
         fetchImunisasi();
         var interval = setInterval(fetchImunisasi, 4000);

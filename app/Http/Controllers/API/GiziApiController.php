@@ -34,6 +34,7 @@ class GiziApiController extends Controller
                         $query->where('id_posyandu', $id);
                     })->get();
         return response()->json($datas);
+        dd($datas);
     }
 
     public function create(Request $request){

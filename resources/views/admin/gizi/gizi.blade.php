@@ -24,6 +24,10 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
                   <a href="{{ url('/gizi/export_gizi')}}" class="btn btn-outline-success " >Export Laporan</a>
                 </div>
+                 @elseif(session('level') == 'bidan')
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
+                  <a href="{{ url('/gizi/export_gizi_bidan')}}" class="btn btn-outline-success " >Export Laporan</a>
+                </div>
                 @else
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
                   <button type="button" data-toggle="modal"  data-target="#modalexport" id="#myBtn" class="btn btn-outline-success " >Export Laporan</a>
@@ -169,11 +173,14 @@
     fetchGizi();
     var apiUrl = '';
     var level = "{{session('level')}}";
-    if(level == 'admin_puskesmas'){ 
+    if(level == 'admin_puskesmas' ){ 
           var puskesmas = "{{session('puskesmas')}}";
           apiUrl = 'api/getGiziPuskes/'+ puskesmas; 
     }else if(level == 'super_admin'){
           apiUrl = 'api/getGizi';
+    } else if(level == 'bidan'){
+          var posyandu = "{{session('posyandu')}}";
+          apiUrl = 'api/getGiziByPosyandu/'+ posyandu;
     }
     var interval = setInterval(fetchGizi, 4000);
     $('#dataTable').DataTable(); // ID From dataTable 

@@ -18,20 +18,11 @@ use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use PhpOffice\PhpSpreadsheet\Cell\StringValueBinder;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
- 
-class ImunisasiExport extends StringValueBinder implements WithCustomValueBinder, FromView, WithTitle
+
+class BidanImunisasiExport extends StringValueBinder implements WithCustomValueBinder, FromView, WithTitle
 {
-    use Exportable;
+ 	use Exportable;
 
-    private $puskesmas;
-    private $name;
-
-    public function __construct($puskesmas, $name)
-    {
-        $this->puskesmas = $puskesmas;
-        $this->name = $name;
-    }
-    
     public function view(): View
     {
   
@@ -43,7 +34,7 @@ class ImunisasiExport extends StringValueBinder implements WithCustomValueBinder
                 ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
                 ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
                 ->select('vaksinasi.*','posyandu.*','puskesmas.*', 'desa.*', 'kecamatan.*')
-                ->where('posyandu.id_posyandu', $this->puskesmas)
+                ->where('posyandu.id_posyandu', session('posyandu'))
                 ->first();
 
         $coba = DB::table('imunisasi')
@@ -55,7 +46,7 @@ class ImunisasiExport extends StringValueBinder implements WithCustomValueBinder
                 ->select('vaksinasi.*','posyandu.*', 'desa.*', 'kecamatan.*',
                     DB::raw("SUM(CASE WHEN anak.jk = 'laki-laki' THEN 1 ELSE 0 END) AS l"), 
                     DB::raw("SUM(CASE WHEN anak.jk = 'perempuan' THEN 1 ELSE 0 END) AS p"))
-                ->where('posyandu.id_posyandu', $this->puskesmas)
+                ->where('posyandu.id_posyandu', session('posyandu'))
                 ->groupBy('vaksinasi.nama_vaksinasi')
                 ->get();
 
@@ -66,6 +57,7 @@ class ImunisasiExport extends StringValueBinder implements WithCustomValueBinder
 
     public function title(): string 
     {
-        return ''.$this->name;
+    	$name = Posyandu::where('id_posyandu', session('posyandu'))->value('nama_posyandu');
+        return ''.$name;
     }
 }

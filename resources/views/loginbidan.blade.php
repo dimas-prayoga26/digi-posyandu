@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login Admin</title>
+	<title>Login Bidan</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="{{url('images/icons/favicon.ico')}}"/>
+	<link rel="icon" type="image/png" href="{{url('img/logo/icons.png')}}"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{url('vendor/bootstrap/css/bootstrap.min.css')}}">
 <!--===============================================================================================-->
@@ -28,9 +28,11 @@
 <!--===============================================================================================-->
 </head>
 <body>
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100">
+	<div >
+
+        <div >
+
+            <div align="center">
 				<form class="login100-form validate-form" method="POST"
 					action="{{url('login/bidanPost')}}">
 					@csrf

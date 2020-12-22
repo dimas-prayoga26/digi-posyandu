@@ -181,9 +181,9 @@
                 <div class="modal-footer">
                   <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
                   @if (session('level') == 'bidan')
-                  <a href="{{url('/login/bidan')}}" class="btn btn-primary">Logout</a>
+                  <a href="{{url('/logout/bidan')}}" class="btn btn-primary">Logout</a>
                   @else
-                  <a href="{{url('/login/admin')}}" class="btn btn-primary">Logout</a>
+                  <a href="{{url('/logout/admin')}}" class="btn btn-primary">Logout</a>
                       
                   @endif
                 </div>

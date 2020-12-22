@@ -2,9 +2,12 @@
 namespace App\Exports;
 
 use DB;
+use App\Desa;
 use App\Posyandu;
+use App\Gizi;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromCollection;
 
 
 class GiziExportSheet implements WithMultipleSheets {
@@ -13,9 +16,13 @@ class GiziExportSheet implements WithMultipleSheets {
     */
     use Exportable;
     private $puskesmas;
+    private $posyandu;
 
-    public function setPuskesmas(int $puskesmas){
+     public function setPuskesmas(int $puskesmas){
         $this->puskesmas = $puskesmas;
+    }
+    public function setPosyandu(int $posyandu){
+        $this->posyandu = $posyandu;
     }
 
     public function sheets(): array {
@@ -42,6 +49,18 @@ class GiziExportSheet implements WithMultipleSheets {
                 $sheets[] = new SuperAdminExportGizi($data->id_posyandu, $data->nama_posyandu);
             }
 
+            return $sheets;
+        }
+        
+        else if(session('level')=='bidan') {
+            $pos=Posyandu::with('desa')
+                ->where('id_posyandu', $this->posyandu)
+                ->select('posyandu.*')
+                ->get();
+            $sheets=[];
+            foreach($pos as $data) {
+                $sheets[] = new BidanImunisasiExport($data->id_posyandu, $data->nama_desa);
+            }
             return $sheets;
         }
     }
