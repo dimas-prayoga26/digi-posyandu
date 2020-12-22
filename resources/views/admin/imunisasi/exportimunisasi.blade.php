@@ -27,8 +27,8 @@
     <td>{{$items->nama_kecamatan}}</td>
     <td></td>
     <td></td>
-    <td>RT/RW</td>
-    <td>{{$items->rt}} / {{$items->rw}}</td>
+    <td></td>
+    <td></td>
     <td></td>
     <td></td>
     <td></td>
