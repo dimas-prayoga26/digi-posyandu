@@ -99,7 +99,7 @@
                                         <div class="form-group">
                                             <label for="posyandu">Posyandu</label>
                                             <select class="select2-single-placeholder form-control" name="posyandu"
-                                                id="posyandu">
+                                                id="posyandu" style="width: 100%">
                                                 <option value="">Pilih Posyandu</option>
                                                 @foreach ($posyandu as $item)
                                                 <option value="{{$item->id_posyandu}}">{{$item->nama_posyandu}}</option>
@@ -234,4 +234,18 @@
         </form>
         {{-- Akhir Modal Edit --}}
         @endforeach
-        @endsection
+@endsection
+@section('js')
+<script>
+    $(document).ready(function () {
+    // Select2 Single  with Placeholder
+    
+    $('#posyandu').select2({
+        placeholder: "Pilih Posyandu",
+        allowClear: true
+    
+    });         
+
+    });
+</script>
+@endsection

@@ -16,8 +16,6 @@ class CreateDesaTable extends Migration
         Schema::create('desa', function (Blueprint $table) {
             $table->increments('id_desa');
             $table->string('nama_desa');
-            $table->string('rt');
-            $table->string('rw');
             $table->unsignedInteger('id_kecamatan');
             $table->foreign('id_kecamatan')->references('id_kecamatan')->on('kecamatan');
             $table->timestamps();
