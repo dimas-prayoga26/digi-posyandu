@@ -95,17 +95,20 @@
                                             <textarea class="form-control" id="alamat" name="alamat"
                                                 rows="2"></textarea> 
                                         </div>
+                                       
                                         <div class="form-group">
-                                            <label for="puskes">Puskesmas</label>
-                                            <select class="select2-single-placeholder form-control" name="puskes"
-                                                id="puskes">
-                                                <option value="">Pilih Puskesmas</option>
-                                                @foreach ($puskes as $item)
-                                                <option value="{{$item->id_puskesmas}}">{{$item->nama_puskesmas}}
+                                            <label for="puskesmas">Puskesmas</label>
+                                            <select class="select2-single-placeholder form-control" 
+                                              name="puskesmas" id="puskesmas" style="width: 100%">
+                                              <option value="">Select</option>                             
+                                              @foreach ($puskes as $item)
+                                                <option value="{{$item->id_puskesmas}}">
+                                                  {{$item->nama_puskesmas}}
                                                 </option>
-                                                @endforeach
+                                              @endforeach
                                             </select>
-                                        </div>
+                                          </div>
+
                                         <div class="form-group">
                                             <label for="password">Password</label>
                                             <input type="password" class="form-control" id="password" name="password"
@@ -211,7 +214,7 @@
                                     rows="2">{{$data->alamat}}</textarea>
                             </div>
                             <div class="form-group">
-                                <label for="puskesmas">puskesmas</label>
+                                <label for="puskes">puskesmas</label>
                                 <select class="select2-single-placeholder form-control" name="puskes" id="puskes">
                                     @foreach ($puskes as $item)
                                     <option value="{{$item->id_puskesmas}}">{{$item->nama_puskesmas}}</option>
@@ -230,4 +233,19 @@
     </form>
     {{-- Akhir Modal Tambah --}}
     @endforeach
-    @endsection
+@endsection
+    
+@section('js')
+<script>
+  $(document).ready(function () {
+    // Select2 Single  with Placeholder
+   
+    $('#puskesmas').select2({
+      placeholder: "Pilih Puskesmas",
+      allowClear: true
+    
+    });         
+
+  });
+</script>
+@endsection

@@ -55,7 +55,7 @@ class AdminController extends Controller
             'jk'            =>$request->jk, 
             'level'         =>'admin_puskesmas', 
             'alamat'        =>$request->alamat, 
-            'id_puskesmas'  =>$request->puskes
+            'id_puskesmas'  =>$request->puskesmas
 
         ];
         $create = Admin::create($data);

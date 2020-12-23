@@ -75,8 +75,9 @@
                           <div class="form-group">
                             <label for="puskesmas">Puskesmas</label>
                             <select class="select2-single-placeholder form-control" 
-                              name="id_puskesmas" id="puskesmas">
-                              @foreach ($datas as $item)
+                              name="id_puskesmas" id="puskesmas" style="width: 100%">
+                              <option value="">Select</option>                             
+                              @foreach ($puskesmas as $item)
                                 <option value="{{$item->id_puskesmas}}">
                                   {{$item->nama_puskesmas}}
                                 </option>
@@ -85,10 +86,11 @@
                           </div>
 
                           <div class="form-group">
-                            <label for="puskesmas">Desa</label>
+                            <label for="id_desa">Desa</label>
                             <select class="select2-single-placeholder form-control" 
-                              name="id_desa" id="puskesmas">
-                              @foreach ($datas as $item)
+                              name="id_desa" id="id_desa" style="width: 100%">
+                              <option value="">Select</option>
+                              @foreach ($desa as $item)
                                 <option value="{{$item->id_desa}}">
                                   {{$item->nama_desa}}
                                 </option>
@@ -183,9 +185,9 @@
                             </div>
   
                             <div class="form-group">
-                              <label for="desa">Desa</label>
-                              <select class="select2-single-placeholder form-control" 
-                                name="id_desa" id="desa">
+                              <label for="id_desa">Desa</label>
+                              <select class="select2-single-placeholder form-control " name="id_desa" id="id_desa">
+                               
                                 @foreach ($datas as $item)
                                   <option value="{{$item->id_desa}}">
                                     {{$item->nama_desa}}
@@ -206,4 +208,23 @@
                 @endforeach
         
                  {{-- Akhir Modal Edit --}}
+@endsection
+@section('js')
+<script>
+  $(document).ready(function () {
+    // Select2 Single  with Placeholder
+    $('#id_desa').select2({
+      placeholder: "Pilih Desa",
+      allowClear: true,
+    
+    });         
+   
+    $('#puskesmas').select2({
+      placeholder: "Pilih Puskesmas",
+      allowClear: true,
+    
+    });         
+
+  });
+</script>
 @endsection
