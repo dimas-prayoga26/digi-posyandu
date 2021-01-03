@@ -19,9 +19,19 @@ class ImunisasiExportSheet implements WithMultipleSheets
     use Exportable;
     private $puskesmas;
     private $posyandu;
+    private $month;
+    private $year; 
 
-     public function setPuskesmas(int $puskesmas){
+    public function setPuskesmas(int $puskesmas){
         $this->puskesmas = $puskesmas;
+    }
+
+    public function setMonth(int $month){
+        $this->month = $month;
+    }
+
+    public function setYear(int $year){
+        $this->year = $year;
     }
     public function setPosyandu(int $posyandu){
         $this->posyandu = $posyandu;
@@ -30,15 +40,13 @@ class ImunisasiExportSheet implements WithMultipleSheets
     public function sheets(): array {
         //dd($this->puskesmas);
         if (session('level')=='admin_puskesmas') {
-            $posyandu = DB::table('posyandu')
-                            ->join('desa', 'posyandu.id_desa', '=', 'desa.id_desa')
-                            ->where('id_puskesmas', session('puskesmas'))
-                            ->select('posyandu.id_posyandu', 'desa.nama_desa')
-                            ->get();
+            $posyandu=Posyandu::where('id_puskesmas', session('puskesmas'))
+                ->select('posyandu.*')
+                ->get();
             $sheets=[];
 
             foreach($posyandu as $data) {
-                $sheets[] =new ImunisasiExport($data->id_posyandu, $data->nama_desa);
+                $sheets[] =new ImunisasiExport($data->id_posyandu, $data->nama_posyandu);
             }
 
             return $sheets;
@@ -46,13 +54,12 @@ class ImunisasiExportSheet implements WithMultipleSheets
 
         else if(session('level')=='super_admin') {
             //dd($this->puskesmas);
-            $posyandu=Posyandu::with('desa')
-                ->where('id_puskesmas', $this->puskesmas)
+           $posyandu=Posyandu::where('id_puskesmas', $this->puskesmas)
                 ->select('posyandu.*')
                 ->get();
             $sheets=[];
             foreach($posyandu as $data) {
-                $sheets[] = new SuperAdminExportImunisasi($data->id_posyandu, $data->nama_posyandu);
+                $sheets[] = new SuperAdminExportImunisasi($this->month, $this->year, $data->id_posyandu, $data->nama_posyandu);
             }
 
             return $sheets;

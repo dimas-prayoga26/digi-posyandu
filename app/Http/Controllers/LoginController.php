@@ -87,10 +87,10 @@ class LoginController extends Controller
                                 session()->put('posyandu', $user->id_posyandu);
                 return redirect('dashboard')->with('success', 'Selamat Datang');
             }else{
-                return redirect()
+               return redirect()
                     ->back()
                     ->withErrors(
-                        ['password' => 'username atau password anda salah']
+                        ['username atau password anda salah']
                     );
             }
     }

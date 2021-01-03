@@ -7,16 +7,20 @@ use Illuminate\Http\Request;
 
 class PuskesmasController extends Controller
 {
-    public function puskesmas()
+    public function puskesmas() 
    {
     //
    }
 
     public function index()
     {
+        $level = session('level');
+        if($level == 'super_admin' || $level == 'bidan' || $level == 'admin_puskesmas'){
         $datas = Puskesmas::all();
         return view('admin.puskesmas.puskesmas',compact('datas'))->with('i');
-
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**

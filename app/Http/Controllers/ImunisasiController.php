@@ -24,8 +24,9 @@ class ImunisasiController extends Controller
     public function index()
     {
         $puskesmas = Puskesmas::all();
+        $years = Imunisasi::select(DB::raw('YEAR(tgl_imunisasi) year'))->groupBy('year')->get();
         $level = session('level'); 
-       
+        
         if ($level == 'admin_puskesmas') {
             $datas = DB::table('imunisasi')
                         ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
@@ -40,7 +41,7 @@ class ImunisasiController extends Controller
                          ->where('puskesmas.id_puskesmas', session('puskesmas'))
                         ->get();
 
-            return view('admin.imunisasi.imunisasi', compact('datas','puskesmas'));
+           
         }else if($level == 'super_admin' || $level == 'bidan'){
             $datas = DB::table('imunisasi')
                         ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
@@ -52,17 +53,70 @@ class ImunisasiController extends Controller
                         ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
                         ->select('imunisasi.*', 'vaksinasi.*', 'anak.*', 'posyandu.*','kecamatan.*',
                             'puskesmas.*', 'keluarga.*')
-                        ->get();
-            return view('admin.imunisasi.imunisasi', compact('datas','puskesmas'));      
-        }else{
-            return redirect()->back();   
+                        ->get();      
         }
+        return view('admin.imunisasi.imunisasi', compact('datas','puskesmas','years'));
     }
 
+    public function search(Request $request){
+        $search = $request->get('query');
+        $level = session('level');
+        if($search != ''){
+            if($level == 'admin_puskesmas'){
+                $data = DB::table('imunisasi')
+                            ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
+                            ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
+                            ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                            ->select('imunisasi.*', 'anak.nama_anak', 'anak.nik', 'vaksinasi.nama_vaksinasi')
+                            ->where('posyandu.id_puskesmas', session('puskesmas'))
+                            ->where('nama_anak', 'like', '%'.$search.'%')
+                            ->OrWhere('nik', 'like', '%'.$search.'%')
+                            ->OrWhere('tgl_imunisasi', 'like', '%'.$search.'%')
+                            ->OrWhere('nama_vaksinasi', 'like', '%'.$search.'%')
+                            ->get();
+            }else if($level == 'super_admin'){
+                $data = DB::table('imunisasi')
+                            ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
+                            ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
+                            ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                            ->select('imunisasi.*', 'anak.nama_anak', 'anak.nik', 'vaksinasi.nama_vaksinasi')
+                            ->where('nama_anak', 'like', '%'.$search.'%')
+                            ->OrWhere('nik', 'like', '%'.$search.'%')
+                            ->OrWhere('tgl_imunisasi', 'like', '%'.$search.'%')
+                            ->OrWhere('nama_vaksinasi', 'like', '%'.$search.'%')
+                            ->get();
+            }else if($level == 'bidan'){
+                $data = DB::table('imunisasi')
+                            ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
+                            ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
+                            ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                            ->select('imunisasi.*', 'anak.nama_anak', 'anak.nik', 'vaksinasi.nama_vaksinasi')
+                            ->where('id_posyandu', session('posyandu'))
+                            ->where('nama_anak', 'like', '%'.$search.'%')
+                            ->OrWhere('nik', 'like', '%'.$search.'%')
+                            ->OrWhere('tgl_imunisasi', 'like', '%'.$search.'%')
+                            ->OrWhere('nama_vaksinasi', 'like', '%'.$search.'%')
+                            ->get();
+            }
+        }else {
+            $data = DB::table('imunisasi')
+                        ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
+                        ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
+                        ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                        ->select('imunisasi.*', 'anak.nama_anak', 'anak.nik', 'vaksinasi.nama_vaksinasi')
+                        ->get();
+        }
+        return response()->json($data);
+    }
 
     public function export_imunisasi(){
         if (session('level') == 'admin_puskesmas'){
-            return Excel::download(new ImunisasiExportSheet, 'imunisasi.xlsx');
+            try {
+                return Excel::download(new ImunisasiExportSheet, 'imunisasi.xlsx');
+            } catch (\Exception $e) {
+                return back()->withErrors('Data Kosong');
+            }
+            
         }else{
             echo "Maaf anda tidak mempunyai akses";
         }
@@ -70,9 +124,16 @@ class ImunisasiController extends Controller
 
     public function export_imunisasi_superadmin(Request $request){
         if (session('level') == 'super_admin'){
+            try {
             $export = new ImunisasiExportSheet();
             $export->setPuskesmas($request->id_puskesmas);
-            return Excel::download($export, 'superadmingizi.xlsx');
+            $export->setMonth($request->id_month);
+            $export->setYear($request->id_year);
+            return Excel::download($export, 'superadminimunisasi.xlsx');
+            } catch (\Exception $e) {
+                return back()->withErrors('Data Kosong');
+            }
+            
         }else{
             echo "Maaf anda tidak mempunyai akses";
         }
@@ -80,63 +141,15 @@ class ImunisasiController extends Controller
 
     public function export_imunisasi_bidan(){
         if (session('level') == 'bidan'){
-            return Excel::download(new BidanImunisasiExport, 'imunisasi.xlsx');
+            try {
+                 return Excel::download(new BidanImunisasiExport, 'imunisasi.xlsx');
+            } catch (\Exception $e) {
+                return back()->withErrors('Data Kosong');   
+            }
+           
         }else{
             echo "Maaf anda tidak mempunyai akses";
         }
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 }
+    

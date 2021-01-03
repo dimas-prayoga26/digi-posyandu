@@ -18,23 +18,40 @@
             <div class="col-lg-12">
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Data Gizi</h6>
-                </div>
+                  <h6 class="m-0 font-weight-bold text-primary">Data Gizi</h6>  
+
                 @if (session('level') == 'admin_puskesmas')
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
-                  <a href="{{ url('/gizi/export_gizi')}}" class="btn btn-outline-success " >Export Laporan</a>
-                </div>
-                 @elseif(session('level') == 'bidan')
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
-                  <a href="{{ url('/gizi/export_gizi_bidan')}}" class="btn btn-outline-success " >Export Laporan</a>
+                <div class="card-header export d-flex flex-row align-items-center justify-content-end">
+                  <a href="{{ url('/gizi/export_gizi')}}" class="btn btn-outline-success">
+                    Export Laporan
+                  </a>
                 </div>
                 @else
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
-                  <button type="button" data-toggle="modal"  data-target="#modalexport" id="#myBtn" class="btn btn-outline-success " >Export Laporan</a>
+                <div class="card-header export d-flex flex-row align-items-center justify-content-end">
+                  <button type="button" data-toggle="modal"  data-target="#modalexport" id="#myBtn" class="btn btn-outline-success">
+                    Export Laporan
+                  </button>
                 </div>
                 @endif
+              </div>
+              @if($errors->any())
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                      <li>{{$error}}</li>
+                      @endforeach
+                  </ul>
+              </div>
+              @endif
+              <form method="get" align="right">
+                <input placeholder="Cari disini" class="search" id="search" type="search" name="search">
+              </form>
+
                 <div class="table-responsive p-3">
-                  <table class="table align-items-center table-flush" id="dataTable">
+                  <table class="table align-items-center table-flush" id="">
                     <thead class="thead-light">
                       <tr>
                         <th>No.</th>
@@ -42,7 +59,6 @@
                         <th>Nama Anak</th>
                         <th>Tanggal Ukur</th>
                         <th>Umur (Bln)</th>
-                        <!-- <th>Vit. A Agt</th> -->
                         <th>Detail</th>
                         <th>Data Anak</th>
                       </tr>
@@ -55,7 +71,7 @@
             </div>
           </div>
 
-@foreach($datas as $data)
+    @foreach($datas as $data)
     <!-- Modal Detail -->
       <div class="modal fade" id="modal-detail-{{$data->no_pemeriksaan_gizi}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
@@ -87,8 +103,6 @@
         </div>
       </div>
       </div>
-
-
 
        <!-- Modal Detail Anak -->
        <div class="modal fade" id="modal-anak-{{$data->no_pemeriksaan_gizi}}" tabindex="-1" role="dialog"
@@ -129,73 +143,87 @@
          </div>
        </div>
      </div>
-     @endforeach 
+    @endforeach 
      
-     {{-- Modal Tambah --}}
-                    <div class="modal fade" id="modalexport" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Export Laporan Gizi</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-  
-                                <form id="addExportGizi" action="{{ url('/gizi/export_gizi_superadmin')}}" method="GET" role="form">
-                                    @csrf
-                                    <div class="form-group">
-                                            <label for="id_puskesmas">Laporan Puskesmas</label>
-                                            <select class="select2-single-placeholder form-control" name="id_puskesmas"
-                                                id="id_puskesmas">
-                                                <option value="#">Pilih Puskesmas</option>
-                                                @foreach ($puskesmas as $item)
-                                                <option value="{{$item->id_puskesmas}}">{{$item->nama_puskesmas}}
-                                                </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-danger"
-                                            data-dismiss="modal">Tutup</button>
-                                        <button type="submit" class="btn btn-success">Export</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+    <div class="modal fade" id="modalexport" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Export Laporan Gizi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="addExportGizi" action="{{ url('/gizi/export_gizi_superadmin')}}" method="GET" role="form">
+                    @csrf
+                    <div class="form-group">
+                      <label for="id_puskesmas">Puskesmas</label>
+                      <select class="select2-single-placeholder form-control" name="id_puskesmas"
+                          id="id_puskesmas">
+                          <option value="#">Pilih Puskesmas</option>
+                          @foreach ($puskesmas as $item)
+                            <option value="{{$item->id_puskesmas}}">
+                                {{$item->nama_puskesmas}}
+                            </option>
+                          @endforeach
+                      </select>
                     </div>
+                    <div class="form-group">
+                      <label for="id_month">Bulan</label>
+                      <select class="select2-single-placeholder form-control" name="id_month">
+                          <option value="#">Pilih Bulan</option>
+                          <option value="01">Januari</option>
+                          <option value="02">Februari</option>
+                          <option value="03">Maret</option>
+                          <option value="04">April</option>
+                          <option value="05">Mei</option>
+                          <option value="06">Juni</option>
+                          <option value="07">Juli</option>
+                          <option value="08">Agustus</option>
+                          <option value="09">September</option>
+                          <option value="10">Oktober</option>
+                          <option value="11">November</option>
+                          <option value="12">Desember</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="id_year">Tahun</label>
+                      <select class="select2-single-placeholder form-control" name="id_year">
+                          <option value="#">Pilih Tahun</option>
+                          @foreach ($years as $year)
+                              <option value="{{$year->year}}">{{$year->year}}</option>
+                          @endforeach
+                      </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger"
+                            data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-success">Export</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('js')
 <script>
   $(document).ready(function () {
     fetchGizi();
-    var apiUrl = '';
-    var level = "{{session('level')}}";
-    if(level == 'admin_puskesmas' ){ 
-          var puskesmas = "{{session('puskesmas')}}";
-          apiUrl = 'api/getGiziPuskes/'+ puskesmas; 
-    }else if(level == 'super_admin'){
-          apiUrl = 'api/getGizi';
-    } else if(level == 'bidan'){
-          var posyandu = "{{session('posyandu')}}";
-          apiUrl = 'api/getGiziByPosyandu/'+ posyandu;
-    }
-    var interval = setInterval(fetchGizi, 4000);
-    $('#dataTable').DataTable(); // ID From dataTable 
-    function fetchGizi() {
+    function fetchGizi(query = '') {
       $.ajax({
         type: 'GET',
-        url: apiUrl,
-        dataType: 'json',
+        url: 'giziSearch',
+        data: {query: query},
+        dataType: 'json', 
         success: function(data) {
           var html = '';
-          data.forEach((item, i) => {
+          data.forEach((item, i) =>{
             html += '<tr>'+
                     '<td>' + (i+1) + '</td>' +
-                    '<td>' + item.anak.nik + '</td>' +
-                    '<td>' + item.anak.nama_anak + '</td>' +
+                    '<td>' + item.nik + '</td>' +
+                    '<td>' + item.nama_anak + '</td>' +
                     '<td>' + item.tgl_periksa + '</td>' +
                     '<td>' + item.usia + '</td>' +
                     '<td>' +  '<button type="button" class="btn btn-primary btn-icon-split btn-sm"' +
@@ -216,6 +244,12 @@
         }
       });
     }
+
+    $(document).on('keyup', '#search', function(){
+      var query = $(this).val();
+      fetchGizi(query);
+      var interval = setInterval(fetchGizi, 2000);
+    });
   });
 </script>
 @endsection

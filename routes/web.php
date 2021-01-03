@@ -17,9 +17,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route Dashboard
 Route::get('dashboard/chart/gizi','DashboardController@chartGizi');
 Route::get('dashboard/chart/imunisasi','DashboardController@chartImunisasi');
 Route::get('dashboard','DashboardController@index');
+
+// Route Profile
 Route::get('profil','PageController@profil');
 Route::put('profil/{id}','PageController@update');
 
@@ -41,38 +44,46 @@ Route::post('add_bidan','UserController@createBidan');
 Route::put('editbidan/{id}','UserController@updateBidan');
 Route::delete('deletebidan/{id}','UserController@delete');
 
+// Route Vaksinasi
 Route::get('vaksinasi','VaksinasiController@vaksinasi');
 Route::get('vaksinasi','VaksinasiController@index');
 Route::post('addVaksinasi', 'VaksinasiController@create');
 Route::put('editVaksinasi/{id}','VaksinasiController@update');
 Route::delete('deleteVaksinasi/{id}','VaksinasiController@delete');
-Route::get('imunisasi','ImunisasiController@index');
 
-
+// Route Gizi
 Route::get('gizi','GiziController@index');
+Route::get('giziSearch','GiziController@search');
 Route::get('/gizi/export_gizi', 'GiziController@export_gizi');
 Route::get('/gizi/export_gizi_superadmin', 'GiziController@export_gizi_superadmin');
 Route::get('/gizi/export_gizi_bidan', 'GiziController@export_gizi_bidan');
+
+// Route Imunisasi
+Route::get('imunisasi','ImunisasiController@index');
 Route::get('/imunisasi/exportimunisasi', 'ImunisasiController@export_imunisasi');
 Route::get('/imunisasi/export_imunisasi_superadmin', 'ImunisasiController@export_imunisasi_superadmin');
 Route::get('/imunisasi/export_imunisasi_bidan', 'ImunisasiController@export_imunisasi_bidan');
+Route::get('imunisasiSearch','ImunisasiController@search');
 
 
-
-//================================== Puskesmas=================================
+// ================================== Puskesmas=================================
 Route::get('puskesmas','PuskesmasController@index');
 Route::post('addPuskesmas', 'PuskesmasController@create');
 Route::put('editPuskesmas/{id}','PuskesmasController@update');
 Route::delete('deletePuskesmas/{id}','PuskesmasController@delete');
 
+// Route posyandu
 Route::get('posyandu','PosyanduController@posyandu');
 Route::post('addPosyandu','PosyanduController@create');
 Route::put('editPosyandu/{id}','PosyanduController@update');
 Route::delete('deletePosyandu/{id}','PosyanduController@delete');
 Route::get('posyandu','PosyanduController@posyandu');
+
+// Route Jadwal
 Route::get('jadwal', 'JadwalController@index');
 Route::post('addJadwal', 'JadwalController@create');
 
+// Route Login
 Route::get('login/bidan','LoginController@loginbidan');
 Route::post('login/bidanPost','LoginController@loginBidanPost');
 Route::get('logout/bidan', 'LoginController@logoutBidan');

@@ -28,11 +28,15 @@ class SuperAdminExportImunisasi  extends StringValueBinder implements WithCustom
 
     private $puskesmas;
     private $name;
+    private $month;
+    private $year;
 
-    public function __construct($puskesmas, $name)
+    public function __construct($month, $year, $puskesmas, $name)
     {
+        $this->month     = $month;
+        $this->year      = $year;
         $this->puskesmas = $puskesmas;
-        $this->name = $name;
+        $this->name      = $name;
     }
     public function view(): View
     {
@@ -44,8 +48,10 @@ class SuperAdminExportImunisasi  extends StringValueBinder implements WithCustom
                 ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
                 ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
                 ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
-                ->select('vaksinasi.*','posyandu.*','puskesmas.*', 'desa.*', 'kecamatan.*')
+                ->select('imunisasi.*','vaksinasi.*','posyandu.*','puskesmas.*', 'desa.*', 'kecamatan.*')
                 ->where('posyandu.id_posyandu', $this->puskesmas)
+                ->whereMonth('tgl_imunisasi', $this->month)
+                ->whereYear('tgl_imunisasi', $this->year)
                 ->first();
 
         $coba = DB::table('imunisasi')
@@ -58,6 +64,8 @@ class SuperAdminExportImunisasi  extends StringValueBinder implements WithCustom
                     DB::raw("SUM(CASE WHEN anak.jk = 'laki-laki' THEN 1 ELSE 0 END) AS l"), 
                     DB::raw("SUM(CASE WHEN anak.jk = 'perempuan' THEN 1 ELSE 0 END) AS p"))
                 ->where('posyandu.id_posyandu', $this->puskesmas)
+                ->whereMonth('tgl_imunisasi', $this->month)
+                ->whereYear('tgl_imunisasi', $this->year)
                 ->groupBy('vaksinasi.nama_vaksinasi')
                 ->get();
 

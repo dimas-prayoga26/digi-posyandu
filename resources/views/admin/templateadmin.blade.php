@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link href="img/logo/icons.png" rel="icon">
+  <link href="img/logo/IconLogo.png" rel="icon">
   <title>@yield('title')</title>
   <link href="{{url('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{url('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
@@ -22,9 +22,9 @@
     <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('dashboard')}}">
         {{-- <div class="sidebar-brand-icon">
-        <!--<img src="img/logo/INPOS.png">-->
+        <img src="img/logo/IconLogo.png">
         </div> --}}
-        <div class="sidebar-brand-text mx-3">Integrasi Posyandu</div>
+        <div class="sidebar-brand-text mx-3">Sistem Integrasi Posyandu</div>
       </a>
       <hr class="sidebar-divider my-0">
       <li class="nav-item active">
@@ -220,12 +220,25 @@
 <script src="{{url('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{url('vendor/chart.js/Chart.min.js')}}"></script>
 <!-- Page level custom scripts -->
-<script src="{{url('js/demo/chart-pie-demo.js')}}"></script>
-<script src="{{url('js/demo/chart-bar-demo.js')}}"></script>
+<script src="{{url('js/demo/chart-pie.js')}}"></script>
+<script src="{{url('js/demo/chart-bar.js')}}"></script>
 <script src="{{url('vendor/select2/dist/js/select2.min.js')}}"></script>
 
 <!-- Page level custom scripts -->
 @yield('js')
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="js/ruang-admin.min.js"></script>
+  <!-- Page level plugins -->
+  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
+  <!-- Page level custom scripts -->
+  <script>
+    $(document).ready(function () {
+      $('#dataTable').DataTable(); // ID From dataTable 
+      $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+    });
+  </script>
 </body>
 </html>

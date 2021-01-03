@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 	<title>Login Bidan</title>
@@ -39,7 +39,18 @@
 					<span class="login100-form-title p-b-34">
 						 Login
 					</span>
-					
+					@if($errors->any())
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
 					<div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="Type username">
 						<input id="username" class="input100" type="text" name="username" placeholder="Username">
 						<span class="focus-input100"></span>

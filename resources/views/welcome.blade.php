@@ -14,26 +14,31 @@
   <link href="{{url('css/ruang-admin.min.css')}}" rel="stylesheet">
   <link href="{{url('vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
   <link href="{{url('vendor/select2/dist/css/select2.min.css')}}" rel="stylesheet" type="text/css">
+ <style>
+    .jumbotron{
+      padding: 5rem 1rem;
+      background-color: #eaecf4;
+      border-radius: .3rem;
+    }
+    #left{
+      margin-bottom: 10px;
+    }
+    #right{
+      float: right;
+      margin-right: 50px;
+    }
+    #copyright{
+      margin-top: -8px;
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body id="page-top">
   <div id="wrapper">
-    <!-- Sidebar -->
-        
-    <!-- Sidebar -->
     <div id="content-wrapper" class="d-flex flex-column">
       <div id="content">
-        <!-- TopBar -->
-        <nav class="navbar navbar-expand navbar-light bg-success topbar mb-4 static-top">
-         
-         
-           
-          
-        </nav>
-        <!-- Topbar -->
-
-        <!-- Container Fluid-->
-    
+        <nav class="navbar navbar-expand navbar-light bg-success topbar mb-4 static-top"></nav>    
         <div class="jumbotron">
             <h1 class="display-4">Selamat Datang Di Integrasi Posyandu</h1>
             <h4 class="display-4">Dinas Kesehatan Kabupaten Indramayu</h4>
@@ -54,10 +59,8 @@
               <span class="text">Login Sebagai Bidan</span>  
             </a>
           </div>
-          
         </div>
         </div>
-        <!---Container Fluid-->
       </div>
       <!-- Footer -->
       <footer class="sticky-footer bg-white">

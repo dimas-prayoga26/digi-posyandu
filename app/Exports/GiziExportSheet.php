@@ -2,27 +2,28 @@
 namespace App\Exports;
 
 use DB;
-use App\Desa;
 use App\Posyandu;
-use App\Gizi;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromCollection;
 
 
 class GiziExportSheet implements WithMultipleSheets {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
     use Exportable;
+   
     private $puskesmas;
-    private $posyandu;
+    private $month;
+    private $year; 
 
-     public function setPuskesmas(int $puskesmas){
+    public function setPuskesmas(int $puskesmas){
         $this->puskesmas = $puskesmas;
     }
-    public function setPosyandu(int $posyandu){
-        $this->posyandu = $posyandu;
+
+    public function setMonth(int $month){
+        $this->month = $month;
+    }
+
+    public function setYear(int $year){
+        $this->year = $year; 
     }
 
     public function sheets(): array {
@@ -40,19 +41,16 @@ class GiziExportSheet implements WithMultipleSheets {
         }
 
         else if(session('level')=='super_admin') {
-            //dd($this->puskesmas);
-            $posyandu=Posyandu::where('id_puskesmas', $this->puskesmas)
-                ->select('posyandu.*')
-                ->get();
+            $posyandu = Posyandu::where('id_puskesmas', $this->puskesmas)
+                                ->select('posyandu.*')
+                                ->get();
             $sheets=[];
             foreach($posyandu as $data) {
-                $sheets[] = new SuperAdminExportGizi($data->id_posyandu, $data->nama_posyandu);
+                $sheets[] = new SuperAdminExportGizi($this->month, $this->year, $data->nama_posyandu,$data->id_posyandu);
             }
-
             return $sheets;
         }
-        
-        else if(session('level')=='bidan') {
+     else if(session('level')=='bidan') {
             $pos=Posyandu::with('desa')
                 ->where('id_posyandu', $this->posyandu)
                 ->select('posyandu.*')
@@ -64,4 +62,5 @@ class GiziExportSheet implements WithMultipleSheets {
             return $sheets;
         }
     }
+
 }

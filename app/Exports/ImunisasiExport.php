@@ -36,13 +36,13 @@ class ImunisasiExport extends StringValueBinder implements WithCustomValueBinder
     {
   
         $items = DB::table('imunisasi')
-                ->join('vaksinasi', 'imunisasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
+                ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
                 ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
                 ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
                 ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
                 ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
                 ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
-                ->select('vaksinasi.*','posyandu.*','puskesmas.*', 'desa.*', 'kecamatan.*')
+                ->select('imunisasi.*','vaksinasi.*','posyandu.*','puskesmas.*', 'desa.*', 'kecamatan.*', 'anak.*')
                 ->where('posyandu.id_posyandu', $this->puskesmas)
                 ->first();
 

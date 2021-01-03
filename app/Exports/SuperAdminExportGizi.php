@@ -23,11 +23,15 @@ class SuperAdminExportGizi extends StringValueBinder implements WithCustomValueB
 
     private $puskesmas;
     private $name;
+    private $month;
+    private $year;
 
-    public function __construct($puskesmas, $name)
+    public function __construct($month, $year, $puskesmas, $name)
     {
+        $this->month     = $month;
+        $this->year      = $year;
         $this->puskesmas = $puskesmas;
-        $this->name = $name;
+        $this->name      = $name;
     }
 
     public function view(): View
@@ -43,6 +47,8 @@ class SuperAdminExportGizi extends StringValueBinder implements WithCustomValueB
             ->select('gizi.*', 'anak.*', 'posyandu.*','puskesmas.*', 'keluarga.*', 
                     'status_gizi.*', 'desa.*', 'kecamatan.*')
             ->where('posyandu.id_posyandu', $this->puskesmas)
+            ->whereMonth('tgl_periksa', $this->month)
+            ->whereYear('tgl_periksa', $this->year)
             ->get();
 
         $items = DB::table('gizi')
@@ -54,9 +60,9 @@ class SuperAdminExportGizi extends StringValueBinder implements WithCustomValueB
                 ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
                 ->select('posyandu.*','puskesmas.*', 'desa.*', 'kecamatan.*')
                 ->where('posyandu.id_posyandu', $this->puskesmas)
+                ->whereMonth('tgl_periksa', $this->month)
+                ->whereYear('tgl_periksa', $this->year)
                 ->first();
-
-       
         return view('admin.gizi.exportgizi', compact('datas', 'items'));
     }
 

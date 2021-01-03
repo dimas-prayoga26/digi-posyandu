@@ -33,8 +33,23 @@
                   <button type="button" data-toggle="modal"  data-target="#modalexport" id="#myBtn" class="btn btn-outline-success " >Export Laporan</a>
                 </div>
                 @endif
+                @if($errors->any())
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                      <li>{{$error}}</li>
+                      @endforeach
+                  </ul>
+              </div>
+              @endif
+               <form method="get" align="right">
+                <input placeholder="Cari disini" class="search" id="search" type="search" name="search">
+              </form>
                 <div class="table-responsive p-3">
-                  <table class="table align-items-center table-flush" id="dataTable">
+                  <table class="table align-items-center table-flush" id="">
                     <thead class="thead-light">
                       <tr>
                         <th>No.</th>
@@ -98,13 +113,13 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Export Laporan Gizi</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Export Laporan Imunisasi</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
   
-                                <form id="addExportGizi" action="{{ url('/imunisasi/export_imunisasi_superadmin')}}" method="GET" role="form">
+                                <form id="addExportImunisasi" action="{{ url('/imunisasi/export_imunisasi_superadmin')}}" method="GET" role="form">
                                     @csrf
                                     <div class="form-group">
                                             <label for="id_puskesmas">Laporan Puskesmas</label>
@@ -117,6 +132,33 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        <div class="form-group">
+                                        <label for="id_month">Bulan</label>
+                                        <select class="select2-single-placeholder form-control" name="id_month">
+                                            <option value="#">Pilih Bulan</option>
+                                            <option value="01">Januari</option>
+                                            <option value="02">Februari</option>
+                                            <option value="03">Maret</option>
+                                            <option value="04">April</option>
+                                            <option value="05">Mei</option>
+                                            <option value="06">Juni</option>
+                                            <option value="07">Juli</option>
+                                            <option value="08">Agustus</option>
+                                            <option value="09">September</option>
+                                            <option value="10">Oktober</option>
+                                            <option value="11">November</option>
+                                            <option value="12">Desember</option>
+                                        </select>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="id_year">Tahun</label>
+                                        <select class="select2-single-placeholder form-control" name="id_year">
+                                            <option value="#">Pilih Tahun</option>
+                                            @foreach ($years as $year)
+                                                <option value="{{$year->year}}">{{$year->year}}</option>
+                                            @endforeach
+                                        </select>
+                                      </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-danger"
                                             data-dismiss="modal">Tutup</button>
@@ -130,45 +172,38 @@
 @section('js')
     <script>
       $(document).ready(function () {
-        var apiUrl = '';
-        var level = "{{session('level')}}";
-        if(level == 'admin_puskesmas'){ 
-          var puskesmas = "{{session('puskesmas')}}";
-          apiUrl = 'api/getImunisasi/'+puskesmas; 
-        }else if(level == 'super_admin'){
-          apiUrl = 'api/getImunisasi';
-        }else if(level == 'bidan'){
-           var posyandu = "{{session('posyandu')}}";
-          apiUrl = 'api/getImunisasiByPosyandu/'+posyandu; 
-        }
         fetchImunisasi();
-        var interval = setInterval(fetchImunisasi, 4000);
-        $('#dataTable').DataTable(); // ID From dataTable 
-        function fetchImunisasi() {
+        function fetchImunisasi(query = '') {
           $.ajax({
             type: 'GET',
-            url: apiUrl,
+            url: 'imunisasiSearch',
+            data: {query: query},
             dataType: 'json',
             success: function(data) {
               var html = '';
-              data.forEach((item, i) => {
+              data.forEach((item, i) =>{
                 html += '<tr>'+
-                        '<td>' + (i+1) + '</td>' +
-                        '<td>' + item.tgl_imunisasi + '</td>' +
-                        '<td>' + item.anak.nama_anak + '</td>' +
-                        '<td>' + item.vaksinasi.nama_vaksinasi + '</td>' +
-                        '<td>' +  '<button type="button" class="btn btn-success btn-icon-split btn-sm"' +
-                                  'data-toggle="modal" data-target="#modal-anak-'+item.no_pemeriksaan_imunisasi+'">' +
-                                  '<span class="icon text-white-50"><i class="fas fa-info-circle"></i>' +
-                                  '</span>' +
-                                  '<span class="text">Detail Data Anak</span>' +  
-                                  '</button>' +
-                        '</td></tr>' 
+                    '<td>' + (i+1) + '</td>' +
+                    '<td>' + item.tgl_imunisasi + '</td>' +
+                    '<td>' + item.nama_anak + '</td>' +
+                    '<td>' + item.nama_vaksinasi + '</td>' +
+                    '<td>' +  '<button type="button" class="btn btn-success btn-icon-split btn-sm"' +
+                              'data-toggle="modal" data-target="#modal-anak-'+item.no_pemeriksaan_imunisasi+'">' +
+                              '<span class="icon text-white-50"><i class="fas fa-info-circle"></i>' +
+                              '</span>' +
+                              '<span class="text">Detail Data Anak</span>' +  
+                              '</button>' +
+                    '</td></tr>' 
               });
               $('#show_data').html(html);
             }
           });
         }
+        $(document).on('keyup', '#search', function(){
+          var query = $(this).val();
+          fetchImunisasi(query);
+          var interval = setInterval(fetchImunisasi, 2000);
+        });
       });
     </script>
 @endsection
