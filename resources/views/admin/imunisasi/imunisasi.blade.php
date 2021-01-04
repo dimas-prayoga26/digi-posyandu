@@ -202,7 +202,7 @@
         $(document).on('keyup', '#search', function(){
           var query = $(this).val();
           fetchImunisasi(query);
-          var interval = setInterval(fetchImunisasi, 2000);
+          var interval = setInterval(fetchImunisasi, 5000);
         });
       });
     </script>

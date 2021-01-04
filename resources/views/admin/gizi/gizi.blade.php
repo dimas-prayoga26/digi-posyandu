@@ -248,7 +248,7 @@
     $(document).on('keyup', '#search', function(){
       var query = $(this).val();
       fetchGizi(query);
-      var interval = setInterval(fetchGizi, 2000);
+      var interval = setInterval(fetchGizi, 5000);
     });
   });
 </script>
