@@ -9,7 +9,7 @@ use Maatwebsite\Excel\Concerns\Exportable;
 
 class GiziExportSheet implements WithMultipleSheets {
     use Exportable;
-   
+    
     private $puskesmas;
     private $month;
     private $year; 
@@ -46,7 +46,7 @@ class GiziExportSheet implements WithMultipleSheets {
                                 ->get();
             $sheets=[];
             foreach($posyandu as $data) {
-                $sheets[] = new SuperAdminExportGizi($this->month, $this->year, $data->nama_posyandu,$data->id_posyandu);
+                $sheets[] = new SuperAdminExportGizi($this->month, $this->year, $this->puskesmas, $data->id_posyandu, $data->nama_posyandu);
             }
             return $sheets;
         }
