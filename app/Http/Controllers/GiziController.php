@@ -7,6 +7,8 @@ use App\Gizi;
 use App\Puskesmas;
 use Illuminate\Http\Request;
 use App\Exports\GiziExportSheet;
+use App\Exports\SuperAdminExportGizi;
+use App\Exports\BidanGiziExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class GiziController extends Controller

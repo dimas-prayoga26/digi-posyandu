@@ -46,7 +46,7 @@ class SuperAdminExportGizi extends StringValueBinder implements WithCustomValueB
             ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
             ->select('gizi.*', 'anak.*', 'posyandu.*','puskesmas.*', 'keluarga.*', 
                     'status_gizi.*', 'desa.*', 'kecamatan.*')
-            ->where('posyandu.id_puskesmas', $this->puskesmas)
+            ->where('posyandu.id_posyandu', $this->puskesmas)
             ->whereMonth('tgl_periksa', $this->month)
             ->whereYear('tgl_periksa', $this->year)
             ->get();
@@ -59,7 +59,7 @@ class SuperAdminExportGizi extends StringValueBinder implements WithCustomValueB
                 ->join('kecamatan', 'kecamatan.id_kecamatan', '=', 'desa.id_kecamatan')
                 ->join('puskesmas', 'posyandu.id_puskesmas', '=', 'puskesmas.id_puskesmas')
                 ->select('posyandu.*','puskesmas.*', 'desa.*', 'kecamatan.*')
-                ->where('posyandu.id_puskesmas', $this->puskesmas)
+                ->where('posyandu.id_posyandu', $this->puskesmas)
                 ->whereMonth('tgl_periksa', $this->month)
                 ->whereYear('tgl_periksa', $this->year)
                 ->first();

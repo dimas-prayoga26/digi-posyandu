@@ -26,6 +26,10 @@
                     Export Laporan
                   </a>
                 </div>
+                 @elseif(session('level') == 'bidan')
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
+                  <a href="{{ url('/gizi/export_gizi_bidan')}}" class="btn btn-outline-success " >Export Laporan</a>
+                </div>
                 @else
                 <div class="card-header export d-flex flex-row align-items-center justify-content-end">
                   <button type="button" data-toggle="modal"  data-target="#modalexport" id="#myBtn" class="btn btn-outline-success">

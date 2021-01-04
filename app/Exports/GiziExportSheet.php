@@ -46,7 +46,7 @@ class GiziExportSheet implements WithMultipleSheets {
                                 ->get();
             $sheets=[];
             foreach($posyandu as $data) {
-                $sheets[] = new SuperAdminExportGizi($this->month, $this->year, $this->puskesmas, $data->id_posyandu, $data->nama_posyandu);
+                $sheets[] = new SuperAdminExportGizi($this->month, $this->year, $data->id_posyandu, $data->nama_posyandu);
             }
             return $sheets;
         }
