@@ -11,6 +11,7 @@ use App\Gizi;
 use App\Imunisasi;
 use App\Vaksinasi;
 use DB;
+use DateTime;
 
 class DashboardController extends Controller
 {
@@ -42,14 +43,17 @@ class DashboardController extends Controller
 
     public function chartGizi()
     {
+        $now          = new DateTime();       
         $stuntingTinggiBadan = DB::table('gizi')
         ->join('status_gizi', 'gizi.id_status_gizi', '=', 'status_gizi.id_status_gizi')
         ->whereIn('status_gizi.pb_tb_u',['SP','P'])
-        ->select(DB::raw('count(*) as `count`'),DB::raw('YEAR(tgl_periksa) year, MONTHNAME(tgl_periksa) month'))
+        ->whereYear('tgl_periksa', $this->year)
+        ->select(DB::raw('count(*) as `count`'),DB::raw('MONTHNAME(tgl_periksa) month'))
         ->orderBy('tgl_periksa', 'ASC')
         ->groupby('year','month')
         ->get();
         return response()->json($stuntingTinggiBadan,200);
+        dd($now);
         /* $giziChart = DB::table('gizi')
         ->join('status_gizi', 'gizi.id_status_gizi', '=', 'status_gizi.id_status_gizi')
         ->select(DB::raw('count(*) as `count`'),DB::raw('YEAR(tgl_periksa) year, MONTH(tgl_periksa) month'))

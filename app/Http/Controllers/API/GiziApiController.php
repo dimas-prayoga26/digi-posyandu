@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Validator;
 class GiziApiController extends Controller
 {
     public function getAll(){
-        $datas = Gizi::with('anak')->get();
+        $datas = Gizi::with('anak')
+                    ->orderBy('no_pemeriksaan_gizi')
+                    ->get();
         return response()->json($datas);
     }
 
@@ -24,7 +26,9 @@ class GiziApiController extends Controller
         $datas = Gizi::with('anak.posyandu', 'status_gizi')
                     ->whereHas('anak.posyandu', function (Builder $query) use($id){
                         $query->where('id_posyandu', $id);
-                    })->get();
+                    })
+                    ->orderBy('no_pemeriksaan_gizi')
+                    ->get();
         return response()->json($datas);
     }
 
@@ -32,15 +36,16 @@ class GiziApiController extends Controller
         $datas = Gizi::with('anak', 'status_gizi')
                     ->whereHas('anak', function (Builder $query) use($id){
                         $query->where('id_posyandu', $id);
-                    })->get();
+                    })
+                    ->orderBy('no_pemeriksaan_gizi')
+                    ->get();
         return response()->json($datas);
-        dd($datas);
     }
 
     public function create(Request $request){
         $anak         = Anak::where('id_anak', $request->id_anak)->first();
         $tgl_lahir    = new DateTime($anak->tgl_lahir);
-        $now          = new DateTime('now');;
+        $now          = new DateTime($request->tgl_periksa);       
         $year         = date_diff($now, $tgl_lahir)->y;
         $month        = date_diff($now, $tgl_lahir)->m;
         $usia         = ($year*12)+$month;
@@ -51,11 +56,12 @@ class GiziApiController extends Controller
         $id_gizi      = 'G'.date('Ymd').str_pad($increment, 5, '0', STR_PAD_LEFT);
         $bb           = $request->bb;
         $pb_tb        = $request->pb_tb;
+        // dd($now);
 
         $bb_u         = $this->countWeightAge($bb, $anak->jk, $usia);
         $pb_tb_u      = $this->countHeightAge($pb_tb, $anak->jk, $usia);
         $bb_pb_tb     = $this->countWeightHeight($bb, $anak->jk, $pb_tb, $usia);
-
+        
         $data_status = [
             'bb_u'      => $bb_u,
             'pb_tb_u'   => $pb_tb_u,
@@ -90,8 +96,8 @@ class GiziApiController extends Controller
             'id_anak'             => $request->id_anak
         ];
         
+        //dd($now);
         $create = Gizi::create($data_gizi);
-        //dd($create);
         return response()->json($create);
     }
 
@@ -167,12 +173,11 @@ class GiziApiController extends Controller
 
     public function countWeightAge($weight, $gender, $age)
     {
-        $status;
         $std    = StandarWho::where('kategori', 'BB/U')
                     ->where('jk', $gender)
                     ->where('parameter', $age)
                     ->first();
-        //$div = $weight/$age;
+
         if($weight < $std->sd_min_dua){
             return $status = "SK";
         }elseif($weight < $std->sd_min_satu && $weight >= $std->sd_min_dua){
@@ -191,7 +196,6 @@ class GiziApiController extends Controller
     }
     public function countHeightAge($height, $gender, $age)
     {
-        $status;
         //cara ukur
         $measure = $age<25 ? 1 : 2;
         if($measure == 1){
@@ -206,8 +210,6 @@ class GiziApiController extends Controller
                 ->first();
         }
 
-
-        //$div = $height/$age;
         if($height < $std->sd_min_tiga){
             return $status = "SP";
         }elseif($height <= $std->sd_min_dua && $height >= $std->sd_min_tiga){
@@ -227,7 +229,6 @@ class GiziApiController extends Controller
 
     public function countWeightHeight($weight, $gender, $height, $age)
     {
-        $status;
         //cara ukur
         $measure = $age<25 ? 1 : 2;
 
@@ -242,7 +243,7 @@ class GiziApiController extends Controller
                 ->where('parameter', $height)
                 ->first();
         }
-        //$div = $weight/$height;
+        
         if($weight < $std->sd_min_dua){
             return $status = "SK";
         }elseif($weight < $std->sd_min_satu && $weight >= $std->sd_min_dua){

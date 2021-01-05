@@ -3,7 +3,7 @@ Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,Bli
 Chart.defaults.global.defaultFontColor = '#858796';
 
 // Pie Chart Example
-$.get('http://127.0.0.1:8000/dashboard/chart/imunisasi',(imunisasiChart,colours) =>{
+$.get('http://1805049.web.ti.polindra.ac.id/dashboard/chart/imunisasi',(imunisasiChart,colours) =>{
   var ctx = document.getElementById("imunisasiChart");
 
   var data = imunisasiChart.map(function(e) {

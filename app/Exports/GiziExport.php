@@ -34,7 +34,7 @@ implements WithCustomValueBinder, FromView, ShouldAutoSize, WithTitle
     }
     public function view(): View
     {
-
+        
         $datas = DB::table('gizi')
             ->join('status_gizi', 'status_gizi.id_status_gizi', '=', 'gizi.id_status_gizi')
             ->join('anak', 'gizi.id_anak', '=', 'anak.id_anak')

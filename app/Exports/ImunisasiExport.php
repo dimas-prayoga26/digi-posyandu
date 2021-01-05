@@ -34,7 +34,6 @@ class ImunisasiExport extends StringValueBinder implements WithCustomValueBinder
     
     public function view(): View
     {
-  
         $items = DB::table('imunisasi')
                 ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
                 ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')

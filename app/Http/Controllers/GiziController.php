@@ -120,17 +120,14 @@ class GiziController extends Controller
 
     public function export_gizi_superadmin(Request $request){
         if (session('level') == 'super_admin'){    
-            try {
+          
             $export = new GiziExportSheet();
             $export->setPuskesmas($request->id_puskesmas);
             $export->setMonth($request->id_month);
             $export->setYear($request->id_year);
                 return Excel::download($export, 'superadmingizi.xlsx');
-            } catch (\Exception $e) {
-                return back()->withErrors('Data Kosong');
-            }
-         }else{
-            echo "Maaf anda tidak mempunyai akses";
+          
+         
         }     
     }
      public function export_gizi_bidan(){
