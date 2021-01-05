@@ -21,8 +21,17 @@ class PosyanduController extends Controller
                     ->select('desa.*', 'puskesmas.*', 'posyandu.*')
                     ->where('puskesmas.id_puskesmas', session('puskesmas'))
                     ->get();
-             return view('admin.posyandu.posyandu', compact('datas'))->with('i');
-           }else{
+            return view('admin.posyandu.posyandu', compact('datas'))->with('i');
+           }elseif(session('level') == 'bidan'){
+            $datas = DB::table('posyandu')
+                    ->join('puskesmas', 'puskesmas.id_puskesmas', '=', 'posyandu.id_puskesmas')
+                    ->join('desa', 'desa.id_desa', '=', 'posyandu.id_desa')
+                    ->select('desa.*', 'puskesmas.*', 'posyandu.*')
+                    ->where('puskesmas.id_puskesmas', session('posyandu'))
+                    ->get();
+            return view('admin.posyandu.posyandu', compact('datas'))->with('i');
+           }
+           else{
            $datas     = Posyandu::all();
            $puskesmas = Puskesmas::all();
            $desa      = Desa::all();

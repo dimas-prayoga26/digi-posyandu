@@ -7,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link href="img/logo/icons.png" rel="icon">
-  <title>Integrasi Posyandu | DINKES</title>
+  <link href="img/logo/IconLogo.png" rel="icon">
+  <title>Sistem Integrasi Posyandu</title>
   <link href="{{url('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{url('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{url('css/ruang-admin.min.css')}}" rel="stylesheet">
@@ -40,9 +40,9 @@
       <div id="content">
         <nav class="navbar navbar-expand navbar-light bg-success topbar mb-4 static-top"></nav>    
         <div class="jumbotron">
-            <h1 class="display-4">Selamat Datang Di Integrasi Posyandu</h1>
+            <h1 class="display-4">Selamat Datang Di Sistem Integrasi Posyandu</h1>
             <h4 class="display-4">Dinas Kesehatan Kabupaten Indramayu</h4>
-            <p class="lead">Untuk Masuk Ke dalam Sistem silakan Login Terlebih Dahulu</p>
+            <p class="lead">Untuk Masuk Ke dalam Sistem Silakan Login Terlebih Dahulu</p>
             <hr class="my-4">
             
             <a class="btn btn-primary btn-icon-split  btn-lg" href="{{url('/login/admin')}}" role="button">
@@ -66,7 +66,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>copyright &copy; <script> document.write(new Date().getFullYear()); </script> Integrasi Posyandu
+            <span>copyright &copy; <script> document.write(new Date().getFullYear()); </script> Sistem Integrasi Posyandu
           
             </span>
           </div>

@@ -17,6 +17,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
+    $level = session('level');
+    if($level == 'super_admin' || $level == 'bidan' || $level == 'admin_puskesmas'){       
         $anak = Anak::count();
         $puskes = Puskesmas::count();
         $posyandu = Posyandu::count();  
@@ -38,6 +40,9 @@ class DashboardController extends Controller
         ->where('posyandu.id_puskesmas', session('puskesmas'))
         ->count();         
          return view('admin.dashboard', compact('puskes','posyandu','anak','bidan','kader','posBidan','anakBidan','posPuskes','bidanPuskes','anakAdmin'));
+    }else{
+        return redirect()->back();
+        } 
     }
 
 

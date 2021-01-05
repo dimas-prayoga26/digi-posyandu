@@ -16,6 +16,8 @@ class GiziController extends Controller
 
     public function index()
     {
+    $level = session('level');
+    if($level == 'super_admin' || $level == 'bidan' || $level == 'admin_puskesmas'){
         $puskesmas = Puskesmas::all();
         $years = Gizi::select(DB::raw('YEAR(tgl_periksa) year'))->groupBy('year')->get();
         if (session('level') == 'admin_puskesmas'){
@@ -58,6 +60,9 @@ class GiziController extends Controller
                         ->get();
         }    
         return view('admin.gizi.gizi', compact('datas','puskesmas', 'years'));
+    }else{
+        return redirect()->back();
+        } 
     }
 
     public function search(Request $request){
@@ -119,17 +124,22 @@ class GiziController extends Controller
     }
 
     public function export_gizi_superadmin(Request $request){
-        if (session('level') == 'super_admin'){    
-          
-            $export = new GiziExportSheet();
-            $export->setPuskesmas($request->id_puskesmas);
-            $export->setMonth($request->id_month);
-            $export->setYear($request->id_year);
+        if (session('level') == 'super_admin'){   
+
+            try {
+                $export = new GiziExportSheet();
+                $export->setPuskesmas($request->id_puskesmas);
+                $export->setMonth($request->id_month);
+                $export->setYear($request->id_year);
                 return Excel::download($export, 'superadmingizi.xlsx');
-          
-         
-        }     
-    }
+                } catch (\Exception $e) {
+                     return back()->withErrors('Data Kosong');
+                }
+        }else{
+            echo "Maaf anda tidak mempunyai akses";
+        }      
+    }     
+    
      public function export_gizi_bidan(){
         if (session('level') == 'bidan'){
             try {

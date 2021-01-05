@@ -15,16 +15,26 @@ class UserController extends Controller
      */
      public function kader()
    {
+    $level = session('level');
+    if($level == 'super_admin'){   
        $datas    = User::where('level','kader')->get();
        $posyandu = Posyandu::all();
        return view('admin.kader.kader', compact('posyandu','datas'));
+    }else{
+          return redirect()->back();
+        }
    }
 
    public function bidan()
    {
+    $level = session('level');
+    if($level == 'super_admin'){   
        $datas    = User::where('level','bidan')->get();
        $posyandu = Posyandu::all();
        return view('admin.bidan.bidan', compact('posyandu','datas'));
+       }else{
+          return redirect()->back();
+        }
    }
 
     /**

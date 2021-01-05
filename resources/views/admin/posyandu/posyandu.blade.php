@@ -44,7 +44,9 @@
                 </div>
 
                 {{-- Modal Tambah --}}
+                
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  @if (session('level') == 'admin_puskesmas' || session('level') == 'super_admin'){
                   <button type="button" class="btn btn-success btn-icon-split btn-sm" data-toggle="modal" data-target="#exampleModal"
                      id="#myBtn">
                      <span class="icon text-white-50">
@@ -52,6 +54,7 @@
                      </span>
                      <span class="text">Tambah Data Posyandu</span>  
                    </button>
+                   @endif
                    
                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                    aria-hidden="true">
@@ -117,7 +120,9 @@
                         <th>Nama Posyandu</th>
                         <th>Nama Puskesmas</th>
                         <th>Nama Desa</th>
+                        @if (session('level') == 'admin_puskesmas' || session('level') == 'super_admin'){
                         <th>Aksi</th>
+                        @endif
                       </tr>
                     </thead>
                     <tbody>
@@ -127,6 +132,7 @@
                       <td>{{$data->nama_posyandu}}</td>
                       <td>{{$data->nama_puskesmas}}</td>
                       <td>{{$data->nama_desa}}</td>
+                      @if (session('level') == 'admin_puskesmas' || session('level') == 'super_admin'){
                         <td>
                        <button type="button" class="btn btn-primary" data-toggle="modal" 
                         data-target="#edit-data-{{$data->id_posyandu}}">
@@ -138,6 +144,7 @@
                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                       </form>
                       </td>
+                      @endif
                       @endforeach
                       </tr>                      
                     </tbody>

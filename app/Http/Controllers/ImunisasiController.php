@@ -23,6 +23,9 @@ class ImunisasiController extends Controller
 
     public function index()
     {
+
+    $level = session('level');
+    if($level == 'super_admin' || $level == 'bidan' || $level == 'admin_puskesmas'){    
         $puskesmas = Puskesmas::all();
         $years = Imunisasi::select(DB::raw('YEAR(tgl_imunisasi) year'))->groupBy('year')->get();
         $level = session('level'); 
@@ -56,6 +59,9 @@ class ImunisasiController extends Controller
                         ->get();      
         }
         return view('admin.imunisasi.imunisasi', compact('datas','puskesmas','years'));
+    }else{
+        return redirect()->back();
+        } 
     }
 
     public function search(Request $request){

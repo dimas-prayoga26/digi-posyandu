@@ -15,10 +15,16 @@ class AdminController extends Controller
      */
     public function adminpuskesmas()
    {
+    $level = session('level');
+    if($level == 'super_admin'){     
         $puskes = Puskesmas::all();
         $datas  = Admin::where('level', 'admin_puskesmas')->get();
        return view('admin.admin_puskesmas.admin_puskesmas', compact('puskes', 'datas'));
-   }
+     }else{
+            return redirect()->back();
+        } 
+    }
+    
     public function index()
     {
         

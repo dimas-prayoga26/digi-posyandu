@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="{{url('img/logo/icons.png')}}"/>
+	<link rel="icon" type="image/png" href="{{url('img/logo/IconLogo.png')}}"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{url('vendor/bootstrap/css/bootstrap.min.css')}}">
 <!--===============================================================================================-->
@@ -37,7 +37,7 @@
 					action="{{url('login/bidanPost')}}">
 					@csrf
 					<span class="login100-form-title p-b-34">
-						 Login
+						 Login Bidan
 					</span>
 					@if($errors->any())
                     <div class="alert alert-danger alert-dismissible" role="alert">
