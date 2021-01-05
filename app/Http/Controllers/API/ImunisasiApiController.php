@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Validator;
 class ImunisasiApiController extends Controller
 {
     public function getAll(){
-        $datas = Imunisasi::with('anak', 'vaksinasi')->get();
+        $datas = Imunisasi::with('anak', 'vaksinasi')
+                    ->orderBy('no_pemeriksaan_imunisasi')
+                    ->get();
         return response()->json($datas);
     }
 
@@ -23,7 +25,9 @@ class ImunisasiApiController extends Controller
          $datas = Imunisasi::with('anak', 'vaksinasi')
                     ->whereHas('anak.posyandu', function (Builder $query) use($id){
                         $query->where('id_puskesmas', $id);
-                    })->get();
+                    })
+                    ->orderBy('no_pemeriksaan_imunisasi')
+                    ->get();
         return response()->json($datas);
     }
 
@@ -31,7 +35,9 @@ class ImunisasiApiController extends Controller
         $datas = Imunisasi::with('anak', 'vaksinasi')
                     ->whereHas('anak', function (Builder $query) use($id){
                         $query->where('id_posyandu', $id);
-                    })->get();
+                    })
+                    ->orderBy('no_pemeriksaan_imunisasi')
+                    ->get();
         return response()->json($datas);
     }
 

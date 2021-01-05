@@ -63,6 +63,7 @@ class SuperAdminExportGizi extends StringValueBinder implements WithCustomValueB
                 ->whereMonth('tgl_periksa', $this->month)
                 ->whereYear('tgl_periksa', $this->year)
                 ->first();
+                
         return view('admin.gizi.exportgizi', compact('datas', 'items'));
     }
 

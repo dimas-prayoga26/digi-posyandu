@@ -19,7 +19,7 @@ use PhpOffice\PhpSpreadsheet\Cell\StringValueBinder;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class SuperAdminExportImunisasi  extends StringValueBinder implements WithCustomValueBinder, FromView
+class SuperAdminExportImunisasi  extends StringValueBinder implements WithCustomValueBinder, FromView, WithTitle
 {
     /**
     * @return \Illuminate\Support\Collection
