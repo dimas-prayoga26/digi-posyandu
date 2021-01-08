@@ -28,7 +28,7 @@ Route::get('/getAnak', 'API\AnakApiController@getAll');
 Route::get('/getAnakByPosyandu/{id}', 'API\AnakApiController@showByPosyandu');
 Route::post('/anak', 'API\AnakApiController@create');
 Route::get('/detail-anak/{id}', 'API\AnakApiController@show');
-Route::post('/edit-anak/{id}', 'API\AnakApiController@update');
+Route::put('/edit-anak/{id}', 'API\AnakApiController@update');
 
 // ------    Gizi    --------
 Route::get('/getGizi', 'API\GiziApiController@getAll');

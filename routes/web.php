@@ -54,6 +54,8 @@ Route::delete('deleteVaksinasi/{id}','VaksinasiController@delete');
 // Route Gizi
 Route::get('gizi','GiziController@index');
 Route::get('giziSearch','GiziController@search');
+Route::get('giziSearch/puskes/{id}','GiziController@searchByPuskesmas');
+Route::get('giziSearch/posyandu/{id}','GiziController@searchByPosyandu');
 Route::get('/gizi/export_gizi', 'GiziController@export_gizi');
 Route::get('/gizi/export_gizi_superadmin', 'GiziController@export_gizi_superadmin');
 Route::get('/gizi/export_gizi_bidan', 'GiziController@export_gizi_bidan');
@@ -64,7 +66,8 @@ Route::get('/imunisasi/exportimunisasi', 'ImunisasiController@export_imunisasi')
 Route::get('/imunisasi/export_imunisasi_superadmin', 'ImunisasiController@export_imunisasi_superadmin');
 Route::get('/imunisasi/export_imunisasi_bidan', 'ImunisasiController@export_imunisasi_bidan');
 Route::get('imunisasiSearch','ImunisasiController@search');
-
+Route::get('imunisasiSearch/puskes/{id}','ImunisasiController@searchByPuskesmas');
+Route::get('imunisasiSearch/posyandu/{id}','ImunisasiController@searchByPosyandu');
 
 // ================================== Puskesmas=================================
 Route::get('puskesmas','PuskesmasController@index');

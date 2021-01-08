@@ -173,10 +173,23 @@
     <script>
       $(document).ready(function () {
         fetchImunisasi();
+        var level = "{{session('level')}}";
+        var apiUrl = '';
+        if(level == 'admin_puskesmas'){
+          var puskes = "{{session('puskesmas')}}";
+          apiUrl = 'imunisasiSearch/puskes/'+ puskes;
+        }else if(level == 'bidan'){
+          var posyandu = "{{session('posyandu')}}";
+          console.log(posyandu);
+          apiUrl = 'imunisasiSearch/posyandu/'+posyandu;
+        }else if(level == 'super_admin'){
+          apiUrl = 'imunisasiSearch';
+        }
+        var interval = setInterval(fetchImunisasi, 1000);
         function fetchImunisasi(query = '') {
           $.ajax({
             type: 'GET',
-            url: 'imunisasiSearch',
+            url: apiUrl,
             data: {query: query},
             dataType: 'json',
             success: function(data) {
@@ -198,11 +211,12 @@
               $('#show_data').html(html);
             }
           });
+          clearInterval(interval);
         }
         $(document).on('keyup', '#search', function(){
           var query = $(this).val();
           fetchImunisasi(query);
-          var interval = setInterval(fetchImunisasi, 5000);
+          var interval = setInterval(fetchImunisasi(query), 3000);
         });
       });
     </script>

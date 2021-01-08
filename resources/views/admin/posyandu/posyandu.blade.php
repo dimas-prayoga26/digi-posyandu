@@ -46,7 +46,7 @@
                 {{-- Modal Tambah --}}
                 
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  @if (session('level') == 'admin_puskesmas' || session('level') == 'super_admin'){
+                  @if (session('level') == 'super_admin')
                   <button type="button" class="btn btn-success btn-icon-split btn-sm" data-toggle="modal" data-target="#exampleModal"
                      id="#myBtn">
                      <span class="icon text-white-50">
@@ -120,7 +120,7 @@
                         <th>Nama Posyandu</th>
                         <th>Nama Puskesmas</th>
                         <th>Nama Desa</th>
-                        @if (session('level') == 'admin_puskesmas' || session('level') == 'super_admin'){
+                        @if (session('level') == 'super_admin'){
                         <th>Aksi</th>
                         @endif
                       </tr>
@@ -132,7 +132,7 @@
                       <td>{{$data->nama_posyandu}}</td>
                       <td>{{$data->nama_puskesmas}}</td>
                       <td>{{$data->nama_desa}}</td>
-                      @if (session('level') == 'admin_puskesmas' || session('level') == 'super_admin'){
+                      @if (session('level') == 'super_admin')
                         <td>
                        <button type="button" class="btn btn-primary" data-toggle="modal" 
                         data-target="#edit-data-{{$data->id_posyandu}}">

@@ -69,18 +69,6 @@ class GiziController extends Controller
         $search = $request->get('query');
         $level = session('level');
         if($search != ''){
-            if($level == 'admin_puskesmas'){
-                $data = DB::table('gizi')
-                            ->join('anak', 'gizi.id_anak', '=', 'anak.id_anak')
-                            ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
-                            ->select('gizi.*', 'anak.*', 'posyandu.*')
-                            ->where('posyandu.id_puskesmas', session('puskesmas'))
-                            ->where('nama_anak', 'like', '%'.$search.'%')
-                            ->OrWhere('nik', 'like', '%'.$search.'%')
-                            ->OrWhere('tgl_periksa', 'like', '%'.$search.'%')
-                            ->OrWhere('usia', 'like', '%'.$search.'%')
-                            ->get();
-            }else if($level == 'super_admin'){
                 $data = DB::table('gizi')
                             ->join('anak', 'gizi.id_anak', '=', 'anak.id_anak')
                             ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
@@ -90,21 +78,59 @@ class GiziController extends Controller
                             ->OrWhere('tgl_periksa', 'like', '%'.$search.'%')
                             ->OrWhere('usia', 'like', '%'.$search.'%')
                             ->get();
-            }else if($level == 'bidan'){
-                $data = DB::table('gizi')
-                            ->join('anak', 'gizi.id_anak', '=', 'anak.id_anak')
-                            ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
-                            ->select('gizi.*', 'anak.*', 'posyandu.*')
-                            ->where('id_posyandu', session('posyandu'))
-                            ->where('nama_anak', 'like', '%'.$search.'%')
-                            ->OrWhere('nik', 'like', '%'.$search.'%')
-                            ->OrWhere('tgl_periksa', 'like', '%'.$search.'%')
-                            ->OrWhere('usia', 'like', '%'.$search.'%')
-                            ->get();
-            }
         }else {
             $data = DB::table('gizi')
                         ->join('anak', 'gizi.id_anak', '=', 'anak.id_anak')
+                        ->select('gizi.*', 'anak.*')
+                        ->get();
+        }
+        return response()->json($data);
+    }
+
+    public function searchByPuskesmas(Request $request, $id){
+        $search = $request->get('query');
+        $level = session('level');
+        if($search != ''){
+            $data = DB::table('gizi')
+                        ->join('anak', 'gizi.id_anak', '=', 'anak.id_anak')
+                        ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                        ->select('gizi.*', 'anak.*', 'posyandu.*')
+                        ->where('posyandu.id_puskesmas', $id)
+                        ->where('nama_anak', 'like', '%'.$search.'%')
+                        ->OrWhere('nik', 'like', '%'.$search.'%')
+                        ->OrWhere('tgl_periksa', 'like', '%'.$search.'%')
+                        ->OrWhere('usia', 'like', '%'.$search.'%')
+                        ->get();
+        }else {
+            $data = DB::table('gizi')
+                        ->join('anak', 'gizi.id_anak', '=', 'anak.id_anak')
+                        ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                        ->where('posyandu.id_puskesmas', $id)
+                        ->select('gizi.*', 'anak.*')
+                        ->get();
+        }
+        return response()->json($data);
+    }
+
+    public function searchByPosyandu(Request $request, $id){
+        $search = $request->get('query');
+        $level = session('level');
+        if($search != ''){
+            $data = DB::table('gizi')
+                            ->join('anak', 'gizi.id_anak', '=', 'anak.id_anak')
+                            ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                            ->select('gizi.*', 'anak.*', 'posyandu.*')
+                            ->where('posyandu.id_posyandu', $id)
+                            ->where('nama_anak', 'like', '%'.$search.'%')
+                            ->OrWhere('nik', 'like', '%'.$search.'%')
+                            ->OrWhere('tgl_periksa', 'like', '%'.$search.'%')
+                            ->OrWhere('usia', 'like', '%'.$search.'%')
+                            ->get();
+        }else {
+            $data = DB::table('gizi')
+                        ->join('anak', 'gizi.id_anak', '=', 'anak.id_anak')
+                        ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                        ->where('posyandu.id_posyandu', $id)
                         ->select('gizi.*', 'anak.*')
                         ->get();
         }

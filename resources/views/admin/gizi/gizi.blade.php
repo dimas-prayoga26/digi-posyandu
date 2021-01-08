@@ -215,10 +215,23 @@
 <script>
   $(document).ready(function () {
     fetchGizi();
+    var level = "{{session('level')}}";
+    var apiUrl = '';
+    if(level == 'admin_puskesmas'){
+      var puskes = "{{session('puskesmas')}}";
+      apiUrl = 'giziSearch/puskes/'+puskes;
+    }else if(level == 'bidan'){
+      var posyandu = "{{session('posyandu')}}";
+      apiUrl = 'giziSearch/posyandu/'+posyandu;
+      console.log(apiUrl);
+    }else if(level == 'super_admin'){
+      apiUrl = 'giziSearch';
+    }
+    var interval = setInterval(fetchGizi, 1000);
     function fetchGizi(query = '') {
       $.ajax({
         type: 'GET',
-        url: 'giziSearch',
+        url: apiUrl,
         data: {query: query},
         dataType: 'json', 
         success: function(data) {
@@ -247,12 +260,13 @@
           $('#show_data').html(html);
         }
       });
+      clearInterval(interval);
     }
 
     $(document).on('keyup', '#search', function(){
       var query = $(this).val();
       fetchGizi(query);
-      var interval = setInterval(fetchGizi, 5000);
+      var interval = setInterval(fetchGizi(query), 3000);
     });
   });
 </script>

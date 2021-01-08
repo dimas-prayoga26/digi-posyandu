@@ -68,42 +68,16 @@ class ImunisasiController extends Controller
         $search = $request->get('query');
         $level = session('level');
         if($search != ''){
-            if($level == 'admin_puskesmas'){
-                $data = DB::table('imunisasi')
-                            ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
-                            ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
-                            ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
-                            ->select('imunisasi.*', 'anak.nama_anak', 'anak.nik', 'vaksinasi.nama_vaksinasi')
-                            ->where('posyandu.id_puskesmas', session('puskesmas'))
-                            ->where('nama_anak', 'like', '%'.$search.'%')
-                            ->OrWhere('nik', 'like', '%'.$search.'%')
-                            ->OrWhere('tgl_imunisasi', 'like', '%'.$search.'%')
-                            ->OrWhere('nama_vaksinasi', 'like', '%'.$search.'%')
-                            ->get();
-            }else if($level == 'super_admin'){
-                $data = DB::table('imunisasi')
-                            ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
-                            ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
-                            ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
-                            ->select('imunisasi.*', 'anak.nama_anak', 'anak.nik', 'vaksinasi.nama_vaksinasi')
-                            ->where('nama_anak', 'like', '%'.$search.'%')
-                            ->OrWhere('nik', 'like', '%'.$search.'%')
-                            ->OrWhere('tgl_imunisasi', 'like', '%'.$search.'%')
-                            ->OrWhere('nama_vaksinasi', 'like', '%'.$search.'%')
-                            ->get();
-            }else if($level == 'bidan'){
-                $data = DB::table('imunisasi')
-                            ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
-                            ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
-                            ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
-                            ->select('imunisasi.*', 'anak.nama_anak', 'anak.nik', 'vaksinasi.nama_vaksinasi')
-                            ->where('id_posyandu', session('posyandu'))
-                            ->where('nama_anak', 'like', '%'.$search.'%')
-                            ->OrWhere('nik', 'like', '%'.$search.'%')
-                            ->OrWhere('tgl_imunisasi', 'like', '%'.$search.'%')
-                            ->OrWhere('nama_vaksinasi', 'like', '%'.$search.'%')
-                            ->get();
-            }
+            $data = DB::table('imunisasi')
+                        ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
+                        ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
+                        ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                        ->select('imunisasi.*', 'anak.nama_anak', 'anak.nik', 'vaksinasi.nama_vaksinasi')
+                        ->where('nama_anak', 'like', '%'.$search.'%')
+                        ->OrWhere('nik', 'like', '%'.$search.'%')
+                        ->OrWhere('tgl_imunisasi', 'like', '%'.$search.'%')
+                        ->OrWhere('nama_vaksinasi', 'like', '%'.$search.'%')
+                        ->get();
         }else {
             $data = DB::table('imunisasi')
                         ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
@@ -114,6 +88,62 @@ class ImunisasiController extends Controller
         }
         return response()->json($data);
     }
+
+    public function searchByPuskesmas(Request $request, $id){
+        $search = $request->get('query');
+        $level = session('level');
+        if($search != ''){
+            $data = DB::table('imunisasi')
+                        ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
+                        ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
+                        ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                        ->select('imunisasi.*', 'anak.nama_anak', 'anak.nik', 'vaksinasi.nama_vaksinasi')
+                        ->where('posyandu.id_puskesmas', $id)
+                        ->where('nama_anak', 'like', '%'.$search.'%')
+                        ->OrWhere('nik', 'like', '%'.$search.'%')
+                        ->OrWhere('tgl_imunisasi', 'like', '%'.$search.'%')
+                        ->OrWhere('nama_vaksinasi', 'like', '%'.$search.'%')
+                        ->get();
+        }else {
+            $data = DB::table('imunisasi')
+                        ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
+                        ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
+                        ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                        ->where('posyandu.id_puskesmas', $id)
+                        ->select('imunisasi.*', 'anak.nama_anak', 'anak.nik', 'vaksinasi.nama_vaksinasi')
+                        ->get();
+        }
+        return response()->json($data);
+    }
+
+    public function searchByPosyandu(Request $request, $id){
+        $search = $request->get('query');
+        $level = session('level');
+        if($search != ''){
+            $data = DB::table('imunisasi')
+                        ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
+                        ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
+                        ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                        ->select('imunisasi.*', 'anak.nama_anak', 'anak.nik', 'vaksinasi.nama_vaksinasi')
+                        ->where('posyandu.id_posyandu', $id)
+                        ->where('nama_anak', 'like', '%'.$search.'%')
+                        ->OrWhere('nik', 'like', '%'.$search.'%')
+                        ->OrWhere('tgl_imunisasi', 'like', '%'.$search.'%')
+                        ->OrWhere('nama_vaksinasi', 'like', '%'.$search.'%')
+                        ->get();
+        }else {
+            $data = DB::table('imunisasi')
+                        ->join('vaksinasi', 'vaksinasi.id_vaksinasi', '=', 'imunisasi.id_vaksinasi')
+                        ->join('anak', 'imunisasi.id_anak', '=', 'anak.id_anak')
+                        ->join('posyandu', 'anak.id_posyandu', '=', 'posyandu.id_posyandu')
+                        ->where('posyandu.id_posyandu', $id)
+                        ->select('imunisasi.*', 'anak.nama_anak', 'anak.nik', 'vaksinasi.nama_vaksinasi')
+                        ->get();
+        }
+        return response()->json($data);
+    }
+
+
 
     public function export_imunisasi(){
         if (session('level') == 'admin_puskesmas'){
