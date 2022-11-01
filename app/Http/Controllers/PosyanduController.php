@@ -90,11 +90,15 @@ class PosyanduController extends Controller
     public function delete($id)
     {
         $data = Posyandu::findOrFail($id);
-        try {
+
             $data->delete();
             return redirect()->back()->with('success', 'Data Berhasil Dihapus');
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Data Gagal Dihapus');
-        }
+
+        // try {
+        //     $data->delete();
+        //     return redirect()->back()->with('success', 'Data Berhasil Dihapus');
+        // } catch (\Throwable $th) {
+        //     return redirect()->back()->with('error', 'Data Gagal Dihapus');
+        // }
     }
 }

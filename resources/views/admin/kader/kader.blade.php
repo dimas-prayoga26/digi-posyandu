@@ -194,13 +194,13 @@
                             <label>Jenis Kelamin</label>
                             <br>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="jk" id="jk1" value="laki-laki"
-                                    {{ ($data->jk=="laki-laki")? "checked" : "" }}>
+                                <input class="form-check-input" type="radio" name="jk" id="jk1" value="laki-laki" {{
+                                    ($data->jk=="laki-laki")? "checked" : "" }}>
                                 <label class="form-check-label" for="jk1">Laki - Laki</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="jk" id="jk2" value="perempuan"
-                                    {{ ($data->jk=="perempuan")? "checked" : "" }}>
+                                <input class="form-check-input" type="radio" name="jk" id="jk2" value="perempuan" {{
+                                    ($data->jk=="perempuan")? "checked" : "" }}>
                                 <label class="form-check-label" for="jk2">Perempuan</label>
                             </div>
                             <div class="form-group">
@@ -234,10 +234,10 @@
         </form>
         {{-- Akhir Modal Edit --}}
         @endforeach
-@endsection
-@section('js')
-<script>
-    $(document).ready(function () {
+        @endsection
+        @section('js')
+        <script>
+            $(document).ready(function () {
     // Select2 Single  with Placeholder
     
     $('#posyandu').select2({
@@ -247,5 +247,5 @@
     });         
 
     });
-</script>
-@endsection
+        </script>
+        @endsection

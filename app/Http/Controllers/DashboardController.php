@@ -52,13 +52,13 @@ class DashboardController extends Controller
         $stuntingTinggiBadan = DB::table('gizi')
         ->join('status_gizi', 'gizi.id_status_gizi', '=', 'status_gizi.id_status_gizi')
         ->whereIn('status_gizi.pb_tb_u',['SP','P'])
-        ->whereYear('tgl_periksa', $this->year)
+        ->whereYear('tgl_periksa', $now->format('Y'))
         ->select(DB::raw('count(*) as `count`'),DB::raw('MONTHNAME(tgl_periksa) month'))
         ->orderBy('tgl_periksa', 'ASC')
         ->groupby('year','month')
         ->get();
+        dd($stuntingTinggiBadan);
         return response()->json($stuntingTinggiBadan,200);
-        dd($now);
         /* $giziChart = DB::table('gizi')
         ->join('status_gizi', 'gizi.id_status_gizi', '=', 'status_gizi.id_status_gizi')
         ->select(DB::raw('count(*) as `count`'),DB::raw('YEAR(tgl_periksa) year, MONTH(tgl_periksa) month'))
